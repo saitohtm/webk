@@ -1,0 +1,57 @@
+#grid-content {
+	overflow: hidden;
+	height: 0;
+	border: 1px solid #eb6100;
+	background-color: #FFFFFF;
+	background-repeat: repeat;
+
+}
+#grid-content div {
+	width: 360px;
+	height: auto;
+	border: 1px solid #808080;
+	background-color: #000000;
+	margin: 5px;
+	padding: 3px;
+	overflow: hidden;
+}
+
+#grid-content div h3 {
+	font-size: 12px;
+	color: #FFFFFF;
+	text-shadow:none;
+	margin: 0;
+	padding: 0;
+}
+#grid-content div p {
+	text-shadow:none;
+	margin: 0;
+	padding: 0;
+}
+.price{
+	font-size: 12px;
+	color: #FFFFFF;
+}
+.category{
+	font-size: 8px;
+	color: #808080;
+}
+
+#grid-content div a{
+	text-decoration: none;
+}
+
+.textOverflow{
+    overflow: hidden;
+    padding: 10px;
+    width: 90px;
+    line-height: 1.0;
+    white-space: nowrap;
+}
+ 
+.textOverflow {
+    text-overflow: ellipsis;
+    -webkit-text-overflow: ellipsis; /* Safari */
+    -o-text-overflow: ellipsis; /* Opera */
+}
+ 

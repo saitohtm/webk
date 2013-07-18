@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>例 組み合わせ eyeco - Recruit UI Library</title>
+<link rel="stylesheet" href="use_all.css" type="text/css" />
+<script type="text/javascript" src="../../recruit/docs/js/jquery-1.2.3.js"></script>
+<script type="text/javascript" src="../../recruit/docs/js/jquery.form.js"></script>
+<script type="text/javascript" src="../../recruit.ui.js"></script>
+<script type="text/javascript" src="../../eyeco.ui.js"></script>
+<script type="text/javascript">
+$(function (){
+    Recruit.UI.key = 'a450fa593ee3f2a4';
+    Recruit.UI.Base.Pulldown.first_opt_text = '-';
+
+    new Eyeco.UI.Price.Pulldown();
+    new Eyeco.UI.Category.Pulldown();
+    new Eyeco.UI.Order.Pulldown();
+
+    $( '#form-block form' ).submit( function (){
+        jsonp_request();
+        return false;
+    });
+});
+
+function jsonp_request ( start ){
+    if( !start ){ start = 1 }
+    var ruip = $( '#rui-page' ).html( 'loading...' );
+    var ruir = $( '#rui-result' ).empty();
+    $( '#rui-page-foot' ).empty();
+
+    var url = 'http://webservice.recruit.co.jp/eyeco/item/v1/?'
+        + 'key=' + Recruit.UI.key + '&format=jsonp&callback=?'
+        + '&start=' + start + '&'
+        + $( '#form-block form' ).formSerialize();
+
+    $.getJSON( url, function ( json ){
+        var res = json.results;
+        // error check
+        if( res.error ){
+            ruip.html( res.error[0].message );
+            return false;
+        }
+        // auto paginate
+        var page = new Recruit.UI.Page.Simple( json );
+        page.paginate({
+            request: jsonp_request,
+            sub_uis: [{
+                id: 'rui-page-foot',
+                template: '<span class="rui-page-back"><a '
+                    + 'href="">&lt;前へ</a>　</span><span '
+                    + 'class="rui-page-next"><a href="">次へ&gt;</a></span>'
+            }]
+        });
+        // display results
+        var ol = $( '<ol></ol>' ).attr( 'start', start );
+        $.each( res.item, function (){
+            var text = this.name;
+            var price = Recruit.UI.to_comma( this.price ) + '円';
+            text += ' ' + price;
+            var li = $( '<li style="clear:both">'
+                + '<img src="' + this.image.pc + '"'
+                + ' style="float:left;margin:0 10px 10px 0">'
+                + '<a href="' + this.urls.pc + '">' + text + '</a>'
+                + '<br><div style="margin-top:10px;font-size:0.8em;color:#999">'
+                + this.desc.substr( 0,100 ) + '... </div></li>' );
+            ol.append( li );
+        });
+        ruir.append( ol );
+    });
+}
+</script>
+</head>
+<body>
+<h1>組み合わせ - eyeco</h1>
+<div id="form-block">
+<div id="form-block-inner">
+    <form action="">
+        <div class="ui-block">
+            <label>商品名</label>
+            <input type="text" name="name"/>
+        </div>
+        <div class="ui-block" style="margin-bottom:0">
+            <label>カテゴリ</label>
+            <select id="eye-large-category-sel"></select>
+        </div>
+        <div class="ui-block">
+            <label>&nbsp;</label>
+            <select id="eye-small-category-sel"></select>
+        </div>
+        <div class="ui-block" style="margin-bottom:0">
+            <label>価格帯</label>
+            <select id="eye-price-min-sel"></select>
+        </div>
+        <div class="ui-block">
+            <label>&nbsp;</label>
+            <select id="eye-price-max-sel"></select>
+        </div>
+        <div class="ui-block">
+            <label>キーワード</label>
+            <input type="text" name="keyword"/>
+        </div>
+        <div class="ui-block">
+            <label>並び順</label>
+            <select id="eye-order-sel"></select>
+        </div>
+        <div class="ui-block">
+            <label>&nbsp;</label>
+            <input type="submit" value="検索" />
+        </div>
+        <input type="hidden" name="count" value="10"/>
+    </form>
+</div>
+</div>
+<div id="result-block">
+<div id="result-block-inner">
+    <div id="rui-page"></div>
+    <div id="rui-result"></div>
+    <div id="rui-page-foot"></div>
+</div>
+</div>
+
+</body>
+</html>

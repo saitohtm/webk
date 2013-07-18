@@ -1,0 +1,347 @@
+<html>
+<head>
+<script type="text/javascript" src="../../recruit/tests/js/JSAN.js"></script>
+<script type="text/javascript" src="../../recruit/docs/js/jquery-1.2.3.js"></script>
+<script type="text/javascript" src="../../recruit.ui.js"></script>
+<script type="text/javascript" src="../../beauty.ui.js"></script>
+</head>
+<body>
+<div style="display:none">
+    <select id="bty-hair-image-sel"></select>
+    <select id="bty-hair-image-sel-2"></select>
+    <select id="bty-hair-length-sel"></select>
+    <select id="bty-hair-length-sel-2"></select>
+    <select id="bty-hair-ryou-sel"></select>
+    <select id="bty-hair-ryou-sel-2"></select>
+    <select id="bty-hair-shitsu-sel"></select>
+    <select id="bty-hair-shitsu-sel-2"></select>
+    <select id="bty-hair-futosa-sel"></select>
+    <select id="bty-hair-futosa-sel-2"></select>
+    <select id="bty-hair-kuse-sel"></select>
+    <select id="bty-hair-kuse-sel-2"></select>
+    <select id="bty-hair-kaogata-sel"></select>
+    <select id="bty-hair-kaogata-sel-2"></select>
+    <select id="bty-kodawari-sel"></select>
+    <select id="bty-kodawari-sel-2"></select>
+    <select id="bty-kodawari-setsubi-sel"></select>
+    <select id="bty-kodawari-setsubi-sel-2"></select>
+    <select id="bty-kodawari-menu-sel"></select>
+    <select id="bty-kodawari-menu-sel-2"></select>
+    <select id="bty-male-sel"></select>
+    <select id="bty-male-sel-2"></select>
+    <select id="bty-order-sel"></select>
+    <select id="bty-order-sel-2"></select>
+</div>
+<pre id="test"><script>
+
+JSAN.use( "Test.More" );
+plan({ tests: 96 });
+
+Recruit.UI.key = 'a450fa593ee3f2a4';
+
+is( typeof Beauty, 'function' );
+is( typeof Beauty.UI, 'function' );
+
+// Beauty.UI.HairImage.Pulldown
+(function (){
+    var p = new Beauty.UI.HairImage.Pulldown({
+        on_update_hook: function ( success ){
+            ok( success, 'hair image pulldown - default' );
+            ok( !this.is_error );
+            is( this.label, 'イメージ' );
+            var elm = $( '#bty-hair-image-sel' );
+            is( elm.attr( 'name' ), 'hair_image' );
+            var opt = elm.find( 'option' );
+            cmpOK( opt.length, '>', 1 );
+            is( $( opt[0] ).text(), '指定なし' );
+        }
+    });
+})();
+(function (){
+    var init = '2';
+    var p = new Beauty.UI.HairImage.Pulldown({
+        id : 'bty-hair-image-sel-2',
+        val: init,
+        on_update_hook: function ( success ){
+            ok( success, 'hair image pulldown - with val' );
+            ok( !this.is_error );
+            var elm = $( '#bty-hair-image-sel-2' );
+            is( elm.val(), init );
+        }
+    });
+})();
+
+// Beauty.UI.HairLength.Pulldown
+(function (){
+    var p = new Beauty.UI.HairLength.Pulldown({
+        on_update_hook: function ( success ){
+            ok( success, 'hair length pulldown - default' );
+            ok( !this.is_error );
+            is( this.label, '髪の長さ' );
+            var elm = $( '#bty-hair-length-sel' );
+            is( elm.attr( 'name' ), 'hair_length' );
+            var opt = elm.find( 'option' );
+            cmpOK( opt.length, '>', 1 );
+            is( $( opt[0] ).text(), '指定なし' );
+        }
+    });
+})();
+(function (){
+    var init = '2';
+    var p = new Beauty.UI.HairLength.Pulldown({
+        id : 'bty-hair-length-sel-2',
+        val: init,
+        on_update_hook: function ( success ){
+            ok( success, 'hair length pulldown - with val' );
+            ok( !this.is_error );
+            var elm = $( '#bty-hair-length-sel-2' );
+            is( elm.val(), init );
+        }
+    });
+})();
+
+// Beauty.UI.HairRyou.Pulldown
+(function (){
+    var p = new Beauty.UI.HairRyou.Pulldown();
+    ok( p, 'Hair ryou pulldown - default' );
+    ok( !p.is_error );
+    is( p.label, '髪の量' );
+    var elm = $( '#bty-hair-ryou-sel' );
+    is( elm.attr( 'name' ), 'hair_ryou' );
+    var opt = elm.find( 'option' );
+    cmpOK( opt.length, '>', 1 );
+})();
+(function (){
+    var init = 2;
+    var p = new Beauty.UI.HairRyou.Pulldown({
+        id : 'bty-hair-ryou-sel-2',
+        val: init
+    });
+    ok( p, 'hair ryou pulldown - with val' );
+    var elm = $( '#bty-hair-ryou-sel-2' );
+    is( elm.val(), init );
+})();
+
+// Beauty.UI.HairShitsu.Pulldown
+(function (){
+    var p = new Beauty.UI.HairShitsu.Pulldown();
+    ok( p, 'hair shitsu pulldown - default' );
+    ok( !p.is_error );
+    is( p.label, '髪の質' );
+    var elm = $( '#bty-hair-shitsu-sel' );
+    is( elm.attr( 'name' ), 'hair_shitsu' );
+    var opt = elm.find( 'option' );
+    cmpOK( opt.length, '>', 1 );
+})();
+(function (){
+    var init = 2;
+    var p = new Beauty.UI.HairShitsu.Pulldown({
+        id : 'bty-hair-shitsu-sel-2',
+        val: init
+    });
+    ok( p, 'hair shitsu pulldown - with val' );
+    var elm = $( '#bty-hair-shitsu-sel-2' );
+    is( elm.val(), init );
+})();
+
+// Beauty.UI.HairFutosa.Pulldown
+(function (){
+    var p = new Beauty.UI.HairFutosa.Pulldown();
+    ok( p, 'hair futosa pulldown - default' );
+    ok( !p.is_error );
+    is( p.label, '髪の太さ' );
+    var elm = $( '#bty-hair-futosa-sel' );
+    is( elm.attr( 'name' ), 'hair_futosa' );
+    var opt = elm.find( 'option' );
+    cmpOK( opt.length, '>', 1 );
+})();
+(function (){
+    var init = 2;
+    var p = new Beauty.UI.HairFutosa.Pulldown({
+        id : 'bty-hair-futosa-sel-2',
+        val: init
+    });
+    ok( p, 'hair futosa pulldown - with val' );
+    var elm = $( '#bty-hair-futosa-sel-2' );
+    is( elm.val(), init );
+})();
+
+// Beauty.UI.HairKuse.Pulldown
+(function (){
+    var p = new Beauty.UI.HairKuse.Pulldown();
+    ok( p, 'hair kuse pulldown - default' );
+    ok( !p.is_error );
+    is( p.label, '髪のクセ' );
+    var elm = $( '#bty-hair-kuse-sel' );
+    is( elm.attr( 'name' ), 'hair_kuse' );
+    var opt = elm.find( 'option' );
+    cmpOK( opt.length, '>', 1 );
+})();
+(function (){
+    var init = 2;
+    var p = new Beauty.UI.HairKuse.Pulldown({
+        id : 'bty-hair-kuse-sel-2',
+        val: init
+    });
+    ok( p, 'hair kuse pulldown - with val' );
+    var elm = $( '#bty-hair-kuse-sel-2' );
+    is( elm.val(), init );
+})();
+
+// Beauty.UI.HairKaogata.Pulldown
+(function (){
+    var p = new Beauty.UI.HairKaogata.Pulldown();
+    ok( p, 'hair kaogata pulldown - default' );
+    ok( !p.is_error );
+    is( p.label, '顔型' );
+    var elm = $( '#bty-hair-kaogata-sel' );
+    is( elm.attr( 'name' ), 'hair_kaogata' );
+    var opt = elm.find( 'option' );
+    cmpOK( opt.length, '>', 1 );
+})();
+(function (){
+    var init = 2;
+    var p = new Beauty.UI.HairKaogata.Pulldown({
+        id : 'bty-hair-kaogata-sel-2',
+        val: init
+    });
+    ok( p, 'hair kaogata pulldown - with val' );
+    var elm = $( '#bty-hair-kaogata-sel-2' );
+    is( elm.val(), init );
+})();
+
+// Beauty.UI.Kodawari.Pulldown
+(function (){
+    var p = new Beauty.UI.Kodawari.Pulldown({
+        on_update_hook: function ( success ){
+            ok( success, 'kodawari pulldown - default' );
+            ok( !this.is_error );
+            is( this.label, 'こだわり' );
+            var elm = $( '#bty-kodawari-sel' );
+            is( elm.attr( 'name' ), 'kodawari' );
+            var opt = elm.find( 'option' );
+            cmpOK( opt.length, '>', 1 );
+            is( $( opt[0] ).text(), '指定なし' );
+        }
+    });
+})();
+(function (){
+    var init = '2';
+    var p = new Beauty.UI.Kodawari.Pulldown({
+        id : 'bty-kodawari-sel-2',
+        val: init,
+        on_update_hook: function ( success ){
+            ok( success, 'kodawari pulldown - with val' );
+            ok( !this.is_error );
+            var elm = $( '#bty-kodawari-sel-2' );
+            is( elm.val(), init );
+        }
+    });
+})();
+
+// Beauty.UI.KodawariSetsubi.Pulldown
+(function (){
+    var p = new Beauty.UI.KodawariSetsubi.Pulldown({
+        on_update_hook: function ( success ){
+            ok( success, 'kodawari setsubi pulldown - default' );
+            ok( !this.is_error );
+            is( this.label, 'こだわり設備' );
+            var elm = $( '#bty-kodawari-setsubi-sel' );
+            is( elm.attr( 'name' ), 'kodawari_setsubi' );
+            var opt = elm.find( 'option' );
+            cmpOK( opt.length, '>', 1 );
+            is( $( opt[0] ).text(), '指定なし' );
+        }
+    });
+})();
+(function (){
+    var init = '2';
+    var p = new Beauty.UI.KodawariSetsubi.Pulldown({
+        id : 'bty-kodawari-setsubi-sel-2',
+        val: init,
+        on_update_hook: function ( success ){
+            ok( success, 'kodawari setsubi pulldown - with val' );
+            ok( !this.is_error );
+            var elm = $( '#bty-kodawari-setsubi-sel-2' );
+            is( elm.val(), init );
+        }
+    });
+})();
+
+// Beauty.UI.KodawariMenu.Pulldown
+(function (){
+    var p = new Beauty.UI.KodawariMenu.Pulldown({
+        on_update_hook: function ( success ){
+            ok( success, 'kodawari menu pulldown - default' );
+            ok( !this.is_error );
+            is( this.label, 'こだわりメニュー' );
+            var elm = $( '#bty-kodawari-menu-sel' );
+            is( elm.attr( 'name' ), 'kodawari_menu' );
+            var opt = elm.find( 'option' );
+            cmpOK( opt.length, '>', 1 );
+            is( $( opt[0] ).text(), '指定なし' );
+        }
+    });
+})();
+(function (){
+    var init = '2';
+    var p = new Beauty.UI.KodawariMenu.Pulldown({
+        id : 'bty-kodawari-menu-sel-2',
+        val: init,
+        on_update_hook: function ( success ){
+            ok( success, 'kodawari menu pulldown - with val' );
+            ok( !this.is_error );
+            var elm = $( '#bty-kodawari-menu-sel-2' );
+            is( elm.val(), init );
+        }
+    });
+})();
+
+
+// Beauty.UI.Male.Pulldown
+(function (){
+    var p = new Beauty.UI.Male.Pulldown();
+    ok( p, 'male pulldown - default' );
+    ok( !p.is_error );
+    is( p.label, '性別' );
+    var elm = $( '#bty-male-sel' );
+    is( elm.attr( 'name' ), 'male' );
+    var opt = elm.find( 'option' );
+    cmpOK( opt.length, '>', 1 );
+})();
+(function (){
+    var init = 0;
+    var p = new Beauty.UI.Male.Pulldown({
+        id : 'bty-male-sel-2',
+        val: init
+    });
+    ok( p, 'male pulldown - with val' );
+    var elm = $( '#bty-male-sel-2' );
+    is( elm.val(), init );
+})();
+
+
+// Beauty.UI.Order.Pulldown
+(function (){
+    var p = new Beauty.UI.Order.Pulldown();
+    ok( p, 'order pulldown - default' );
+    ok( !p.is_error );
+    is( p.label, '並び順' );
+    var elm = $( '#bty-order-sel' );
+    is( elm.attr( 'name' ), 'order' );
+    var opt = elm.find( 'option' );
+    cmpOK( opt.length, '>', 1 );
+})();
+(function (){
+    var init = 2;
+    var p = new Beauty.UI.Order.Pulldown({
+        id : 'bty-order-sel-2',
+        val: init
+    });
+    ok( p, 'order pulldown - with val' );
+    var elm = $( '#bty-order-sel-2' );
+    is( elm.val(), init );
+})();
+</script></pre>
+</body>
+</html>

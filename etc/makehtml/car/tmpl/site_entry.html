@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+<meta name="keyword" content="自動車サイト,自動車メディア,カーメディア,車,車情報,情報誌登録" xml:lang="ja" lang="ja"/>
+<meta name="description" content="自動車関連サイトの登録窓口。" xml:lang="ja" lang="ja"/>
+<title>自動車サイト登録画面</title>
+<!--METATOP-->
+</head>
+<body>
+<!--HEADER-->
+<!--AD_HEADER-->
+	
+
+<form action="/site_entry.htm" method="post">
+<font color="#002595">■</font>登録カテゴリ<br /><br />
+<select name="category" required>
+<option value="">選択してください</option>
+<!--CATEGORY_LIST-->
+</select><br><br>
+<font color="#002595">■</font>登録サイト<br /><br />
+<input name="sitename" type="text" placeholder="サイト名" required><br>
+<font color="#002595">■</font>登録サイトURL<br /><br />
+<input name="url" type="text" placeholder="http://xxxx.xx.xx" required><br>
+<font color="#002595">■</font>RSSURL<br /><br />
+<input name="rss_url" type="text" placeholder="http://xxxx.xx.xx"><br>
+<font color="#002595">■</font>ディーラー名(公式サイトの場合)<br /><br />
+<select name="brand_id">
+<option value="">選択してください</option>
+<!--BRAND_LIST-->
+</select><br><br>
+<button class="btn primary" type="submit">登録</button>
+</form>
+
+<!--FOOTER-->
+</body>
+</html>

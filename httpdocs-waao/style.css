@@ -1,0 +1,150 @@
+#bodyid{
+padding:0;
+margin:0;
+background:#fff url('img/bg.png');
+text-align:center;
+}
+#page{
+width:650px;
+background:#fff url('img/mainbg.png') repeat-y right top;
+padding:0;
+margin:0 auto;
+text-align:left;
+}
+#top{
+height:245px;
+background:url('img/image.png') no-repeat 50px 19px;
+text-align:center;
+}
+#top2{
+height:245px;
+text-align:center;
+}
+#top h1{
+color:#fff;
+background:#f4efd5 url('img/titlebg.png') repeat-y left top;
+font-size:15px;
+letter-spacing:2px;
+margin:0 6px;
+padding:1px 10px;
+text-align:left;
+}
+#map{
+width:600px;
+font-size:13px;
+margin:30px auto 0 auto;
+}
+#map td{
+height:34px;
+width:33%;
+}
+#map a{
+color:#608590;
+text-decoration:none;
+font-weight:bold;
+}
+#map a:hover{
+color:#e1cb87;
+}
+#main{
+font-size:13px;
+background:url('img/bg2.png') repeat-y right top;
+margin:0 6px;
+}
+#left{
+width:448px;
+float:left;
+padding:0;
+}
+#left a{
+color:#d5b657;
+}
+#left a:hover{
+color:#e1cb87;
+text-decoration:none;
+}
+#left h2{
+color:#777;
+background:url('img/mainbg1.png') repeat-x right top;
+font-size:13px;
+margin:0 9px 0 11px;
+padding:0;
+letter-spacing:1px;
+}
+#left span{
+padding:0 10px 0 41px;
+background:#fff url('img/mainbg2.png') no-repeat left top;
+}
+#left p{
+font-weight:normal;
+margin:5px 15px 15px 17px;
+padding:0;
+text-align:left;
+color:#777;
+font-size:13px;
+line-height:120%;
+}
+#right{
+width:170px;
+float:right;
+padding:10px 0;
+}
+#right a{
+color:#d5b657;
+}
+#right a:hover{
+color:#e1cb87;
+text-decoration:none;
+}
+#right ul{
+list-style-type:none;
+margin:0;
+padding:0;
+}
+#right li{
+border:1px solid #dbd8c9;
+background:#fff url('img/menu1.png') repeat-y 0 0;
+padding:1px 5px;
+margin:0 20px 3px 0;
+font-size:13px;
+font-weight:normal;
+}
+#right li a{
+color:#7b7973;
+text-decoration:none;
+width:100%;
+}
+#right li a:hover{
+color:#484744;
+}
+#right p{
+font-weight:normal;
+border-bottom:1px solid #e0e0d8;
+margin:7px 22px 0 2px;
+padding:0 0 7px 0;
+color:#666;
+font-size:13px;
+line-height:120%;
+}
+#pagetop{
+text-align:left;
+padding:0 0 10px 16px;
+}
+#pagetop a{
+color:#888;
+}
+#pagetop a:hover{
+color:#d5dce6;
+}
+#copy{
+clear:both;
+color:#fff;
+background:#f4efd5 url('img/copy.png') repeat-y left top;
+font-size:13px;
+font-weight:bold;
+text-align:right;
+padding:1px 10px;
+}
+#omo{
+display:none;
+}

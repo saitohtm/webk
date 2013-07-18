@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>なんでも探せるキーワード検索 動画・画像・ブログ・Twitter検索</title>
+	<meta name="ROBOTS" content="INDEX, FOLLOW">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1"/>
+	<meta name="keyword" content="検索,動画,画像,キーワード検索,ブログ,スマフォMAX" xml:lang="ja" lang="ja"/>
+	<meta name="description" content="iphone/androidのスマートフォンサイトを一番MAXに集めたスマフォ検索エンジンです" xml:lang="ja" lang="ja"/>
+	<meta name="format-detection" content="telephone=no" />
+<link rel="apple-touch-icon" href="http://s.waao.jp/img/home.png" />
+<link rel="stylesheet" href="/css/smf.css" />
+<link rel="stylesheet" href="/jquery.mobile-1.0a3.min.css" />
+<script type="text/javascript" src="/jquery-1.5.min.js"></script>
+<script type="text/javascript" src="/my.js"></script>
+<script type="text/javascript" src="/jquery.mobile-1.0a3.min.js"></script>
+</head>
+<body>
+<div id="home" data-role="page">
+<div id="header">
+<h1><a href="/" style="display: block;"><img src="/img/smfsearch.jpg" width=100% alt="スマフォマルチ検索スマフォMAX"></a></h1>
+</div>
+<a href="/">スマフォMAX</a>&gt;キーワード検索
+<table border="0" width=100%><tr><td BGCOLOR="#FFFFFF">
+<div data-role="content">
+<form action="/search.html" method="get">
+<fieldset>
+<div data-role="fieldcontain">
+<label for="search">人名／動画／画像／ブログ／くちこみ</label><br>
+<input type="search" name="q" id="search" value=""  />
+<center>
+	<button type="submit" data-theme="a">マルチ検索</button>
+</center>
+</div>
+</fieldset>
+</form>
+<img src="/img/google.png" height="25">
+<img src="/img/yahoo.png" height="25">
+<img src="/img/naver.png" height="25">
+<img src="/img/amazon.jpg" height="25">
+から一気に横断検索
+</td></tr></table>
+
+<ul data-role="listview">
+<li data-role="list-divider">ジャンル別検索</li>
+<li><img src="/img/blog.jpg" height="25" class="ui-li-icon"><a href="/blog/">芸能人ブログ</a></li>
+<li><img src="/img/twitter.png" height="25" class="ui-li-icon"><a href="/twitter/">有名人ツイッター</a></li>
+<li><img src="/img/E151_20.gif" height="20" class="ui-li-icon"><a href="/person.htm">大人気！人物名鑑でもっと探す</a></li>
+<li><img src="/img/E207_20.gif" height="20" class="ui-li-icon"><a href="http://s.goodgirl.jp/">おとなのスマフォ</a></li>
+<li><img src="/img/E209_20.gif" height="20" class="ui-li-icon"><a href="/sitelist/">カテゴリ別に探す</a></li>
+</ul>
+
+<div id="footer">
+<table border="0" width=100%><tr><td BGCOLOR="#FFFFFF">
+<a href="/poricy.htm"  target="_blank">プライバシーポリシー</a>｜
+<a href="/menseki.htm" alt="免責" target="_blank">免責</a>
+<center><img src="/img/We_Aer_All_One.png"><br>- <a href="http://waao.jp/">http://waao.jp/</a> -</center>
+</td></tr></table>
+</div>
+
+</div>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-12681370-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</body>
+</html>

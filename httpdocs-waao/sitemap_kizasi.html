@@ -1,0 +1,41 @@
+#!/usr/bin/perl
+
+use Waao::Utility;
+use DBI;
+
+my $dsn = 'DBI:mysql:waao';
+my $user = 'mysqlweb';
+my $password = 'WaAoqzxe7h6yyHz';
+
+my $domain = $ENV{'SERVER_NAME'};
+
+my $id = $ENV{'QUERY_STRING'};
+$id =~s/id=//g;
+
+my $start = $id * 5000 +  1;
+my $dbh = DBI->connect($dsn,$user,$password,{RaiseError => 1, AutoCommit => 0});
+
+print << "END_OF_HTML";
+Content-type: application/xml;
+
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.google.com/schemas/sitemap/0.84"
+  xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0">
+END_OF_HTML
+
+my $sth = $dbh->prepare(qq{ select id from rssdata order by id desc limit 5000} );
+$sth->execute();
+while(my @row = $sth->fetchrow_array) {
+print << "END_OF_HTML";
+<url>
+<loc>http://$domain/kizasi.html?guid=ON&amp;q=list-kizasi&amp;p1=$row[0]</loc>
+<mobile:mobile/>
+</url>
+END_OF_HTML
+}
+
+print << "END_OF_HTML";
+</urlset>
+END_OF_HTML
+
+$dbh->disconnect;

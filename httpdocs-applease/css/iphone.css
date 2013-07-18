@@ -1,0 +1,88 @@
+@charset "UTF-8";
+
+/*
+	##### smart.goo.to #####
+	Copyright (C) waao All Rights Reserved.
+
+	[Base] Formatting browser's default styles
+		0. Reset
+		1. HTML, Body, Anchor
+		2. Headings
+		3. Lists
+		4. Tables
+		5. Forms
+		6. Others
+
+	[Layout] 
+		0. Base Layout
+		1. Header
+		2. Content
+		3. Footer
+
+	[Module] 
+		1. Common Module
+		90. Others
+		99. Clearfix
+*/
+
+/*/////////////////////////////////////////////////////////////
+[Base] 
+//////////////////////////////////////////////////////////////*/
+
+/* ------------------------------------------------------------
+	0. Reset
+------------------------------------------------------------ */
+html,body, div, dl, dt, dd, ul, ol, li, p,
+h1, h2, h3, h4, h5, h6,
+object, iframe, pre, code, p, blockquote,
+form, fieldset, legend,
+table, th, td, caption, tbody, tfoot, thead,
+article, aside, figure, footer, header,
+hgroup, menu, nav, section, audio, video, canvas {
+	margin: 0;
+	padding: 0;
+}
+article, aside, figure, footer, figcaption,
+header, hgroup, menu, 
+nav {
+	margin: 0;
+	padding: 0;
+	font-size: 100%;
+}
+section {
+	display: block;
+}
+
+/* ------------------------------------------------------------
+	1. Body, Anchor
+------------------------------------------------------------ */
+body {
+	-webkit-text-size-adjust: none; /* フォントサイズ自動調整OFF */
+	font-family: ArialMT, "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W3"; /* iPhoneバンドル */
+	font-size: 14px;
+	line-height: 1.0;
+}
+a {
+	color: #000;
+	-webkit-tap-highlight-color: rgba(00,33,99,0.3); /* タップ時の背景色 */
+}
+
+/* HTML5 の新要素をブロックレベルにする */
+article,aside,canvas,details,figcaption,figure,
+footer,header,hgroup,menu,nav,section,summary{
+	desplay:block;
+}
+
+
+
+.category ul:first-of-type li a.link-inactive:hover{
+opacity:0.8;
+}
+
+/* タブ色設定 */
+.category ul:first-of-type li a.link-active{
+    background: -webkit-gradient(linear, left top, left bottom, from(#d7d7d7), color-stop(50%, #cbcbcb), color-stop(51%, #c1c1c1), to(#bbbbbb));
+}
+
+
+

@@ -1,0 +1,96 @@
+#!/usr/local/bin/perl -w
+
+use DBI;
+use CGI;
+
+my $q = new CGI;
+
+	my $type = $q->param('type');
+	my $app_id = $q->param('app_id');
+
+	my $url;
+	if($type eq 1){    	    
+		$url = &_iphone($q);
+	}elsif($type eq 2){    	    
+		$url = &_android($q);
+	}
+
+	print qq{Location: $url\n\n};
+	
+1;
+
+sub _iphone(){
+	my $q = shift;
+	
+	my $app_id = $q->param('app_id');
+	my $id = $q->param('id');
+	my $cate = $q->param('cate');
+
+	my $url;
+
+	my $dbh = &_db_connect();
+
+eval{
+	if($cate eq 1){
+		my $sth = $dbh->prepare(qq{update app_review_iphone set outcnt = outcnt + 1 where id = ? limit 1 });	 
+		$sth->execute($id);
+	}
+	
+	if($app_id){
+		my $sth = $dbh->prepare(qq{update app_iphone set outcnt = outcnt + 1 where id = ? limit 1 });	 
+		$sth->execute($app_id);
+	}
+
+	my $sth = $dbh->prepare(qq{select url from app_iphone where id = ? limit 1 });	 
+	$sth->execute($app_id);
+	while(my @row = $sth->fetchrow_array) {
+		$url = $row[0];
+	}
+};	
+	$dbh->disconnect;
+
+	return $url;
+}
+
+sub _android(){
+	my $q = shift;
+	
+	my $app_id = $q->param('app_id');
+	my $id = $q->param('id');
+	my $cate = $q->param('cate');
+
+	my $dbh = &_db_connect();
+	my $url;
+eval{
+	if($cate eq 1){
+		my $sth = $dbh->prepare(qq{update app_review_android set outcnt = outcnt + 1 where id = ? limit 1 });	 
+		$sth->execute($id);
+	}
+	
+	if($app_id){
+		my $sth = $dbh->prepare(qq{update app_android set outcnt = outcnt + 1 where id = ? limit 1 });	 
+		$sth->execute($app_id);
+	}
+	my $sth = $dbh->prepare(qq{select url from app_android where id = ? limit 1 });	 
+	$sth->execute($app_id);
+	while(my @row = $sth->fetchrow_array) {
+		$url = $row[0];
+	}
+
+};	
+	$dbh->disconnect;
+
+	return $url;
+}
+
+# db connect
+sub _db_connect(){
+    my $dsn = 'DBI:mysql:waao';
+    my $user = 'mysqlweb';
+    my $password = 'WaAoqzxe7h6yyHz';
+
+    my $dbh = DBI->connect($dsn,$user,$password,{RaiseError => 1, AutoCommit => 0});
+	
+	return $dbh;
+}
+

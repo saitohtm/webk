@@ -1,0 +1,24 @@
+#hd-main {
+    color: #FFF;
+    border: 3px solid #FCBFBE;
+    background: url(../img/header_background.gif) repeat-x #CE0F0C;
+}
+#bd .navi h3 {
+    color: #FFF;
+    background: #CE0F0C;
+    border: 3px solid #FCBFBE;
+}
+#bd .cont div.sample span.lbl {
+    font-size: 0.7em;
+    width: 120px;
+}
+#bd .cont div.sample select {
+    width: 270px;
+}
+#bd .sample table {
+    font-size: 0.9em;
+}
+#bd .cont h3 {
+    color: #CE0F0C;
+    border-left: 5px solid #CE0F0C;
+}

@@ -1,0 +1,73 @@
+<link rel="stylesheet" href="/jquery.mobile-1.3.0.min.css" />
+<link rel="stylesheet" href="/css/smartphone.css">
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/js/jquery-1.7.2.min.js"><\/script>')</script>
+<script type="text/javascript" src="/js/jquery.autopager-1.0.0.min.js"></script>
+
+<script src="/js/jquery.easing.1.3.js" type="text/javascript" charset="UTF-8"></script>
+<script src="/js/jquery.vgrid.min.js" type="text/javascript" charset="UTF-8"></script>
+
+<script type="text/javascript">
+//<![CDATA[
+$(function(){
+	var hsort_flg = false;
+
+	//setup
+	var vg = $("#grid-content").vgrid({
+		easing: "easeOutQuint",
+		useLoadImageEvent: true,
+		useFontSizeListener: true,
+		time: 400,
+		delay: 20,
+		fadeIn: {
+			time: 500,
+			delay: 50
+		},
+		onStart: function(){
+			$("#message1")
+				.css("visibility", "visible")
+				.fadeOut("slow",function(){
+					$(this).show().css("visibility", "hidden");
+				});
+		},
+		onFinish: function(){
+			$("#message2")
+				.css("visibility", "visible")
+				.fadeOut("slow",function(){
+					$(this).show().css("visibility", "hidden");
+				});
+		}
+	});
+	$(window).load(function(e){
+		vg.vgrefresh();
+	});
+
+});
+//]]>
+</script>
+<script type="text/javascript" src="/js/my.js"></script>
+<script type="text/javascript" src="/js/ajaxoff.js"></script>
+<script type="text/javascript" src="/jquery.mobile-1.3.0.min.js"></script>
+<script src="/js/jquery.socialbutton-1.9.0.js" type="text/javascript" charset="UTF-8"></script>
+
+<script>
+    $(function(){
+        var maxpage = 50;
+        $.autopager({
+            content: '.loadbox',
+            start: function(current, next){
+                $('#loading').css('display', 'block'); 
+                $('#nextload').css('display', 'none'); 
+            },
+            load: function(current, next){
+                $('#loading').css('display', 'none');   
+                $('#nextload').css('display', 'block'); 
+                if(current.page >= maxpage) $('#nextload').hide();
+            }
+        });
+    });
+</script>
+
+</head>
+<body>

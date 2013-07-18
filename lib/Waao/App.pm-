@@ -1,0 +1,1038 @@
+package Waao::App;
+
+use lib qw(/var/www/vhosts/waao.jp/etc/lib /var/www/vhosts/waao.jp/lib/Waao);
+use PageAnalyze;
+use DataController;
+
+use DBI;
+use CGI;
+use Cache::Memcached;
+use Waao::Api;
+use XML::Simple;
+use LWP::Simple;
+use Jcode;
+use CGI qw( escape );
+use Date::Simple;
+
+sub dispatch_press(){
+	my $self = shift;
+
+	if($self->{cgi}->param('email')){
+		&_press($self);
+	}else{
+		&_press_top($self);
+	}
+
+	return;
+}
+
+sub _press(){
+	my $self = shift;
+
+	my $html;
+	$html = &_load_tmpl("press_end.html");
+	$html = &_parts_set($html);
+	my $date = Date::Simple->new();
+	my $ymd = $date->format('%Y/%m/%d');
+
+
+eval{
+
+	my $sth = $self->{dbi}->prepare(qq{insert into app_press (`pressdate`,`title`,`mainbody`,`facebook`,`email`,`company`,`type`) values(?,?,?,?,?,?,?)});
+	$sth->execute($ymd,
+	              $self->{cgi}->param('title'),
+	              $self->{cgi}->param('mainbody'),
+	              $self->{cgi}->param('url'),
+	              $self->{cgi}->param('email'),
+	              $self->{cgi}->param('company'),
+	              $self->{cgi}->param('newstype')
+	              );
+};
+
+
+if($self->{cgi}->param('url')){
+
+eval{
+	my $sth = $self->{dbi}->prepare(qq{insert into app_tmp_url (`url`) values(?)});
+	$sth->execute($self->{cgi}->param('url'));
+};
+
+}	
+
+# ニュースリリース登録
+
+print << "END_OF_HTML";
+Content-type: text/html; charset=shift_jis
+
+$html
+END_OF_HTML
+
+	return;
+}
+
+sub _press_top(){
+	my $self = shift;
+
+	my $html;
+	$html = &_load_tmpl("press.html");
+	$html = &_parts_set($html);
+
+print << "END_OF_HTML";
+Content-type: text/html; charset=shift_jis
+
+$html
+END_OF_HTML
+
+	return;
+}
+
+
+sub dispatch_search(){
+	my $self = shift;
+
+	my $html;
+	$html = &_load_tmpl("search.html");
+	$html = &_parts_set($html);
+	my $keyword = $self->{cgi}->param('q');
+	$html =~s/<!--KEYWORD-->/$keyword/g;
+
+eval{
+	my $sth = $self->{dbi}->prepare(qq{insert into app_keyword (`app_keyword`) values(?)});
+	$sth->execute($keyword);
+};
+
+	# item
+	my $list;
+	my $sth = $self->{dbi}->prepare(qq{select id, img, dl_url, appname, ex_str, device, category, developer, price, sale, rdate, eva, review, rank, saledate from app where appname like "%$keyword%" and device <=5 order by review desc limit 100 });
+	$sth->execute();
+	my $no = 0;
+	while(my @row = $sth->fetchrow_array) {
+		$no++;
+		if($type_free eq 1){
+			next if($row[9] != 0);
+		}
+		$list .= qq{<tr>\n};
+		$list .= qq{<td><b>$no</b></td>\n};
+		$list .= qq{<td width=10%><span class="rounded-img" style="background: url($row[1]) no-repeat center center; width: 100px; height: 100px;"><a href="/app-$row[0]/" target="_blank"><img src="$row[1]" style="opacity: 0;" alt="無料アプリ $row[2]" /></span></td>\n};
+		my $star_str = &_star_img($row[11]);
+		my $review = qq{未評価};
+		$review = $row[12] if($row[12]);
+
+		my $price_str;
+		if($type_free eq 2){
+			if($row[8] > $row[9]){
+				if($row[9] eq 0){
+					$price_str .= qq{<S>$row[8]</S> → <font color="#FF0000"><b>無料!!</b></font>};
+				}else{
+					$price_str .= qq{<S>$row[8]</S> → <font color="#FF0000"><b>$row[9]</b></font>};
+				}
+			}else{
+				$price_str .= qq{<b>$row[8]</b>};
+			}
+		}elsif($type_free){
+			$price_str .= qq{<S>$row[8]</S> → <font color="#FF0000"><b>無料!!</b></font>};
+		}else{
+			$price_str .= qq{<font color="#FF0000"><b>無料!!</b></font>};
+		}
+
+		my $facebook = qq{<a href="/app-$row[0]/" target="_blank"><img src="/img/facebook_like.png" width="80"></a>};
+
+		$list .= qq{<td width=20%><a href="/app-$row[0]/">$row[3]</a><br />$star_str（$review）<br />$price_str<br />$row[10]</td>\n};
+		my $exp_short = substr($row[4],0, 200);
+
+		$list .= qq{<td><div class="well">$exp_short</div></td>\n};
+		$list .= qq{<td>$facebook</td>\n};
+		$list .= qq{</tr>\n};
+	}
+
+	$html =~s/<!--LIST-->/$list/g;
+
+
+print << "END_OF_HTML";
+Content-type: text/html; charset=shift_jis
+
+$html
+END_OF_HTML
+
+	return;
+}
+
+sub dispatch_regist(){
+	my $self = shift;
+
+	if($self->{cgi}->param('url')){
+		&_regist($self);
+	}else{
+		&_regist_top($self);
+	}
+
+	return;
+}
+
+sub _regist(){
+	my $self = shift;
+
+	my $html;
+	$html = &_load_tmpl("regist_end.html");
+	$html = &_parts_set($html);
+	
+	my $dl_url = $self->{cgi}->param('url');
+	
+	if($dl_url=~/android|play\.google/){
+		&_android($self,$dl_url);
+	}else{
+		&_iphone($self,$dl_url);
+	}
+
+eval{
+	my $sth = $self->{dbi}->prepare(qq{insert into app_tmp_url (`url`) values(?)});
+	$sth->execute($self->{cgi}->param('url'));
+};
+	
+print << "END_OF_HTML";
+Content-type: text/html; charset=shift_jis
+
+$html
+END_OF_HTML
+
+	return;
+}
+
+
+sub _regist_top(){
+	my $self = shift;
+
+	my $html;
+	$html = &_load_tmpl("regist.html");
+	$html = &_parts_set($html);
+
+print << "END_OF_HTML";
+Content-type: text/html; charset=shift_jis
+
+$html
+END_OF_HTML
+
+	return;
+}
+
+sub _android(){
+	my $self = shift;
+	my $dl_url = shift;
+
+	my $data = &googleplay_page($dl_url);
+
+	# 存在確認
+	my $exist_flag;
+	my $sth = $self->{dbi}->prepare(qq{SELECT id FROM app where android_id = ? });
+	$sth->execute($data->{android_id});
+	while(my @row = $sth->fetchrow_array) {
+		$exist_flag = 1;
+		&_android_upd($self,$row[0],$data);
+	}
+	
+	unless($exist_flag){
+		&_android_ins($self,$data);
+	}
+	
+	return;
+}
+
+sub _android_upd(){
+	my $self = shift;
+	my $id = shift;
+	my $data = shift;
+
+eval{
+my $sth = $self->{dbi}->prepare(qq{update app set img=?,dl_url=?,appname=?,ex_str=?,device=?,category=?,developer=?,lang_flag=?,rdate=?,eva=?,review=?,price=?,updated = NOW() where id = ? limit 1} );
+$sth->execute($data->{icon},$data->{dl_url},$data->{name},$data->{detail},4,$data->{category_id},$data->{developer_name},$data->{lang},$data->{rdate} ,$data->{rateno},$data->{revcnt},$data->{sale_price},$id);
+};
+eval{
+my $sth2 = $self->{dbi}->prepare(qq{insert into app_info ( `app_id`,`sshot1`,`sshot2`,`sshot3`,`sshot4`,`sshot5`,`exp` ) values (?,?,?,?,?,?,?)} );
+$sth2->execute($id,$data->{shot1},$data->{shot2},$data->{shot3},$data->{shot4},$data->{shot5},$data->{detail});
+};
+	
+	return;
+}
+
+sub _android_ins(){
+	my $self = shift;
+	my $data = shift;
+
+eval{
+my $sth2 = $self->{dbi}->prepare(qq{insert into app ( `img`,`dl_url`,`appname`,`ex_str`,`device`,`category`,`developer`,`lang_flag` ) values (?,?,?,?,?,?,?,?)} );
+$sth2->execute($data->{icon},$data->{dl_url},$data->{name},$data->{detail},4,$data->{category_id},$data->{developer_name},$data->{lang});
+};
+
+my $sth2 = $self->{dbi}->prepare(qq{SELECT id FROM app where dl_url = ? limit 1 });
+$sth2->execute($data->{dl_url});
+while(my @row = $sth2->fetchrow_array) {
+	$app_id = $row[0];
+}
+
+eval{
+my $sth2 = $self->{dbi}->prepare(qq{update app set rdate=?,eva=?,review=?,price=? where id = ? });
+$sth2->execute($data->{rdate} ,$data->{rateno},$data->{revcnt},$data->{sale_price},$app_id);
+my $sth2 = $self->{dbi}->prepare(qq{insert into app_info ( `app_id`,`sshot1`,`sshot2`,`sshot3`,`sshot4`,`sshot5`,`exp` ) values (?,?,?,?,?,?,?)} );
+$sth2->execute($app_id,$data->{shot1},$data->{shot2},$data->{shot3},$data->{shot4},$data->{shot5},$data->{detail});
+};
+	return;
+}
+
+
+
+sub _iphone(){
+	my $self = shift;
+	my $dl_url = shift;
+
+	my $data = &itunes_page_lookup($dl_url);
+	&app_data($self->{dbi}, $data);
+	return;
+
+	# 存在確認
+	my $exist_flag;
+	my $sth = $self->{dbi}->prepare(qq{SELECT id FROM app where iphone_id = ? });
+	$sth->execute($data->{iphone_id});
+	while(my @row = $sth->fetchrow_array) {
+		$exist_flag = 1;
+		&_iphone_upd($self,$row[0],$data);
+	}
+	
+	unless($exist_flag){
+		&_iphone_ins($self,$data);
+	}
+	
+	return;
+}
+
+sub _iphone_upd(){
+	my $self = shift;
+	my $id = shift;
+	my $data = shift;
+
+my $sth;
+
+my $sth = $self->{dbi}->prepare(qq{update app set img=?,dl_url=?,appname=? ,updated = now() where id = ? } );
+$sth->execute($data->{icon},$data->{dl_url},$data->{name},$id);
+$sth = $self->{dbi}->prepare(qq{update app set ex_str=? where id = ? } );
+$sth->execute($data->{detail},$id);
+
+$sth = $self->{dbi}->prepare(qq{update app set device=?,category=?,developer=?,lang_flag=?,iphone_id=?,rdate=?,eva=?,review=?,price=? where id = ? } );
+$sth->execute(2,$data->{category_id},$data->{developer_name},$data->{lang},$data->{iphone_id},$data->{rdate} ,$data->{rateno},$data->{revcnt},$data->{sale_price},$id);
+
+my $sth2;
+$sth2 = $self->{dbi}->prepare(qq{update app set app_id=?,sshot1=?,sshot2=?,sshot3=?,sshot4=?,sshot5=?,`exp`=?} );
+$sth2->execute($id,$data->{shot1},$data->{shot2},$data->{shot3},$data->{shot4},$data->{shot5},$data->{detail});
+
+	return;
+}
+
+sub _iphone_ins(){
+	my $self = shift;
+	my $data = shift;
+	
+eval{
+my $sth = $self->{dbi}->prepare(qq{insert into app ( `img`,`dl_url`,`appname`,`ex_str`,`device`,`category`,`developer`,`lang_flag`,`iphone_id` ) values (?,?,?,?,?,?,?,?,?)} );
+$sth->execute($data->{icon},$data->{dl_url},$data->{name},$data->{detail},2,$data->{category_id},$data->{developer_name},$data->{lang},$data->{iphone_id});
+};
+
+my $sth = $self->{dbi}->prepare(qq{SELECT id FROM app where dl_url = ? limit 1 });
+$sth->execute($data->{dl_url});
+while(my @row = $sth->fetchrow_array) {
+	$app_id = $row[0];
+}
+
+eval{
+my $sth2 = $self->{dbi}->prepare(qq{update app set rdate=?,eva=?,review=?,price=? where id = ? });
+$sth2->execute($data->{rdate} ,$data->{rateno},$data->{revcnt},$data->{sale_price},$app_id);
+my $sth2 = $self->{dbi}->prepare(qq{insert into app_info ( `app_id`,`sshot1`,`sshot2`,`sshot3`,`sshot4`,`sshot5`,`exp` ) values (?,?,?,?,?,?,?)} );
+$sth2->execute($app_id,$data->{shot1},$data->{shot2},$data->{shot3},$data->{shot4},$data->{shot5},$data->{detail});
+};
+	return;
+}
+
+sub dispatch(){
+	my $self = shift;
+
+	# 切り替え
+	if($self->{cgi}->param('iphoneid')){
+		&_detail_dsp_iphone($self);
+		return;
+	}
+
+	my $appid = $self->{cgi}->param('id');
+	# 更新
+	if($self->{cgi}->param('upd')){
+		my $sth = $self->{dbi}->prepare(qq{select dl_url,device from app where id = ? limit 1});
+		$sth->execute($appid);
+		while(my @row = $sth->fetchrow_array) {
+			if($row[1] >= 4){
+				&_android($self,$row[0]);
+			}else{
+				&_iphone($self,$row[0]);
+			}
+		}
+	}
+
+	# item
+	my ($img, $dl_url, $appname, $ex_str, $device, $category, $developer, $price, $sale, $cnt, $lang_flag, $rdate, $eva, $review, $dl_mini, $dl_max, $rank, $saledate);
+	my $sth = $self->{dbi}->prepare(qq{select img, dl_url, appname, ex_str, device, category, developer, price, sale, cnt, lang_flag, rdate, eva, review, dl_mini, dl_max, rank, saledate from app where id = ? limit 1});
+	$sth->execute($appid);
+	while(my @row = $sth->fetchrow_array) {
+		($img, $dl_url, $appname, $ex_str, $device, $category, $developer, $price, $sale, $cnt, $lang_flag, $rdate, $eva, $review, $dl_mini, $dl_max, $rank, $saledate) = @row;
+	}
+
+	# カテゴリ(iphone/android)
+	my ($c_name, $c_category, $c_cnt, $c_flag, $game, $c_key_value, $c_img);
+	my $sth = $self->{dbi}->prepare(qq{select name, category, cnt, flag, game, key_value, img from app_category where id = ? limit 1});
+	$sth->execute($category);
+	while(my @row = $sth->fetchrow_array) {
+		($c_name, $c_category, $c_cnt, $c_flag, $game, $c_key_value, $c_img) = @row;
+	}
+
+	# アプリ本体
+	my ($sshot1, $sshot2, $sshot3, $sshot4, $sshot5,$exp_long);
+	my $sth = $self->{dbi}->prepare(qq{select sshot1,sshot2,sshot3,sshot4,sshot5,exp from app_info where app_id = ? limit 1});
+	$sth->execute($appid);
+	while(my @row = $sth->fetchrow_array) {
+		($sshot1, $sshot2, $sshot3, $sshot4, $sshot5,$exp_long) = @row;
+	}
+
+	my $html;
+	if($device < 4){
+		$html = &_load_tmpl("app_iphone.html");
+	}else{
+		$html = &_load_tmpl("app_android.html");
+	}
+
+	# 画面ショット
+	my $shotimgs;
+	$shotimgs .= qq{<li><a href="javascript:void(0);"><img src="$sshot1" alt="$appname" /><img src="$sshot1" alt="$appname" class="preview" /></a></li>} if($sshot1);
+	$shotimgs .= qq{<li><a href="javascript:void(0);"><img src="$sshot2" alt="$appname" /><img src="$sshot2" alt="$appname" class="preview" /></a></li>} if($sshot2);
+	$shotimgs .= qq{<li><a href="javascript:void(0);"><img src="$sshot3" alt="$appname" /><img src="$sshot3" alt="$appname" class="preview" /></a></li>} if($sshot3);
+	$shotimgs .= qq{<li><a href="javascript:void(0);"><img src="$sshot4" alt="$appname" /><img src="$sshot4" alt="$appname" class="preview" /></a></li>} if($sshot4);
+	$shotimgs .= qq{<li><a href="javascript:void(0);"><img src="$sshot5" alt="$appname" /><img src="$sshot5" alt="$appname" class="preview" /></a></li>} if($sshot5);
+	$html =~s/<!--SHOTIMGS-->/$shotimgs/g;
+
+	my $shotimgs_full;
+	$shotimgs_full .= qq{<form action="/app.htm" method="post"><input type="hidden" name="id" value="$appid"><input type="hidden" name="upd" value="1"><input type="submit" value="最新の情報で更新する"></form><br />};
+	$shotimgs_full .= qq{<img src="$sshot1" alt="$appname"> } if($sshot1);
+	$shotimgs_full .= qq{<img src="$sshot2" alt="$appname"><br /> } if($sshot2);
+	$shotimgs_full .= qq{<img src="$sshot3" alt="$appname"> } if($sshot3);
+	$shotimgs_full .= qq{<img src="$sshot4" alt="$appname"><br /> } if($sshot4);
+	$shotimgs_full .= qq{<img src="$sshot5" alt="$appname"> } if($sshot5);
+	$html =~s/<!--SHOTIMGS_FULL-->/$shotimgs_full/g;
+
+	$eva=0 unless($eva);
+	my $star_str = &_star_img($eva);
+
+	$html = &_parts_set($html);
+
+	$ex_str = substr($ex_str,0,300);
+
+	$img =~s/175x175/100x100/g;
+	$html =~s/<!--IMG-->/$img/g;
+	$html =~s/<!--STAR-->/$star_str/g;
+	$html =~s/<!--VAL-->/$review/g;
+	$html =~s/<!--C_NAME-->/$c_name/g;
+	$html =~s/<!--CATEGORY-->/$category/g;
+	$html =~s/<!--DL_URL-->/$dl_url/g;
+	$html =~s/<!--APPNAME-->/$appname/g;
+	$html =~s/<!--EX_STR-->/$ex_str/g;
+	$html =~s/<!--EXP_LONG-->/$exp_long/g;
+	$html =~s/<!--DEVELOPER-->/$developer/g;
+
+	# 価格
+	if($price == 0){
+		$sale= "無料" if($sale==0);
+		$price=qq{<font color="#FF0000">$sale</font>};
+	}if($price > $sale){
+		$sale= "無料" if($sale==0);
+		$price=qq{<S>$price</S> → <font color="#FF0000">$sale</font>};
+	}else{
+		$price=qq{<font color="#FF0000">$price</font>};
+	}
+	$html =~s/<!--PRICE-->/$price/g;
+	$html =~s/<!--RDATE-->/$rdate/g;
+	$html =~s/<!--EVA-->/$eva/g;
+	$html =~s/<!--REVIEW-->/$review/g;
+	$html =~s/<!--DL_MINI-->/$dl_mini/g;
+	$html =~s/<!--DL_MAX->/$dl_max/g;
+	$html =~s/<!--RANK->/$rank/g;
+
+	# レコメンド
+	my $list = &_recomment($self,$category);
+	$html =~s/<!--LIST-->/$list/g;
+print << "END_OF_HTML";
+Content-type: text/html; charset=shift_jis
+
+$html
+END_OF_HTML
+
+	return;
+}
+
+sub _recomment(){
+	my $self = shift;
+	my $category_id = shift;
+	
+	my $startno;
+	my $list;
+	my $order_str = qq{ order by eva desc };
+	my $sth = $self->{dbi}->prepare(qq{select id, img, dl_url, appname, ex_str, device, category, developer, price, sale, rdate, eva, review, rank, saledate from app where category = ? $order_str limit 10 });
+	$sth->execute($category_id);
+	$startno = 0 unless($startno);
+	my $no = $startno;
+	while(my @row = $sth->fetchrow_array) {
+		$no++;
+		if($type_free eq 1){
+			next if($row[9] != 0);
+		}
+		my $img = $row[1];
+		$img =~s/175x175/100x100/g;
+		$list .= qq{<tr>\n};
+		$list .= qq{<td><b>$no</b></td>\n};
+		$list .= qq{<td width=10%><span class="rounded-img" style="background: url($img) no-repeat center center; width: 100px; height: 100px;"><a href="/app-$row[0]/" target="_blank"><img src="$row[1]" style="opacity: 0;" alt="無料アプリ $row[2]" /></span></td>\n};
+		my $star_str = &_star_img($row[11]);
+		my $review = qq{未評価};
+		$review = $row[12] if($row[12]);
+
+		my $price_str;
+		if($type_free eq 2){
+			if($row[8] > $row[9]){
+				if($row[8] eq 0){
+					$price_str .= qq{<font color="#FF0000"><b>無料!!</b></font>};
+				}else{
+					$price_str .= qq{<S>$row[8]</S> → <font color="#FF0000"><b>$row[9]</b></font>};
+				}
+			}else{
+				$price_str .= qq{<b>$row[8]</b>};
+			}
+		}elsif($type_free){
+			$price_str .= qq{<S>$row[8]</S> → <font color="#FF0000"><b>無料!!</b></font>};
+		}else{
+			$price_str .= qq{<font color="#FF0000"><b>無料!!</b></font>};
+		}
+
+#		my $facebook = qq{<div class="fb-like" data-href="http://applease.info/app-$row[0]/" data-send="false" data-layout="button_count" data-width="50" data-show-faces="false" data-action="recommend" data-font="lucida grande"></div>};
+#		my $twitter = qq{<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://applease.info/app-$row[0]/" data-text="イイ！アプリ:$row[3]" data-count="none" data-lang="ja">ツイート</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>};
+
+		my $facebook = qq{<a href="/app-$row[0]/" target="_blank"><img src="/img/facebook_like.png" width="80"></a>};
+
+		$list .= qq{<td width=20%><a href="/app-$row[0]/">$row[3]</a><br />$star_str（$review）<br />$price_str<br />$row[10]</td>\n};
+		my $exp_short = substr($row[4],0, 200);
+
+		$list .= qq{<td><div class="well">$exp_short</div></td>\n};
+		$list .= qq{<td>$facebook</td>\n};
+		$list .= qq{</tr>\n};
+	}
+
+	return $list;
+}
+
+sub _parts_set(){
+	my $html = shift;
+
+	# meta
+	my $meta = &_load_tmpl("meta.html");
+	# header
+	my $header = &_load_tmpl("header.html");
+	# footer
+	my $footer = &_load_tmpl("footer.html");
+	# slider
+	my $side_free = &_load_tmpl("side_free.html");
+	$html =~s/<!--SIDE_FREE-->/$side_free/g;
+	my $catelist = &_load_tmpl("cate_list.html");
+	$html =~s/<!--CATELIST-->/$catelist/g;
+
+	$html =~s/<!--META-->/$meta/g;
+	$html =~s/<!--HEADER-->/$header/g;
+	$html =~s/<!--FOOTER-->/$footer/g;
+
+	return $html;
+}
+
+sub new(){
+	my $class = shift;
+	my $q = new CGI;
+
+	my $self={
+			'mem' => &_mem_connect(),
+			'dbi' => &_db_connect(),
+			'cgi' => $q
+			};
+	
+	return bless $self, $class;
+}
+
+# memcached connect
+sub _mem_connect(){
+
+	my $memd = new Cache::Memcached {
+    'servers' => [ "localhost:11211" ],
+    'debug' => 0,
+    'compress_threshold' => 1_000,
+	};
+
+	return $memd;
+}
+
+# db connect
+sub _db_connect(){
+    my $dsn = 'DBI:mysql:waao';
+    my $user = 'mysqlweb';
+    my $password = 'WaAoqzxe7h6yyHz';
+
+    my $dbh = DBI->connect($dsn,$user,$password,{RaiseError => 0, AutoCommit => 1, PrintError => 0});
+	
+	return $dbh;
+}
+
+sub _load_tmpl(){
+	my $tmpl = shift;
+	
+my $file = qq{/var/www/vhosts/waao.jp/etc/app/tmpl/$tmpl};
+my $fh;
+my $filedata;
+open( $fh, "<", $file );
+while( my $line = readline $fh ){ 
+	$filedata .= $line;
+}
+close ( $fh );
+
+	return $filedata;
+}
+
+sub price_dsp(){
+	my $price = shift;
+
+	1 while $price =~ s/(.*\d)(\d\d\d)/$1,$2/;	
+
+	return $price;
+}
+
+
+sub _star_img(){
+	my $point = shift;
+	
+	my $str;
+	$str = qq{<img src="/img/star-off.png"><img src="/img/star-off.png"><img src="/img/star-off.png"><img src="/img/star-off.png"><img src="/img/star-off.png">};
+	$str = qq{<img src="/img/star-on.png"><img src="/img/star-on.png"><img src="/img/star-on.png"><img src="/img/star-on.png"><img src="/img/star-on.png">} if($point eq "5");
+	$str = qq{<img src="/img/star-on.png"><img src="/img/star-on.png"><img src="/img/star-on.png"><img src="/img/star-on.png"><img src="/img/star-half.png">} if($point eq "4.5");
+	$str = qq{<img src="/img/star-on.png"><img src="/img/star-on.png"><img src="/img/star-on.png"><img src="/img/star-on.png"><img src="/img/star-off.png">} if($point eq "4");
+	$str = qq{<img src="/img/star-on.png"><img src="/img/star-on.png"><img src="/img/star-on.png"><img src="/img/star-half.png"><img src="/img/star-off.png">} if($point eq "3.5");
+	$str = qq{<img src="/img/star-on.png"><img src="/img/star-on.png"><img src="/img/star-on.png"><img src="/img/star-off.png"><img src="/img/star-off.png">} if($point eq "3");
+	$str = qq{<img src="/img/star-on.png"><img src="/img/star-on.png"><img src="/img/star-half.png"><img src="/img/star-off.png"><img src="/img/star-off.png">} if($point eq "2.5");
+	$str = qq{<img src="/img/star-on.png"><img src="/img/star-on.png"><img src="/img/star-off.png"><img src="/img/star-off.png"><img src="/img/star-off.png">} if($point eq "2");
+	$str = qq{<img src="/img/star-on.png"><img src="/img/star-half.png"><img src="/img/star-off.png"><img src="/img/star-off.png"><img src="/img/star-off.png">} if($point eq "1.5");
+	$str = qq{<img src="/img/star-on.png"><img src="/img/star-off.png"><img src="/img/star-off.png"><img src="/img/star-off.png"><img src="/img/star-off.png">} if($point eq "1");
+	$str = qq{<img src="/img/star-half.png"><img src="/img/star-off.png"><img src="/img/star-off.png"><img src="/img/star-off.png"><img src="/img/star-off.png">} if($point eq "0.5");
+	$str = qq{<img src="/img/star-off.png"><img src="/img/star-off.png"><img src="/img/star-off.png"><img src="/img/star-off.png"><img src="/img/star-off.png">} if($point eq "0");
+
+	return $str;
+}
+
+sub DESTROY{
+	my $self = shift;
+
+	$self->{db}->disconnect if($self->{db});
+
+	return;
+}
+
+sub dispatch_fmfm_regist(){
+	my $self = shift;
+
+	if($self->{cgi}->param('url')){
+		&_fmfm_check($self);
+	}elsif($self->{cgi}->param('title')){
+		&_fmfm_regist($self);
+	}else{
+		&_fmfm_regist_top($self);
+	}
+
+	return;
+}
+
+sub _fmfm_check(){
+	my $self = shift;
+	my $html;
+	$html = &_load_tmpl("fmfm_regist_check.html");
+	$html = &_parts_set($html);
+	
+	my $url = $self->{cgi}->param('url');
+
+	my $get_url = `GET "$url"`;
+	my @lines = split(/\n/,$get_url);
+my $title;
+	my $ut8;
+	foreach my $line (@lines){
+		if($line=~/utf-8/i){
+			$utf=1;
+		}
+		if($line=~/utf8/i){
+			$utf=1;
+		}
+		if($line=~/(.*)title>(.*)<\/title(.*)/i){
+			$title = $2;
+			if($utf){
+				$title = Jcode->new($title, 'utf8')->sjis;
+			}
+		}
+	}
+	$html =~s/<!--URL-->/$url/g;
+	$html =~s/<!--TITLE-->/$title/g;
+
+print << "END_OF_HTML";
+Content-type: text/html; charset=shift_jis
+
+$html
+END_OF_HTML
+
+	return;
+}
+
+sub _fmfm_regist(){
+	my $self = shift;
+
+	my $html;
+	$html = &_load_tmpl("fmfm_regist_end.html");
+	$html = &_parts_set($html);
+	
+	my $date = Date::Simple->new();
+	my $ymd = $date->format('%Y/%m/%d');
+
+eval{
+	my $sth = $self->{dbi}->prepare(qq{insert into fmfm (`url`,`title`,`type`,`date`,`moto`) values(?,?,?,?,?)});
+	$sth->execute($self->{cgi}->param('tmp_url'),$self->{cgi}->param('title'),$self->{cgi}->param('newstype'),$ymd,$self->{cgi}->param('moto'));
+};
+	
+print << "END_OF_HTML";
+Content-type: text/html; charset=shift_jis
+
+$html
+END_OF_HTML
+
+	return;
+}
+
+sub _fmfm_regist_top(){
+	my $self = shift;
+
+	my $html;
+	$html = &_load_tmpl("fmfm_regist.html");
+	$html = &_parts_set($html);
+
+print << "END_OF_HTML";
+Content-type: text/html; charset=shift_jis
+
+$html
+END_OF_HTML
+
+	return;
+}
+
+sub dispatch_rd(){
+	my $self = shift;
+
+	my $id = $self->{cgi}->param('id');
+
+	my $sth = $self->{dbi}->prepare(qq{select `url` from fmfm where id = ? });	 
+	$sth->execute($id);
+	my $url;
+	while(my @row = $sth->fetchrow_array) {
+		$url = $row[0];
+	}
+eval{
+	my $sth = $self->{dbi}->prepare(qq{update fmfm set cnt = cnt + 1 where id = ? limit 1 });	 
+	$sth->execute($id);
+};	
+	print qq{Location: $url\n\n};
+	return;
+}
+
+sub _socialnews_date(){
+	my $self = shift;
+	my $date = $self->{cgi}->param('date');
+	my $html;
+	$html = &_load_tmpl("socialnews_date.html");
+	$html = &_parts_set($html);
+
+	my $sth = $self->{dbi}->prepare(qq{select id,url,title,type,date,cnt from fmfm where type >= 5 and type < 10 and date = ? order by id desc });	 
+	$sth->execute($date);
+	my $list;
+	while(my @row = $sth->fetchrow_array) {
+		my $typename;
+		if($type eq 5){
+			$typename = qq{アプリ関連};
+		}elsif($type eq 6){
+			$typename = qq{ソーシャルゲーム関連};
+		}else{
+			$typename = qq{値下げセール関連};
+		}
+		$list .= qq{<tr>};
+		$list .= qq{<td>$row[2] <br /><a href="$row[1]" target="_blank" ref="nofollow">情報を見る</a></td>};
+		$list .= qq{<td>$typename</td>};
+		$list .= qq{<td>$row[4]</td>};
+		$list .= qq{<td>$row[5]</td>};
+		$list .= qq{</tr>};
+	}
+	$html =~s/<!--DATE-->/$date/g;
+	$html =~s/<!--LIST-->/$list/g;
+
+print << "END_OF_HTML";
+Content-type: text/html; charset=shift_jis
+
+$html
+END_OF_HTML
+
+	return;
+}
+
+sub _socialnews_list(){
+	my $self = shift;
+
+	my $html;
+	$html = &_load_tmpl("socialnews.html");
+	$html = &_parts_set($html);
+	my $page = 0;
+	$page = $self->{cgi}->param('page');
+	$page = 0 if($page <=0);
+	my $pagemax = 50;
+	my $start = 0 + ($pagemax * ($page - 1));
+
+	my $sth = $self->{dbi}->prepare(qq{select id,url,title,type,date,cnt from fmfm where type >= 5 and type < 10  order by id desc limit $start,$pagemax});	 
+	$sth->execute();
+	my $list;
+	while(my @row = $sth->fetchrow_array) {
+		my $typename;
+		if($type eq 5){
+			$typename = qq{アプリ関連};
+		}elsif($type eq 6){
+			$typename = qq{ソーシャルゲーム関連};
+		}else{
+			$typename = qq{値下げセール関連};
+		}
+		$list .= qq{<tr>};
+		$list .= qq{<td>$row[2] <br /><a href="$row[1]" target="_blank" ref="nofollow">情報を見る</a></td>};
+		$list .= qq{<td>$typename</td>};
+		my $date = $row[4];
+		$list .= qq{<td><a href="/app-topics$date/">$row[4]</a></td>};
+		$list .= qq{<td>$row[5]</td>};
+		$list .= qq{</tr>};
+	}
+	my $pager = &_pager($page,"apptopics");
+	$html =~s/<!--LIST-->/$list/g;
+	$html =~s/<!--PAGER-->/$pager/g;
+
+print << "END_OF_HTML";
+Content-type: text/html; charset=shift_jis
+
+$html
+END_OF_HTML
+
+	return;
+}
+
+sub dispatch_socialnews(){
+	my $self = shift;
+
+	if($self->{cgi}->param('date')){
+		&_socialnews_date($self);
+	}else{
+		&_socialnews_list($self);
+	}
+
+	return;
+}
+
+sub _pager(){
+	my $page = shift;
+	my $type = shift;
+	my $pagelist;
+
+	$pagelist .= qq{<div class="pagination">\n};
+	$pagelist .= qq{<ul>\n};
+	if($page == 1){
+	   	$pagelist .= qq{<li class="prev disabled"><a href="/$type-1/">&larr; Previous</a></li>\n};
+	}else{
+		my $preno = $page - 1;
+	   	$pagelist .= qq{<li class="prev"><a href="/$type-$preno/">&larr; Previous</a></li>\n};
+	}
+	my $pageno;
+	for(my $i=0; $i<10; $i++){
+		$pageno = $page + $i;
+		if($page eq $pageno){
+		    $pagelist .= qq{<li class="active"><a href="/$type-$pageno/">$pageno</a></li>\n};
+		}else{
+		    $pagelist .= qq{<li><a href="/$type-$pageno/">$pageno</a></li>\n};
+		}
+	}
+	$pageno++;
+	my $page_next = $page + 1;
+    $pagelist .= qq{<li class="next"><a href="/$type-$page_next/">Next &rarr;</a></li>\n};
+    $pagelist .= qq{</ul>\n};
+    $pagelist .= qq{</div>\n};
+
+	return $pagelist;
+}
+
+sub dispatch_review_regist(){
+	my $self = shift;
+
+	if($self->{cgi}->param('id')){
+		&_review_top($self);
+	}elsif($self->{cgi}->param('who')){
+		&_review($self);
+	}else{
+	}
+
+	return;
+}
+
+sub _review(){
+	my $self = shift;
+
+	my $html;
+	$html = &_load_tmpl("review_regist_end.html");
+	$html = &_parts_set($html);
+	my $date = Date::Simple->new();
+	my $ymd = $date->format('%Y/%m/%d');
+
+
+eval{
+
+	my $sth = $self->{dbi}->prepare(qq{insert into app_review (`a_id`,`who`,`mainbody`,`good`,`nickname`,`linkurl`) values(?,?,?,?,?,?)});
+	$sth->execute($self->{cgi}->param('a_id'),
+	              $self->{cgi}->param('who'),
+	              $self->{cgi}->param('mainbody'),
+	              $self->{cgi}->param('good'),
+	              $self->{cgi}->param('nickname'),
+	              $self->{cgi}->param('linkurl')
+	              );
+};
+
+
+if($self->{cgi}->param('url')){
+
+eval{
+	my $sth = $self->{dbi}->prepare(qq{insert into app_tmp_url (`url`) values(?)});
+	$sth->execute($self->{cgi}->param('url'));
+};
+
+}	
+
+
+print << "END_OF_HTML";
+Content-type: text/html; charset=shift_jis
+
+$html
+END_OF_HTML
+
+	return;
+}
+
+sub _review_top(){
+	my $self = shift;
+
+	my $html;
+	$html = &_load_tmpl("review_regist_check.html");
+	$html = &_parts_set($html);
+
+	my $list = qq{<table>};
+	my $sth = $self->{dbi}->prepare(qq{select id, img, dl_url, appname, ex_str, device, category, developer, price, sale, rdate, eva, review, rank, saledate from app where id = ? });
+	$sth->execute($self->{cgi}->param('id'));
+	my $no = $startno;
+	while(my @row = $sth->fetchrow_array) {
+		$list .= qq{<tr>\n};
+		$list .= qq{<td width=10%><span class="rounded-img" style="background: url($row[1]) no-repeat center center; width: 100px; height: 100px;"><a href="/app-$row[0]/" target="_blank"><img src="$row[1]" style="opacity: 0;" alt="無料アプリ $row[2]" /></span></td>\n};
+		$list .= qq{<td width=20%><a href="/app-$row[0]/">$row[3]</a><br />$row[10]</td>\n};
+		$list .= qq{<td><div class="well">$exp_short</div></td>\n};
+		$list .= qq{</tr>\n};
+	}
+	$list .= qq{</table>};
+
+	$html =~s/<!--LIST-->/$list/g;
+    my $id = $self->{cgi}->param('id');
+	$html =~s/<!--ID-->/$id/g;
+
+print << "END_OF_HTML";
+Content-type: text/html; charset=shift_jis
+
+$html
+END_OF_HTML
+
+	return;
+}
+
+sub _detail_dsp_iphone(){
+	my $self = shift;
+	my $iphoneid = $self->{cgi}->param('iphoneid');
+	if($self->{cgi}->param('upd')){
+		my $data = &itunes_page_lookup($iphoneid);
+		&app_data($self->{dbi}, $data);
+	}
+	
+	my @vals=(id,
+				    name,
+				    url,
+				    artistId,
+				    artistName,
+				    artistViewUrl,
+				    img60,
+				    img100,
+				    img512,
+				    genre_id,
+				    genre_name,
+				    price,
+				    formattedPrice,
+				    eva,
+				    evaCurrent,
+				    evacount,
+				    evacountCurrent,
+				    evaAdvisory,
+				    description,
+				    releaseDate,
+				    releaseNotes,
+				    languageCodes,
+				    currency,
+				    sellerName,
+				    sellerUrl,
+				    trackCensoredName,
+				    trackContentRating,
+				    appversion,
+				    supportedDevices,
+				    bundleId,
+				    features,
+				    fileSizeBytes,
+				    genreIds,
+				    genres);
+print << "END_OF_HTML";
+Content-type: text/html; charset=shift_jis
+
+END_OF_HTML
+
+	my $sql_str;
+	for(my $i=0;$i<100;$i++){
+		$sql_str .= $vals[$i]."," if($vals[$i]);
+		last unless($vals[$i]);
+	}
+	chop $sql_str;
+	my $sth = $self->{dbi}->prepare(qq{select $sql_str from app_iphone where id = ? limit 1});
+	$sth->execute($iphoneid);
+	my $app_data;
+	while(my @row = $sth->fetchrow_array) {
+		for(my $i=0;$i<100;$i++){
+			$app_data->{$vals[$i]} = $row[$i] if($row[$i]);
+			last unless($row[$i]);
+		}
+	}
+
+print "BBBBBBBBBBBBBBB $iphoneid";
+	
+foreach my $key ( sort keys( %{$app_data} ) ) {
+   print "$key : $app_data->{$key} \n "
+}
+	
+	return;
+}
+1;

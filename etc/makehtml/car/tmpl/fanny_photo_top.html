@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+<meta name="keyword" content="fanny,面白,ネタ,画像,photo,写真" xml:lang="ja" lang="ja"/>
+<meta name="description" content="面白ネタ好きの面白ネタ好きによる画像写真登録" xml:lang="ja" lang="ja"/>
+<title>fanny画像サイト登録画面</title>
+<!--METATOP-->
+<link href="/css/bootstrap-responsive.css" rel="stylesheet">
+<link href="/css/bootstrap-formhelpers.css" rel="stylesheet">
+<link href="/css/bootstrap-formhelpers-countries.flags.css" rel="stylesheet">
+<script src="/js/bootstrap-formhelpers-datepicker.en_US.js"></script>
+<script src="/js/bootstrap-formhelpers-datepicker.js"></script>
+</head>
+<body>
+<!--HEADER-->
+<!--AD_HEADER-->
+	
+fanny・レース関連の画像サイトの登録㌻:<br><br>
+
+<form action="/fanny_photo.htm" method="post">
+
+<font color="#002595">■</font>カテゴリ (※<a href="/fanny_photo.htm?cate_top=1">カテゴリ追加</a>) <br /><br />
+<select name="car_photo_category" required>
+<option value="">選択してください</option>
+<!--CATEGORY_LIST-->
+</select><br><br>
+
+<font color="#002595">■</font>URL<br /><br />
+<input name="car_url" type="text" placeholder="http://" required><br>
+
+<font color="#002595">■</font>キーワード<br /><br />
+<input name="car_keyword" type="text" placeholder="ポルシェ"><br>
+<input name="photo_site_ins" type="hidden" value=1><br>
+<button class="btn primary" type="submit">登録</button>
+</form>
+
+<!--FOOTER-->
+</body>
+</html>

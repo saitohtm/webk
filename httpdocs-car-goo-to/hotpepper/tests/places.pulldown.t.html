@@ -1,0 +1,664 @@
+<html>
+<head>
+<script type="text/javascript" src="../../recruit/tests/js/JSAN.js"></script>
+<script type="text/javascript" src="../../recruit/docs/js/jquery-1.2.3.js"></script>
+<script type="text/javascript" src="../../recruit.ui.js"></script>
+<script type="text/javascript" src="../../hotpepper.ui.js"></script>
+</head>
+<body>
+<div style="display:none">
+    <select id="hpp-large-service-area-sel"></select>
+    <select id="hpp-large-service-area-sel-2"></select>
+    <select id="hpp-large-service-area-sel-3"></select>
+    <select id="hpp-large-service-area-sel-4"></select>
+    <br />
+    <select id="hpp-service-area-sel"></select>
+    <select id="hpp-service-area-sel-2"></select>
+    <select id="hpp-service-area-sel-3"></select>
+    <select id="hpp-service-area-sel-4"></select>
+    <select id="hpp-service-area-sel-5"></select>
+    <br />
+    <select id="hpp-middle-area-sel"></select>
+    <select id="hpp-middle-area-sel-2"></select>
+    <select id="hpp-middle-area-sel-3"></select>
+    <select id="hpp-middle-area-sel-4"></select>
+    <select id="hpp-middle-area-sel-5"></select>
+    <br />
+    <select id="hpp-small-area-sel"></select>
+    <select id="hpp-small-area-sel-2"></select>
+    <select id="hpp-small-area-sel-3"></select>
+    <select id="hpp-small-area-sel-4"></select>
+    <select id="hpp-small-area-sel-5"></select>
+    <br />
+    <select id="combo-hpp-large-service-area-sel"></select>
+    <select id="combo-hpp-service-area-sel"></select>
+    <select id="combo-hpp-middle-area-sel"></select>
+    <select id="combo-hpp-small-area-sel"></select>
+    <br />
+    <select id="combo-hpp-large-service-area-sel-2"></select>
+    <select id="combo-hpp-service-area-sel-2"></select>
+    <br />
+    <select id="combo-hpp-service-area-sel-3"></select>
+    <select id="combo-hpp-middle-area-sel-3"></select>
+    <br />
+    <select id="combo-hpp-small-area-sel-4"></select>
+    <br />
+    <select id="combo-hpp-large-service-area-sel-5"></select>
+    <select id="combo-hpp-service-area-sel-5"></select>
+    <select id="combo-hpp-middle-area-sel-5"></select>
+    <select id="combo-hpp-small-area-sel-5"></select>
+    <br />
+    <select id="combo-hpp-large-service-area-sel-6"></select>
+    <select id="combo-hpp-service-area-sel-6"></select>
+    <select id="combo-hpp-middle-area-sel-6"></select>
+    <select id="combo-hpp-small-area-sel-6"></select>
+    <br />
+    <select id="combo-hpp-large-service-area-sel-7"></select>
+    <br />
+    <select id="combo-hpp-large-service-area-sel-8"></select>
+    <select id="combo-hpp-service-area-sel-8"></select>
+    <select id="combo-hpp-middle-area-sel-8"></select>
+    <br />
+</div>
+<pre id="test"><script type="text/javascript">
+
+JSAN.use( "Test.More" );
+plan({ tests: 166 });
+
+is( typeof HotPepper, 'function' );
+is( typeof HotPepper.UI, 'function' );
+is( typeof HotPepper.UI.Places, 'function' );
+
+// set API key
+Recruit.UI.key = 'a450fa593ee3f2a4';
+
+// 大サービスエリア - 正常系
+(function (){
+    // デフォルト
+    new HotPepper.UI.Places.LargeServiceArea.Pulldown({
+        on_update_hook: function ( success ){
+            ok( success, 'large service area - default' );
+            var elm = $( '#hpp-large-service-area-sel' );
+            var opt = elm.find( 'option' );
+            is( elm.length, 1 );
+            ok( opt.length > 1 );
+            is( $( opt[1] ).val(), 'SS10' );
+            is( $( opt[9] ).val(), 'SS90' );
+            is( $( opt[0] ).text(), '指定なし' );
+            is( $( opt[1] ).text(), '関東' );
+            is( $( opt[9] ).text(), '九州' );
+        }
+    });
+    // 初期値 val を指定
+    new HotPepper.UI.Places.LargeServiceArea.Pulldown({
+        id: 'hpp-large-service-area-sel-4',
+        val: 'SS70',
+        on_update_hook: function ( success ){
+            ok( success, 'large service area - val' );
+            var elm = $( '#hpp-large-service-area-sel-4' );
+            var opt = elm.find( 'option' );
+            is( elm.length, 1 );
+            ok( opt.length > 1 );
+            is( elm.val(), 'SS70' );
+        }
+    });
+})();
+
+// 大サービスエリア - 異常系
+(function (){
+    // APIキーを間違えたら
+    var ar = new HotPepper.UI.Places.LargeServiceArea.Pulldown({
+        id: 'hpp-large-service-area-sel-2',
+        on_update_hook: function ( success ){
+            ok( !success, 'large service area - wrong api key' );
+            ok( this.driver.errstr.match( /APIキー.+?正しくありません/ ) );
+            var elm = $( '#hpp-large-service-area-sel-2' );
+            var opt = elm.find( 'option' );
+            is( elm.length, 1 );
+            is( opt.length, 1 );
+        },
+        prm: {
+            key: 'wrong_key'
+        }
+    });
+})();
+// 大サービスエリア - 異常系 - プルダウン要素が存在しなかったら
+(function (){
+    var ar = new HotPepper.UI.Places.LargeServiceArea.Pulldown({
+        id: 'hpp-large-service-area-sel-xxx'
+    });
+    is( ar.is_error, true );
+    ok( ar.error_msg.match(
+        /HTML要素が見つかりません/ ), 'large-service-area - no elm' );
+})();
+
+// サービスエリア - 正常系
+(function (){
+    // デフォルト
+    new HotPepper.UI.Places.ServiceArea.Pulldown({
+        large_service_area: 'SS10',
+        on_update_hook: function ( success ){
+            ok( success, 'service area - default' );
+            var elm = $( '#hpp-service-area-sel' );
+            var opt = elm.find( 'option' );
+            is( elm.length, 1 );
+            ok( opt.length > 0 );
+            is( $( opt[0] ).text(), '指定なし' );
+            is( $( opt[1] ).val(), 'SA11' );
+            is( $( opt[1] ).text(), '東京' );
+            is( $( opt[7] ).val(), 'SA17' );
+            is( $( opt[7] ).text(), '群馬' );
+        }
+    });
+    // 初期値 val を指定 
+    new HotPepper.UI.Places.ServiceArea.Pulldown({
+        id: 'hpp-service-area-sel-5',
+        large_service_area: 'SS20',
+        val: 'SA25', // 奈良
+        on_update_hook: function ( success ){
+            ok( success, 'service area - val' );
+            var elm = $( '#hpp-service-area-sel-5' );
+            var opt = elm.find( 'option' );
+            is( elm.length, 1 );
+            ok( opt.length > 0 );
+            is( elm.val(), 'SA25' );
+        }
+    });
+})();
+
+// サービスエリア - 異常系
+(function (){
+    // APIキーを間違えたら
+    var ar = new HotPepper.UI.Places.ServiceArea.Pulldown({
+        id: 'hpp-service-area-sel-2',
+        large_service_area: 'SS10',
+        on_update_hook: function ( success ){
+            ok( !success, 'service area - wrong api key' );
+            ok( this.driver.errstr.match( /APIキー.+?正しくありません/ ) );
+            var elm = $( '#hpp-service-area-sel-2' );
+            var opt = elm.find( 'option' );
+            is( elm.length, 1 );
+            is( opt.length, 1 );
+        },
+        prm: {
+            key: 'wrong_key'
+        }
+    });
+})();
+// サービスエリア - 異常系 - プルダウン要素が存在しなかったら
+(function (){
+    var ar = new HotPepper.UI.Places.ServiceArea.Pulldown({
+        id: 'hpp-service-area-sel-xxx',
+        large_service_area: 'SS20'
+    });
+    is( ar.is_error, true );
+    ok( ar.error_msg.match(
+        /HTML要素が見つかりません/ ),
+        'service area - no elm' );
+})();
+// サービスエリア - 異常系 - 大サービスエリアを指定しなかったら
+(function (){
+    var ar = new HotPepper.UI.Places.ServiceArea.Pulldown({
+        id: 'hpp-service-area-sel-3'
+    });
+    var elm = $( '#hpp-service-area-sel-3' );
+    var opt = elm.find( 'option' );
+    is( elm.length, 1 );
+    is( opt.length, 1 );
+    ok( ar.is_error );
+    ok( ar.error_msg.match( /large_service_areaが指定されていません/ ) );
+})();
+
+// 中エリア - 正常系
+(function (){
+    // デフォルト
+    new HotPepper.UI.Places.MiddleArea.Pulldown({
+        service_area: 'SA11',
+        on_update_hook: function ( success ){
+            ok( success, 'middle area - default' );
+            var elm = $( '#hpp-middle-area-sel' );
+            var opt = elm.find( 'option' );
+            is( elm.length, 1 );
+            ok( opt.length > 0 );
+            is( $( opt[0] ).text(), '指定なし' );
+            is( $( opt[1] ).val(), 'Y005' );
+            is( $( opt[1] ).text(), '銀座・有楽町・新橋・築地・月島' );
+            is( $( opt[2] ).val(), 'Y006' );
+            is( $( opt[2] ).text(), '水道橋・飯田橋・市ヶ谷・四谷' );
+        }
+    });
+    // 初期値 val を指定 
+    new HotPepper.UI.Places.MiddleArea.Pulldown({
+        id: 'hpp-middle-area-sel-5',
+        service_area: 'SA21',
+        val: 'Y947', // 長浜・彦根・近江八幡
+        on_update_hook: function ( success ){
+            ok( success, 'middle area - val' );
+            var elm = $( '#hpp-middle-area-sel-5' );
+            var opt = elm.find( 'option' );
+            is( elm.length, 1 );
+            ok( opt.length > 0 );
+            is( elm.val(), 'Y947' );
+        }
+    });
+})();
+
+// 中エリア - 異常系
+(function (){
+    // APIキーを間違えたら
+    var ar = new HotPepper.UI.Places.MiddleArea.Pulldown({
+        id: 'hpp-middle-area-sel-2',
+        service_area: 'SA11',
+        on_update_hook: function ( success ){
+            ok( !success, 'middle area - wrong api key' );
+            ok( this.driver.errstr.match( /APIキー.+?正しくありません/ ) );
+            var elm = $( '#hpp-middle-area-sel-2' );
+            var opt = elm.find( 'option' );
+            is( elm.length, 1 );
+            is( opt.length, 1 );
+        },
+        prm: {
+            key: 'wrong_key'
+        }
+    });
+})();
+// 中エリア - 異常系 - プルダウン要素が存在しなかったら
+(function (){
+    var ar = new HotPepper.UI.Places.MiddleArea.Pulldown({
+        id: 'hpp-middle-area-sel-xxx',
+        service_area: 'SA11'
+    });
+    is( ar.is_error, true );
+    ok( ar.error_msg.match(
+        /HTML要素が見つかりません/ ),
+        'middle area - no elm' );
+})();
+// 中エリア - 異常系 - サービスエリアを指定しなかったら
+(function (){
+    var ar = new HotPepper.UI.Places.MiddleArea.Pulldown({
+        id: 'hpp-middle-area-sel-3'
+    });
+    var elm = $( '#hpp-middle-area-sel-3' );
+    var opt = elm.find( 'option' );
+    is( elm.length, 1 );
+    is( opt.length, 1 );
+    ok( ar.is_error );
+    ok( ar.error_msg.match( /service_areaが指定されていません/ ) );
+})();
+
+// 小エリア - 正常系
+(function (){
+    // デフォルト
+    new HotPepper.UI.Places.SmallArea.Pulldown({
+        middle_area: 'Y005',
+        on_update_hook: function ( success ){
+            ok( success, 'small area - default' );
+            var elm = $( '#hpp-small-area-sel' );
+            var opt = elm.find( 'option' );
+            is( elm.length, 1 );
+            ok( opt.length > 0 );
+            is( $( opt[0] ).text(), '指定なし' );
+            is( $( opt[1] ).val(), 'X005' );
+            is( $( opt[1] ).text(), '銀座1～4丁目' );
+            is( $( opt[2] ).val(), 'X010' );
+            is( $( opt[2] ).text(), '銀座5～8丁目' );
+        }
+    });
+    // 初期値 val を指定 
+    new HotPepper.UI.Places.SmallArea.Pulldown({
+        id: 'hpp-small-area-sel-5',
+        middle_area: 'Y005',
+        val: 'X025', // 東銀座・築地
+        on_update_hook: function ( success ){
+            ok( success, 'small area - val' );
+            var elm = $( '#hpp-small-area-sel-5' );
+            var opt = elm.find( 'option' );
+            is( elm.length, 1 );
+            ok( opt.length > 0 );
+            is( elm.val(), 'X025' );
+        }
+    });
+})();
+
+// 小エリア - 異常系
+(function (){
+    // APIキーを間違えたら
+    var ar = new HotPepper.UI.Places.SmallArea.Pulldown({
+        id: 'hpp-small-area-sel-2',
+        middle_area: 'Y005',
+        on_update_hook: function ( success ){
+            ok( !success, 'small area - wrong api key' );
+            ok( this.driver.errstr.match( /APIキー.+?正しくありません/ ) );
+            var elm = $( '#hpp-small-area-sel-2' );
+            var opt = elm.find( 'option' );
+            is( elm.length, 1 );
+            is( opt.length, 1 );
+        },
+        prm: {
+            key: 'wrong_key'
+        }
+    });
+})();
+// 小エリア - 異常系 - プルダウン要素が存在しなかったら
+(function (){
+    var ar = new HotPepper.UI.Places.SmallArea.Pulldown({
+        id: 'hpp-small-area-sel-xxx',
+        middle_area: 'Y005'
+    });
+    is( ar.is_error, true );
+    ok( ar.error_msg.match(
+        /HTML要素が見つかりません/ ),
+        'small area - no elm' );
+})();
+// 小エリア - 異常系 - 中エリアを指定しなかったら
+(function (){
+    var ar = new HotPepper.UI.Places.SmallArea.Pulldown({
+        id: 'hpp-small-area-sel-3'
+    });
+    var elm = $( '#hpp-small-area-sel-3' );
+    var opt = elm.find( 'option' );
+    is( elm.length, 1 );
+    is( opt.length, 1 );
+    ok( ar.is_error );
+    ok( ar.error_msg.match( /middle_areaが指定されていません/ ) );
+})();
+
+// コンビネーション - 基本形
+(function (){
+    var p = new HotPepper.UI.Places.Pulldown({
+        large_service_area: {
+            id: 'combo-hpp-large-service-area-sel',
+            on_update_hook: function ( success ){
+                ok( success, 'combo - basic' );
+                // プルダウン存在チェック
+                var elm_lsa = $( '#combo-hpp-large-service-area-sel' );
+                var opt_lsa = elm_lsa.find( 'option' );
+                is( elm_lsa.length, 1 );
+                ok( opt_lsa.length > 1 );
+                var elm_sa = $( '#combo-hpp-service-area-sel' );
+                var opt_sa = elm_sa.find( 'option' );
+                is( elm_sa.length, 1 );
+                is( opt_sa.length, 1, 'opt_sa.length' );
+                var elm_ma = $( '#combo-hpp-middle-area-sel' );
+                var opt_ma = elm_ma.find( 'option' );
+                is( elm_ma.length, 1 );
+                is( opt_ma.length, 1 );
+                var elm_sa = $( '#combo-hpp-small-area-sel' );
+                var opt_sa = elm_sa.find( 'option' );
+                is( elm_sa.length, 1 );
+                is( opt_sa.length, 1 );
+                // 連動更新チェック
+                p.service_area.driver.on_update_hook = function ( success ){
+                    ok( success, 'service area 連動更新' );
+                    var elm_sa = $( '#combo-hpp-service-area-sel' );
+                    var opt_sa = elm_sa.find( 'option' );
+                    cmpOK( opt_sa.length, '>', 2 );
+                    // サービスエリア更新
+                    p.middle_area.driver.on_update_hook = function ( success ){
+                        ok( success, 'middle area 連動更新' );
+                        var elm_ma = $( '#combo-hpp-middle-area-sel' );
+                        var opt_ma = elm_ma.find( 'option' );
+                        cmpOK( opt_ma.length, '>', 2 );
+                        p.small_area.driver.on_update_hook =
+                        function ( success ){
+                            ok( success, 'small area 連動更新' );
+                            var elm_sma = $( '#combo-hpp-small-area-sel' );
+                            var opt_sma = elm_sma.find( 'option' );
+                            cmpOK( opt_sma.length, '>', 2 );
+                        };
+                        p.middle_area.elm.val( 'Y005' ).change(); // ma更新
+                    };
+                    p.service_area.elm.val( 'SA11' ).change();    // sa更新
+                };
+                p.large_service_area.elm.val( 'SS10' ).change(); // lsa更新
+            }
+        },
+        service_area: { id: 'combo-hpp-service-area-sel' },
+        middle_area:  { id: 'combo-hpp-middle-area-sel' },
+        small_area:   { id: 'combo-hpp-small-area-sel' }
+    });
+})();
+
+// コンビネーション - lsa + sa + ma のみ
+(function (){
+    new HotPepper.UI.Places.Pulldown({
+        large_service_area: {
+            id: 'combo-hpp-large-service-area-sel-8',
+            on_update_hook: function ( success ){
+                ok( success, 'combo - lsa + sa + ma' );
+                // プルダウン存在チェック
+                var elm_lsa = $( '#combo-hpp-large-service-area-sel-8' );
+                var opt_lsa = elm_lsa.find( 'option' );
+                is( elm_lsa.length, 1 );
+                ok( opt_lsa.length > 1 );
+                var elm_sa = $( '#combo-hpp-service-area-sel-8' );
+                var opt_sa = elm_sa.find( 'option' );
+                is( elm_sa.length, 1 );
+                is( opt_sa.length, 1 );
+                var elm_ma = $( '#combo-hpp-middle-area-sel-8' );
+                var opt_ma = elm_ma.find( 'option' );
+                is( elm_ma.length, 1 );
+                is( opt_ma.length, 1 );
+            }
+        },
+        service_area: { id: 'combo-hpp-service-area-sel-8' },
+        middle_area:  { id: 'combo-hpp-middle-area-sel-8' },
+        small_area:   { id: 'combo-hpp-small-area-sel-8' }
+    });
+})();
+
+// コンビネーション - lsa + sa のみ
+(function (){
+    new HotPepper.UI.Places.Pulldown({
+        large_service_area: {
+            id: 'combo-hpp-large-service-area-sel-2',
+            on_update_hook: function ( success ){
+                ok( success, 'combo - lsa + sa' );
+                // プルダウン存在チェック
+                var elm_lsa = $( '#combo-hpp-large-service-area-sel-2' );
+                var opt_lsa = elm_lsa.find( 'option' );
+                is( elm_lsa.length, 1 );
+                ok( opt_lsa.length > 1 );
+                var elm_sa = $( '#combo-hpp-service-area-sel-2' );
+                var opt_sa = elm_sa.find( 'option' );
+                is( elm_sa.length, 1 );
+                is( opt_sa.length, 1 );
+            }
+        },
+        service_area: { id: 'combo-hpp-service-area-sel-2' },
+        middle_area:  { id: 'combo-hpp-middle-area-sel-2' },
+        small_area:   { id: 'combo-hpp-small-area-sel-2' }
+    });
+})();
+
+// コンビネーション - sa + ma のみ
+(function (){
+    new HotPepper.UI.Places.Pulldown({
+        large_service_area: { id: 'combo-hpp-large-service-area-sel-3' },
+        service_area: {
+            id: 'combo-hpp-service-area-sel-3',
+            large_service_area: 'SS10',
+            on_update_hook: function ( success ){
+                ok( success, 'combo - service area + middle area' );
+                // プルダウン存在チェック
+                var elm_sa = $( '#combo-hpp-service-area-sel-3' );
+                var opt_sa = elm_sa.find( 'option' );
+                is( elm_sa.length, 1 );
+                cmpOK( opt_sa.length, '>', 1 );
+                var elm_ma = $( '#combo-hpp-middle-area-sel-3' );
+                var opt_ma = elm_ma.find( 'option' );
+                is( elm_ma.length, 1 );
+                cmpOK( opt_ma.length, '=', 1 );
+            }
+        },
+        middle_area: { id: 'combo-hpp-middle-area-sel-3' }
+    });
+})();
+
+// コンビネーション - 単品利用 (small area)
+(function (){
+    new HotPepper.UI.Places.Pulldown({
+        large_service_area: { id: 'combo-hpp-large-service-area-sel-4' },
+        service_area: { id: 'combo-hpp-service-area-sel-4' },
+        middle_area: { id: 'combo-hpp-middle-area-sel-4' },
+        small_area: {
+            id: 'combo-hpp-small-area-sel-4',
+            middle_area: 'Y005',
+            on_update_hook: function ( success ){
+                ok( success, 'combo - small areay standalone' );
+                // プルダウン存在チェック
+                var elm_sa = $( '#combo-hpp-small-area-sel-4' );
+                var opt_sa = elm_sa.find( 'option' );
+                is( elm_sa.length, 1 );
+                cmpOK( opt_sa.length, '>', 1 );
+            }
+        }
+    });
+})();
+
+// HotPepper.UI.Places.Pulldown.find_item_by_code
+(function (){
+    var p = new HotPepper.UI.Places.Pulldown();
+    p.find_item_by_code({
+        large_service_area: 'SS20',
+        callback: function ( itm ){
+            ok( itm, 'find_place_by_code - large_service_area' );
+            is( itm.name, '関西' );
+            is( itm.code, 'SS20' );
+        }
+    });
+    p = new HotPepper.UI.Places.Pulldown();
+    p.find_item_by_code({
+        service_area: 'SA12',
+        callback: function ( itm ){
+            ok( itm, 'find_place_by_code - service_area' );
+            is( itm.name, '神奈川' );
+            is( itm.code, 'SA12' );
+            is( itm.large_service_area.name, '関東' );
+            is( itm.large_service_area.code, 'SS10' );
+        }
+    });
+    p = new HotPepper.UI.Places.Pulldown();
+    p.find_item_by_code({
+        middle_area: 'Y005',
+        callback: function ( itm ){
+            ok( itm, 'find_place_by_code - middle_area' );
+            is( itm.name, '銀座・有楽町・新橋・築地・月島' );
+            is( itm.code, 'Y005' );
+            is( itm.service_area.name, '東京' );
+            is( itm.service_area.code, 'SA11' );
+            is( itm.large_service_area.name, '関東' );
+            is( itm.large_service_area.code, 'SS10' );
+        }
+    });
+    p = new HotPepper.UI.Places.Pulldown();
+    p.find_item_by_code({
+        small_area: 'X015',
+        callback: function ( itm ){
+            ok( itm, 'find_place_by_code - small_area' );
+            is( itm.name, '有楽町・日比谷' );
+            is( itm.code, 'X015' );
+            is( itm.middle_area.name, '銀座・有楽町・新橋・築地・月島' );
+            is( itm.middle_area.code, 'Y005' );
+            is( itm.service_area.name, '東京' );
+            is( itm.service_area.code, 'SA11' );
+            is( itm.large_service_area.name, '関東' );
+            is( itm.large_service_area.code, 'SS10' );
+        }
+    });
+})();
+
+
+// コンビネーション - デフォルト small area 値つき
+(function (){
+    new HotPepper.UI.Places.Pulldown({
+        large_service_area: {
+            id: 'combo-hpp-large-service-area-sel-5',
+            on_update_hook: function ( success ){
+                ok( success, 'combo - with default sma - lsa' );
+                is( $( '#combo-hpp-large-service-area-sel-5' ).val(), 'SS10' );
+            }
+        },
+        service_area: {
+            id: 'combo-hpp-service-area-sel-5',
+            on_update_hook: function ( success ){
+                ok( success, 'combo - with default sma - sa' );
+                is( $( '#combo-hpp-service-area-sel-5' ).val(), 'SA11' );
+            }
+        },
+        middle_area: {
+            id: 'combo-hpp-middle-area-sel-5',
+            on_update_hook: function ( success ){
+                ok( success, 'combo - with default sma - ma' );
+                is( $( '#combo-hpp-middle-area-sel-5' ).val(), 'Y005' );
+            }
+        },
+        small_area: {
+            id: 'combo-hpp-small-area-sel-5',
+            val: 'X010',
+            on_update_hook: function ( success ){
+                ok( success, 'combo - with default sma - sma' );
+                is( $( '#combo-hpp-small-area-sel-5' ).val(), 'X010' );
+            }
+        }
+    });
+})();
+
+// コンビネーション - デフォルト middle area 値つき
+(function (){
+    new HotPepper.UI.Places.Pulldown({
+        large_service_area: {
+            id: 'combo-hpp-large-service-area-sel-6',
+            on_update_hook: function ( success ){
+                ok( success, 'combo - with default sma - lsa' );
+                is( $( '#combo-hpp-large-service-area-sel-6' ).val(), 'SS10' );
+            }
+        },
+        service_area: {
+            id: 'combo-hpp-service-area-sel-6',
+            on_update_hook: function ( success ){
+                ok( success, 'combo - with default sma - sa' );
+                is( $( '#combo-hpp-service-area-sel-6' ).val(), 'SA11' );
+            }
+        },
+        middle_area: {
+            id: 'combo-hpp-middle-area-sel-6',
+            val: 'Y005',
+            on_update_hook: function ( success ){
+                ok( success, 'combo - with default sma - ma' );
+                is( $( '#combo-hpp-middle-area-sel-6' ).val(), 'Y005' );
+                // small area pulldown
+                var elm_sa = $( '#combo-hpp-small-area-sel-6' );
+                var opt_sa = elm_sa.find( 'option' );
+                is( elm_sa.length, 1 );
+                is( opt_sa.length, 1 );
+            }
+        },
+        small_area: { id: 'combo-hpp-small-area-sel-6' }
+    });
+})();
+// コンビネーション - デフォルト service area 値つき
+// large service area プルダウンのみ存在
+(function (){
+    new HotPepper.UI.Places.Pulldown({
+        large_service_area: {
+            id: 'combo-hpp-large-service-area-sel-7',
+            on_update_hook: function ( success ){
+                ok( success, 'combo - with default sa2 - lsa' );
+                is( $( '#combo-hpp-large-service-area-sel-7' ).val(), 'SS10' );
+            }
+        },
+        service_area: {
+            id: 'combo-hpp-service-area-sel-7',
+            val: 'SA11',
+            on_update_hook: function ( success ){
+                ok( success, 'combo - with default sa2 - sa' );
+                is( $( '#combo-hpp-service-area-sel-7' ).length, 0 );
+            }
+        }
+    });
+})();
+
+</script></pre>
+</body>
+</html>

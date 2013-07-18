@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>例 キーワード検索 重み付け + KWIC表示 - エイビーロード - Recruit UI Library</title>
+<link rel="stylesheet" href="use_all.css" type="text/css" />
+<style type="text/css">
+    h1 {
+        font-size: 1.4em;
+        color: #666;
+    }
+    .kwic-block {
+        color: #666;
+        font-size: 0.7em;
+    }
+    .kwic-block .kwic {
+        color: #000;
+        font-weight: bold;
+        background: #DDD;
+        font-size: 1.3em;
+    }
+    #query-url {
+        margin-top: 20px;
+        font-size: 0.7em;
+        padding: 10px;
+        overflow: auto;
+    }
+    * html #query-url {
+        width: 90%;
+    }
+</style>
+<script type="text/javascript" src="../../recruit/docs/js/jquery-1.2.3.js"></script>
+<script type="text/javascript" src="../../recruit/docs/js/jquery.form.js"></script>
+<script type="text/javascript" src="../../recruit.ui.js"></script>
+<script type="text/javascript" src="../../abroad.ui.js"></script>
+<script type="text/javascript" src="abroad.kwicprocessor.js"></script>
+<script type="text/javascript">
+$(function (){
+    Recruit.UI.key = 'a450fa593ee3f2a4';
+    Recruit.UI.Base.Pulldown.first_opt_text = '-';
+    //Recruit.UI.key = 'guest';
+    //Recruit.UI.api_url = 'http://192.168.0.248';
+
+    new ABROAD.UI.Dept.Pulldown({ val: 'TYO' });
+    new ABROAD.UI.Places.Pulldown();
+    new ABROAD.UI.Month.Pulldown();
+    new ABROAD.UI.Term.Pulldown();
+    new ABROAD.UI.Price.Pulldown();
+    new ABROAD.UI.Order.Pulldown();
+
+    $( '#form-block form' ).submit( function (){
+        jsonp_request();
+        return false;
+    });
+
+    $( 'input[@name=keyword]' ).change( function (){
+        var opt = {};
+        if( $( this ).val() != '' ){
+            opt.is_keyword_search = 1;
+        }
+        new ABROAD.UI.Order.Pulldown( opt );
+    });
+});
+
+function jsonp_request ( start ){
+    if( !start ){ start = 1 }
+    var ruip = $( '#rui-page' ).html( 'loading...' );
+    var ruir = $( '#rui-result' ).empty();
+
+    var url = Recruit.UI.api_url + '/ab-road/tour/v1/?'
+        + 'key=' + Recruit.UI.key + '&format=jsonp&callback=?'
+        + '&start=' + start + '&'
+        + $( '#form-block form' ).formSerialize();
+
+    $.getJSON( url, function ( json ){
+        var res = json.results;
+        // display query url
+        var du = url.replace( /&format=[^&]+/, '' )
+            .replace( /&callback=\?/, '' )
+            $( '#query-url' ).html( '<a href="' + du + '">' + du + '</a>' );
+        // error check
+        if( res.error ){
+            ruip.html( res.error[0].message );
+            return false;
+        }
+        // auto paginate
+        var page = new Recruit.UI.Page.Simple( json );
+        page.paginate({
+            request: jsonp_request
+        });
+        // display results
+        var ol = $( '<ol></ol>' ).attr( 'start', start );
+        $.each( res.tour, function (){
+            var li = '<li><a href="' + this.urls.pc + '">'
+                + this.title + '</a>';
+            if( this.kwic ){
+                var kp = new ABROAD.KwicProcessor( this.kwic, {
+                    alt : '代替テキストです。このツアー楽しいよー？',
+                    tier: '...',
+                    wrap: ''
+                }); 
+                kp.trim_if_included_in( this.title );
+                var kwic = kp.get_result();
+                //console.log( kwic );
+                li += '<div class="kwic-block">' + kwic + '</div>';
+            }
+            li += '</li>';
+            ol.append( li );
+        });
+        ruir.append( ol );
+    });
+}
+</script>
+</head>
+<body>
+<h1>キーワード検索 KWIC 加工して表示 - エイビーロード</h1>
+<div id="form-block">
+<div id="form-block-inner">
+    <form action="">
+        <div class="ui-block">
+            <label>出発地</label>
+            <select id="ab-dept-sel"></select>
+        </div>
+        <div class="ui-block" style="margin-bottom:0">
+            <label>行き先</label>
+            <select id="ab-area-sel"></select>
+        </div>
+        <div class="ui-block" style="margin-bottom:0">
+            <label>&nbsp;</label>
+            <select id="ab-country-sel"></select>
+        </div>
+        <div class="ui-block">
+            <label>&nbsp;</label>
+            <select id="ab-city-sel"></select>
+        </div>
+        <div class="ui-block">
+            <label>出発月</label>
+            <select id="ab-month-sel"></select>
+        </div>
+        <div class="ui-block">
+            <label>期間</label>
+            <select id="ab-term-min-sel" class="short"></select> ～
+            <select id="ab-term-max-sel" class="short"></select>
+        </div>
+        <div class="ui-block">
+            <label>価格帯</label>
+            <select id="ab-price-min-sel" class="short"></select> ～
+            <select id="ab-price-max-sel" class="short"></select>
+        </div>
+        <div class="ui-block">
+            <label>キーワード</label>
+            <input type="text" name="keyword"/>
+        </div>
+        <div class="ui-block">
+            <label>KWIC</label>
+            <input type="text" name="kwic" value="1"/>
+        </div>
+        <div class="ui-block">
+            <label>掲載区分</label>
+            <select name="ad_type">
+                <option value="">全ツアー</option>
+                <option value="F">オススメツアー</option>
+            </select>
+        </div>
+        <div class="ui-block">
+            <label>並び順</label>
+            <select id="ab-order-sel"></select>
+        </div>
+        <div class="ui-block">
+            <label>&nbsp;</label>
+            <input type="submit" value="検索" />
+        </div>
+        <input type="hidden" name="count" value="10"/>
+        <div id="query-url"></div>
+    </form>
+</div>
+</div>
+<div id="result-block">
+<div id="result-block-inner">
+    <div id="rui-page"></div>
+    <div id="rui-result"></div>
+</div>
+</div>
+
+</body>
+</html>

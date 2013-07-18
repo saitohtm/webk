@@ -1,0 +1,82 @@
+﻿<!--META-->
+<meta name="keyword" content="スーパーカー,車,自動車,画像" xml:lang="ja" lang="ja"/>
+<meta name="description" content="スーパーカー画像 <!--ID-->" xml:lang="ja" lang="ja"/>
+<title>スーパーカー画像 <!--ID--></title>
+<!--HEADER-->
+<div data-role="header">
+    <a href="/" data-icon="home" data-ajax="false">Home</a>
+    <h1>スーパーカー</h1>
+</div>
+<script>
+$(function() {
+
+	$('#google_plusone').socialbutton('google_plusone', {
+		lang: 'en',
+		size: 'medium'
+	});
+
+	$('#twitter').socialbutton('twitter', {
+		button: 'horizontal',
+        text: 'スーパーカー画像 <!--ID-->'
+	});
+
+	$('#facebook_share').socialbutton('facebook_share', {
+	});
+
+	$('#pinterest').socialbutton('pinterest', {
+        media: '<!--PHOTO-->'
+    });
+
+});
+</script>
+
+
+<!--LIST-->
+
+<center>
+<a href="/super-car-photo/<!--PREID-->/" data-role="button" data-icon="arrow-l" data-inline="true">前へ</a>
+<a href="/super-car-photo/<!--NEXTID-->/" data-role="button" data-icon="arrow-r" data-inline="true">次へ</a>
+</center>
+<hr>
+<ul style="list-style:none">
+<img src="/img/facebook.png" width="20"> いいなぁと思ったらシェア！<br />
+<li style="float:left"><div id="pinterest"></div></li>
+<li style="float:left"><div id="facebook_share"></div></li>
+<li style="float:left"><div id="twitter"></div></li>
+</ul>
+<br />
+<br />
+<hr>
+
+<center>
+みんなの評価:<font color="red"><!--POINT--></font><br />
+<a href="/index.htm?good=1&id=<!--ID-->" data-role="button" data-inline="true" data-ajax="false">Good</a>
+<a href="/index.htm?bad=1&id=<!--ID-->" data-role="button" data-inline="true" data-ajax="false">Bad!</a>
+</center>
+<hr>
+<div data-role="fieldcontain">
+<form action="/index.htm"; method="post">
+<input type="hidden" name="id" value="<!--ID-->"/>
+
+<label for="textarea">この車はなんですか？</label>
+<textarea cols="40" rows="8" name="description" id="textarea"></textarea>
+     
+<button type="submit" data-transition="fade">教える</button>
+</form>
+
+</div>
+<br />
+<!--COMMENT-->
+<br />
+<img src="/img/E419_20.gif" height=20>登録日：<!--REGISTDATE-->
+<br />
+<img src="/img/E132_20.gif" height=20><a href="<!--URL-->" target="_blank" ref=nofollow>参照元</a>
+<br />
+<img src="/img/E252_20.gif" height=20>当サイトは、世界のスーパーカーの画像検索サービスです。表示される画像に不備がある場合には、
+参照元へご確認をお願いします。
+
+<br />
+<!--FOOTER-->
+
+</body>
+</html>

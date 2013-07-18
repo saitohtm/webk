@@ -1,0 +1,408 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>こだわり選択 チェックボックス - ホットペッパー -  リクルート WEBサービス UI Library</title>
+<link rel="stylesheet" href="../../recruit/docs/css/yui.reset-fonts-grids-base.css" type="text/css" />
+<link rel="stylesheet" href="../../recruit/docs/css/style.css" type="text/css" />
+<link rel="stylesheet" href="./css/style.css" type="text/css" />
+<style type="text/css">
+#hpp-kodawari-checkbox-3 .rui-checkbox-each {
+    margin-right: 20px;
+}
+#hpp-kodawari-checkbox-3 .rui-checkbox-label {
+    text-decoration: underline;
+}
+</style>
+<script type="text/javascript" src="../../recruit/docs/js/jquery-1.2.3.js"></script>
+<script type="text/javascript" src="../../recruit/docs/js/jquery.form.js"></script>
+<script type="text/javascript" src="../../recruit.ui.js"></script>
+<script type="text/javascript" src="../../hotpepper.ui.js"></script>
+<script type="text/javascript">
+$(function (){
+    new HotPepper.UI.Kodawari.Checkbox();
+    new HotPepper.UI.Kodawari.Checkbox({
+        id : 'hpp-kodawari-checkbox-2',
+        val: [ 'course', 'free_drink', 'private_room' ]
+    });
+    new HotPepper.UI.Kodawari.Checkbox({
+        id : 'hpp-kodawari-checkbox-3',
+        template: 'horizontal'
+    });
+    new HotPepper.UI.Kodawari.Checkbox({
+        id : 'hpp-kodawari-checkbox-tmpl-horizontal',
+        template: 'horizontal'
+    });
+    new HotPepper.UI.Kodawari.Checkbox({
+        id : 'hpp-kodawari-checkbox-tmpl-double',
+        template: 'double_space'
+    });
+    new HotPepper.UI.Kodawari.Checkbox({
+        id : 'hpp-kodawari-checkbox-tmpl-vertical',
+        template: 'vertical'
+    });
+    new HotPepper.UI.Kodawari.Checkbox({
+        id : 'hpp-kodawari-checkbox-tmpl-table2',
+        template: 'table_2c'
+    });
+    new HotPepper.UI.Kodawari.Checkbox({
+        id : 'hpp-kodawari-checkbox-tmpl-table4',
+        template: 'table_4c'
+    });
+    new HotPepper.UI.Kodawari.Checkbox({
+        id : 'hpp-kodawari-checkbox-template-func',
+        template: function ( items, box ){
+            $.each( items, function ( i, itm ){
+                box.append( '[ ' );
+                box.append( itm.elm.input );
+                box.append( '&nbsp;' );
+                box.append( itm.elm.label );
+                box.append( ' ]' );
+            });
+        }
+    });
+    new HotPepper.UI.Kodawari.Checkbox({
+        id : 'hpp-kodawari-checkbox-template-func2',
+        template: function ( items, box ){
+            var _self = this;
+            $.each( items, function ( i, itm ){
+                var wrap = _self._create_wrapper_block();
+                wrap.append( '[ ' );
+                wrap.append( itm.elm.input );
+                wrap.append( '&nbsp;' );
+                wrap.append( itm.elm.label );
+                wrap.append( ' ]' );
+                box.append( wrap );
+            });
+        }
+    });
+    new HotPepper.UI.Kodawari.Checkbox({
+        id : 'hpp-kodawari-checkbox-template-click',
+        template: 'horizontal',
+        clickable_label: false
+    });
+
+    $( 'form' ).submit( function (){
+        alert( $( this ).formSerialize() );
+        return false;
+    });
+});
+</script>
+</head>
+<body>
+<div id="doc" class="yui-t4">                   
+<div id="hd">
+    <div id="hd-logo">
+        <a href="http://webservice.recruit.co.jp/">
+        <img src="../../recruit/docs/img/rws_logo.gif" border="0"/></a>
+    </div>
+    <div id="hd-main">
+        <h1 id="top"><a href="../../index.html">こだわり選択 チェックボックス </a></h1>
+        <p>ホットペッパー - HotPepper.UI.Kodawari.Checkbox - by Recruit Web Service UI Library</p>
+    </div>
+</div><!-- end hd -->
+
+<div id="bd">
+<div id="yui-main">
+<div class="yui-b cont">
+    <div class="breadcrumb">
+        <a href="../../">TOP</a> &gt; <a href="./">ホットペッパー</a> &gt;
+        こだわり選択 チェックボックス
+    </div>
+    <h2 id="synopsis">概要</h2>
+    <p><a
+    href="http://webservice.recruit.co.jp/hotpepper/reference.html#a1to">ホットペッパー
+    グルメサーチAPI</a> に「食べ放題」「個室あり」「ランチあり」等のこだわり条件をパラメータとして渡す事で検索結果を絞り込む事ができます。これは、そのこだわり条件を選択する為のチェックボックスUIを簡単に生成するためのモジュールです。</p>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h2 id="sample">サンプル</h2>
+    <div class="sample">
+        <form action="">
+        <div id="hpp-kodawari-checkbox"></div>
+        <div class="submit"><input type="submit" value="値を確認" /></div>
+        </form>
+    </div>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h2 id="requirement">動作条件</h2>
+    <ul>
+        <li><a href="http://jquery.com/">jQuery</a> v1.0 以降</li>
+    </ul>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h2 id="reuseable-code">簡易なコード例</h2>
+    <pre style="padding:20px"><a
+    href="../samples/kodawari.checkbox.html">コピペする事で手軽に再利用が可能なコード例はこちら</a></pre>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h2 id="howto">使い方</h2>
+    <p>下記のように必要なファイルを読み込んだうえで...</p>
+    <pre>&lt;script type=&quot;text/javascript&quot; src=&quot;jquery.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;recruit.ui.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;hotpepper.ui.js&quot;&gt;&lt;/script&gt;</pre>
+    <p>チェックボックスを表示させたい場所にこのようなHTMLを書き...</p>
+    <pre>&lt;div id=&quot;hpp-kodawari-checkbox&quot;&gt;&lt;/div&gt;</pre>
+    <p>最後にこのようなjavascriptコードを書くことで選択可能なチェックボックス群が自動生成されます。</p>
+    <pre>new HotPepper.UI.Kodawari.Checkbox();</pre> 
+    <p>jQueryを使って、ページ表示と同時にチェックボックス生成したい場合はこちら:</p>
+    <pre>$( function(){
+    new HotPepper.UI.Kodawari.Checkbox();
+});</pre> 
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h3>マウスオーバー設定</h3>
+    <p>上記サンプルのように、各テキストにマウスオーバーした際に背景色を変える等の変化をつけたい場合はさらに以下のCSSを設定します:</p>
+<pre>&lt;style type=&quot;text/css&quot;&gt;
+.rui-checkbox-each.hover {
+    background: #EBB705;
+}
+&lt;/style&gt;</pre>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h3>DIVタグでないと駄目？</h3>
+    <p>id値 &quot;hpp-kodawari-checkbox&quot; を設定するHTML要素はDIVタグでないと動作しないのでしょうか？<br />
+    →いいえ、DIVタグ以外でも appendChild 出来るHTML要素 (dom element) であれば何でもかまいません。</p>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h2 id="options">オプション機能</h2>
+    <h3 id="options-id">対象DIVのid値を指定したい</h3>
+    <p>デフォルトでは id="hpp-kodawari-checkbox" のHTML要素 (divタグ、pタグ等) を探しにいきますが、これを任意のid値で指定したい場合は以下のように書きます:
+    <pre>new HotPepper.UI.Kodawari.Checkbox({
+    id: 'my-own-kodawari'
+});</pre> 
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h3 id="options-val">あらかじめ選択されている状態にする</h3>
+    <p>各チェックボックスにあらかじめチェックが入っている状態にしたい場合は以下のように、チェックを入れておきたい要素の name 値を配列で指定します:</p>
+    <pre>// コースありと飲み放題と個室ありにチェックをいれておく
+new HotPepper.UI.Kodawari.Checkbox({
+    val: [ 'course', 'free_drink', 'private_room' ]
+});</pre> 
+    <p>実際の動作例:</p>
+    <div class="sample">
+        <form action="">
+        <div id="hpp-kodawari-checkbox-2"></div>
+        <div class="submit"><input type="submit" value="値を確認" /></div>
+        </form>
+    </div>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h3 id="options-template">選択可能なデザインテンプレート</h3>
+    <p>デフォルトでは3列の表レイアウトでチェックボックス群が表示されていますが、引数 template に以下のいずれかのテンプレート名を指定する事により、各チェックボックスのレイアウト・デザインを変更する事ができます:</p>
+    <pre>// 横並びレイアウトにする
+new HotPepper.UI.Kodawari.Checkbox({
+    template: 'horizontal'
+});</pre> 
+    <p id="tmpl_list">選択可能なテンプレート名一覧:</p>
+    <ul>
+        <li><a href="#template-horizontal">horizontal</a></li>
+        <li><a href="#template-vertical">vertical</a></li>
+        <li><a href="#template-table_nc">table_*c</a></li>
+    </ul>
+    <p id="template-horizontal"><strong>&gt; horizontal</strong></p>
+    <p>表組みでは無く、単純に横一列にチェックボックスを並べます。通常のテキスト同様、親要素の右端まで届いた際は自動で改行されます。限られたスペースにチェックボックスを表示させたい場合に最適です。</p>
+    <div class="sample">
+        <div id="hpp-kodawari-checkbox-tmpl-horizontal"></div>
+    </div>
+    <p class="back-to-top"><a href="#tmpl_list">&gt;BACK TO LIST</a></p>
+    <p id="template-vertical"><strong>&gt; vertical</strong></p>
+    <p>縦一列にチェックボックスを配置します。</p>
+    <div class="sample">
+        <div id="hpp-kodawari-checkbox-tmpl-vertical"></div>
+    </div>
+    <p class="back-to-top"><a href="#tmpl_list">&gt;BACK TO LIST</a></p>
+    <p id="template-table_nc"><strong>&gt; table_*c</strong></p>
+    <p>* の位置に列数を指定することにより、*列組みの表レイアウトが生成されます。</p>
+    <pre>// 例: 2列レイアウト
+new HotPepper.UI.Kodawari.Checkbox({
+    template: 'table_2c'
+});</pre> 
+    <div class="sample">
+        <div id="hpp-kodawari-checkbox-tmpl-table2"></div>
+    </div>
+    <pre>// 例: 4列レイアウト
+new HotPepper.UI.Kodawari.Checkbox({
+    template: 'table_4c'
+});</pre> 
+    <div class="sample" style="font-size:0.7em;margin-bottom:5px">
+        <div id="hpp-kodawari-checkbox-tmpl-table4"></div>
+    </div>
+    <p style="text-align:right;font-size:0.7em">* 枠に収まるようにあえてフォントサイズを小さくしています</p>
+    <p>なお、template 引数に何も指定しなかった場合のデフォルトレイアウトは table_3c です。</p>
+    <p class="back-to-top"><a href="#tmpl_list">&gt;BACK TO LIST</a></p>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h3 id="options-css">デフォルトUIデザインのCSSクラス設定</h3>
+    <p>各チェックボックスUIには以下のようなCSSクラスが設定されています:</p>
+    <p style="text-align:center"><img src="img/kodawari_css.gif" style="border: 1px solid #CCC; padding: 5px"/></p>
+    <p>これらCSSを再設定する事である程度、見栄えを変更する事ができます。</p>
+    <pre>new HotPepper.UI.Kodawari.Checkbox({
+    template: 'horizontal'
+});</pre> 
+    <pre>&lt;style type=&quot;text/css&quot;&gt;
+.rui-checkbox-each {
+    font-size: 0.7em;
+    margin-right: 20px;
+}
+.rui-checkbox-label {
+    text-decoration: underline;
+}
+&lt;/style&gt;</pre>
+    <p>実際の動作例:</p>
+    <div class="sample">
+        <div id="hpp-kodawari-checkbox-3"></div>
+    </div>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h3 id="options-template-func">デザインを自由にカスタマイズする</h3>
+    <p>あらかじめ用意されたデザインレイアウトや、CSSクラス設定以上の事を自分で指定したい場合は、以下のように引数
+    template に自分のカスタマイズ関数を指定することで、自由にレイアウトを作成する事ができます。</p>
+    <pre>new HotPepper.UI.Kodawari.Checkbox({
+    template: function ( items, box ){
+        $.each( items, function ( i, itm ){
+            box.append( '[ ' );
+            box.append( itm.elm.input ); // チェックボックス
+            box.append( '&amp;nbsp;' );
+            box.append( itm.elm.label ); // ラベルテキスト
+            box.append( ' ]' );
+        });
+    }
+});</pre> 
+    <p>実際の動作例:</p>
+    <div class="sample">
+        <div id="hpp-kodawari-checkbox-template-func"></div>
+    </div>
+    <p>この際、カスタマイズ関数に渡される引数は以下の2つです:</p>
+    <dl>
+        <dt>items</dt>
+        <dd>生成されるべきチェックボックスがこの items 配列に格納されています。これをループで回しながらチェックボックスとラベルを作成していきます。配列内の各要素は以下の情報を保持しています:<pre>items[0].name        // inputのname属性
+items[0].label       // ラベルテキスト
+items[0].value       // inputのvalue属性
+items[0].checked     // 初期チェック状態のbool値
+items[0].elm.input   // チェックボックス要素
+items[0].elm.label   // ラベル span タグ
+</pre>
+</dd>
+        <dt>box</dt>
+        <dd>最終的に画面に描画される親要素です(jQuery Object型)。ここに items 配列から生成された要素を append() していきます。</dd>
+    </dl>
+    <p>マウスオーバーによる背景色変化機能を使いたい場合はループ毎に _create_wrapper_block() をコールすることで受け取れる wrapper 要素で囲んでおくことで有効になります:</p>
+    <pre>new HotPepper.UI.Kodawari.Checkbox({
+    template: function ( items, box ){
+        var _self = this;
+        $.each( items, function ( i, itm ){
+            var wrap = _self._create_wrapper_block();
+            wrap.append( '[ ' );
+            wrap.append( itm.elm.input ); // チェックボックス
+            wrap.append( '&amp;nbsp;' );
+            wrap.append( itm.elm.label ); // ラベルテキスト
+            wrap.append( ' ]' );
+            box.append( wrap );
+        });
+    }
+});</pre> 
+    <p>実際の動作例:</p>
+    <div class="sample">
+        <div id="hpp-kodawari-checkbox-template-func2"></div>
+    </div>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h3 id="options-click">ラベルをクリック不可にする</h3>
+    <p>デフォルトでは各ラベルテキスト &quot;飲み放題&quot; 等もクリックすると該当チェックボックスにチェックが入るようになっていますが、この機能をOFFにしたい場合は以下のようにオプション指定を入れます:</p>
+    <pre>new HotPepper.UI.Kodawari.Checkbox({
+    clickable_label: false
+})</pre>
+    <p>実際の動作例:</p>
+    <div class="sample">
+        <div id="hpp-kodawari-checkbox-template-click"></div>
+    </div>
+    <p>クリック不可にすると、同時にマウスオーバーによる背景色変化機能もOFFになります。</p>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h3 id="options-on-update-hook">チェックボックスが刷新されたタイミングで任意の処理を実行したい</h3>
+    <p><strong>チェックボックスが刷新された直後</strong>のタイミング (＝初期化のタイミング) で任意の処理を実行したい場合は、以下のようにオプション指定 - on_update_hook - に任意の処理を記述した無名関数を設定します:</p>
+    <pre>new HotPepper.UI.Kodawari.Checkbox({
+    on_update_hook: function (){
+        alert( 'kodawari initialized' );
+    }
+});</pre>
+    <p>この時、以下のプロパティから各種状態を取得できます:</p>
+    <table class="desc" style="font-size:0.8em">
+        <tr>
+        <td class="term">this.get_current_stat()</td>
+        <td>取得可能な情報は下記 <a href="options-get-current-stat">&quot;現在のプルダウン内容を取得&quot;</a> の項を参照</td>
+        </tr>
+        <tr>
+        <td class="term">this.elm</td>
+        <td>プルダウン要素の jQuery オブジェクト。$( '#hpp-kodawari-checkbox' ) の戻り値と同じ。</td>
+        </tr>
+    </table>
+    <pre>HotPepper.UI.Kodawari.Checkbox({
+    on_update_hook: function (){
+        var obj = this.get_current_stat();
+        alert( obj.list.length );  // チェックボックスの総数
+    }
+});</pre>
+    <p>簡単なサンプルはこちら:</p>
+    <pre><a href="../samples/kodawari.checkbox.on_update_hook.html">on_update_hook のサンプルコード</a></pre>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h3 id="options-get-current-stat">現在のプルダウン内容を取得</h3>
+    <p>get_current_stat() メソッドにて、すべてのチェックボックス要素の値とラベルをリストで取得したり、現在選択中の値を取得する等、チェックボックス情報を別途加工する際に便利な情報を取得できます:</p>
+    <pre>var p = new HotPepper.UI.Kodawari.Checkbox();
+var obj = p.get_current_stat();</pre>
+    <p>この時の戻り値 (object) の中身は以下の通りです:</p>
+    <table class="desc" style="font-size:0.8em">
+        <tr>
+        <td class="term">obj.val.names</td>
+        <td>現在チェックが入っているチェックボックスの名前ハッシュ。例)<br/>{ 'wedding:1, mobile:1 }</td>
+        </tr>
+        <tr>
+        <td class="term">obj.val.names</td>
+        <td>現在チェックが入っているチェックボックスの値リスト。例)<br/>[ 1, 3, 5 ]</td>
+        </tr>
+        <tr>
+        <td class="term">obj.list</td>
+        <td>全チェックボックスの値と名称を含んだ Array オブジェクト。Array 内の各要素は val (値) と text (名称) と name (name属性) プロパティを保持 - 例)<br/>obj.list[0].val // 1<br/>obj.list[0].text // 飲み放題<br/>obj.list.[0].name // free_drink</td>
+        </tr>
+    </table>
+    <p>簡単なサンプルはこちら:</p>
+    <pre><a href="../samples/kodawari.checkbox.on_update_hook.html">get_current_stat() のサンプルコード</a></pre>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+</div><!-- end yui-b -->
+</div><!-- end yui-main -->
+<div class="yui-b navi">
+<div class="banner">
+    <a href="../../index.html"><img src="../../recruit/docs/img/rui-logo-banner.jpg"/></a>
+</div>
+<h3>INDEX</h3>
+<ul>
+    <li><a href="#synopsis">概要</a></li>
+    <li><a href="#sample">サンプル</a></li>
+    <li><a href="#requirement">動作条件</a></li>
+    <li><a href="#reuseable-code">簡易なコード例</a></li>
+    <li><a href="#howto">使い方</a></li>
+    <li>オプション機能
+        <ul class="nobullet" style="margin-top:10px;font-size:1em">
+            <li><a href="#options-id">対象DIVのid値を指定したい</a>
+            <li><a href="#options-val">あらかじめ選択されている状態にする</a>
+            <li><a href="#options-template">選択可能なデザインテンプレート</a>
+            <li><a href="#options-css">デフォルトUIデザインのCSSクラス設定</a>
+            <li><a href="#options-template-func">デザインを自由にカスタマイズする</a>
+            <li><a href="#options-click">ラベルをクリック不可にする</a>
+            <li><a href="#options-on-update-hook">選択肢が刷新されたタイミングで任意の処理を実行したい</a>
+            <li><a href="#options-get-current-stat">現在のプルダウン内容を取得</a>
+        </ul>
+    </li>
+</ul>
+<h3 style="margin-top:20px">その他</h3>
+<ul class="nobullet">
+    <li><a href="http://webservice.recruit.co.jp/hotpepper/">ホットペッパー WEBサービス</a></li>
+    <li><a href="http://mtl.recruit.co.jp/contact.html">お問い合わせ</a></li>
+
+</ul>
+</div><!-- end yui-b navi -->
+</div><!-- end bd -->
+
+<div id="ft">
+<div class="inner">
+<div class="yui-gc">
+    <div class="yui-u first">
+    本コンテンツはリクルートが提供する実験サービスです
+    </div>
+    <div class="yui-u">
+    <p><a href="http://mtl.recruit.co.jp/"><img src="../../recruit/docs/img/mtl_logo.gif" border="0" alt="メディアテクノロジーラボ"></a></p>
+    </div>
+</div>
+</div><!-- end inner-->
+</div><!-- end ft -->
+</div><!-- end doc -->
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+#bd .cont div.sample span.lbl {
+    font-size: 0.7em;
+}
+#hd-main {
+    color: #FFF;
+    border: 3px solid #DDD;
+    background: url(../img/header_background.gif) repeat-x #FECD85;
+}
+#bd .navi h3 {
+    color: #FFF;
+    background: #FECD85;
+    border: 3px solid #DDD;
+}
+#bd .cont h3 {
+    color: #FEB547;
+    border-left: 5px solid #FEB547;
+}

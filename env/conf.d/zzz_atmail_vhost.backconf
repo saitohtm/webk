@@ -1,0 +1,99 @@
+<VirtualHost  111.68.23.225:80>
+	ServerName atmail.webmail
+	ServerAlias atmail.webmail.*
+	ServerAdmin root@waao.jp
+
+	Include /etc/psa-webmail/atmail/conf.d/*
+
+	UseCanonicalName Off
+
+        DocumentRoot /var/www/atmail
+        Alias /atmail/ /var/www/atmail/
+	CustomLog /var/log/atmail/access_log plesklog
+	ErrorLog /var/log/atmail/error_log
+
+	
+
+	<Directory /var/www/atmail> 
+		<IfModule sapi_apache2.c>
+			php_admin_flag engine on
+			php_admin_flag safe_mode off
+			php_admin_flag magic_quotes_gpc off
+			php_admin_flag register_globals off
+
+			php_admin_value open_basedir "/var/www/atmail:/var/log/atmail:/etc/psa:/tmp:/var/tmp"
+			php_admin_value include_path "/var/www/atmail:/var/www/atmail/libs:/var/www/atmail/libs/Atmail:/var/www/atmail/libs/PEAR:/var/www/atmail/libs/File:."
+			php_admin_value upload_max_filesize 16M
+			php_admin_value post_max_size 16M
+		</IfModule>
+
+		<IfModule mod_php5.c>
+			php_admin_flag engine on
+			php_admin_flag safe_mode off
+			php_admin_flag magic_quotes_gpc off
+			php_admin_flag register_globals off
+
+			php_admin_value open_basedir "/var/www/atmail:/var/log/atmail:/etc/psa:/tmp:/var/tmp"
+			php_admin_value include_path "/var/www/atmail:/var/www/atmail/libs:/var/www/atmail/libs/Atmail:/var/www/atmail/libs/PEAR:/var/www/atmail/libs/File:."
+			php_admin_value upload_max_filesize 16M
+			php_admin_value post_max_size 16M
+		</IfModule>
+
+		Order allow,deny
+		Allow from all
+	</Directory>
+</VirtualHost>
+
+<IfModule mod_ssl.c>
+<VirtualHost  111.68.23.225:443>
+	ServerName atmail.webmail
+	ServerAlias atmail.webmail.*
+	ServerAdmin root@waao.jp
+
+	Include /etc/psa-webmail/atmail/conf.d/*
+
+	UseCanonicalName Off
+
+        DocumentRoot /var/www/atmail
+        Alias /atmail/ /var/www/atmail
+	CustomLog /var/log/atmail/access_log plesklog
+	ErrorLog /var/log/atmail/error_log
+
+	SSLEngine on
+	SSLVerifyClient none
+	SSLCertificateFile /etc/httpd/conf/httpd.pem
+
+	
+
+	<Directory /var/www/atmail> 
+		<IfModule sapi_apache2.c>
+			php_admin_flag engine on
+			php_admin_flag safe_mode off
+			php_admin_flag magic_quotes_gpc off
+			php_admin_flag register_globals off
+
+			php_admin_value open_basedir "/var/www/atmail:/var/log/atmail:/etc/psa:/tmp:/var/tmp"
+			php_admin_value include_path "/var/www/atmail:."
+			php_admin_value upload_max_filesize 16M
+			php_admin_value post_max_size 16M
+		</IfModule>
+
+		<IfModule mod_php5.c>
+			php_admin_flag engine on
+			php_admin_flag safe_mode off
+			php_admin_flag magic_quotes_gpc off
+			php_admin_flag register_globals off
+
+			php_admin_value open_basedir "/var/www/atmail:/var/log/atmail:/etc/psa:/tmp:/var/tmp"
+			php_admin_value include_path "/var/www/atmail:."
+			php_admin_value upload_max_filesize 16M
+			php_admin_value post_max_size 16M
+		</IfModule>
+		
+		SSLRequireSSL
+
+		Order allow,deny
+		Allow from all
+	</Directory>
+</VirtualHost>
+</IfModule>

@@ -1,0 +1,82 @@
+#!/usr/bin/perl -w
+use DBI;
+use CGI;
+
+print "Content-type: text/html\n\n"; 
+
+
+my ($sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst) = localtime(time - 604800);
+my $yyyymmddJ = sprintf("%04d%02d%02d", $year + 1900, $mon+1, $mday);
+
+foreach $var (sort(keys(%ENV))) { 
+    $val = $ENV{$var}; 
+    $val =~ s|\n|\\n|g; 
+    $val =~ s|"|\\"|g; 
+    print "${var}=\"${val}\"<br>\n"; 
+} 
+
+if (exists $ENV{MOD_PERL}) {
+    print " $ENV{MOD_PERL}";
+} else {
+    print "mod_perl は組み込まれていません。";
+}
+
+print << "END_OF_HTML";
+<html>
+<body>
+<hr>
+END_OF_HTML
+my $q = new CGI;
+my $rev_id =$q->param('rev_id');
+$rev_id = 29875526 unless($rev_id);
+# DB 接続
+my $dbh = &_db_connect();
+my $sth = $dbh->prepare(qq{select * from wikipedia where rev_id = ? limit 1});
+$sth->execute($rev_id);
+while(my @row = $sth->fetchrow_array) {
+
+print << "END_OF_HTML";
+$row[1] 
+<br>
+<br>
+$row[3] 
+
+<br>
+<br>
+$row[2] 
+<hr>
+END_OF_HTML
+
+}
+
+print << "END_OF_HTML";
+</body>
+</html>
+END_OF_HTML
+$dbh->disconnect;
+
+# memcahe 接続
+
+$count;
+for (1..5) {
+increment();
+}
+
+sub increment{
+$count++;
+print "Count is $count \n";
+}
+
+
+exit(0);
+
+# db connect
+sub _db_connect(){
+    my $dsn = 'DBI:mysql:waao';
+    my $user = 'mysqlweb';
+    my $password = 'WaAoqzxe7h6yyHz';
+
+    my $dbh = DBI->connect($dsn,$user,$password,{RaiseError => 1, AutoCommit => 0});
+	
+	return $dbh;
+}

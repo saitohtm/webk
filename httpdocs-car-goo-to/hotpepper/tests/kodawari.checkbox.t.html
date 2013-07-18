@@ -1,0 +1,83 @@
+<html>
+<head>
+<script type="text/javascript" src="../../recruit/tests/js/JSAN.js"></script>
+<script type="text/javascript" src="../../recruit/docs/js/jquery-1.2.3.js"></script>
+<script type="text/javascript" src="../../recruit.ui.js"></script>
+<script type="text/javascript" src="../../hotpepper.ui.js"></script>
+</head>
+<body>
+<div style="display:none">
+    <div id="hpp-kodawari-checkbox"></div>
+    <div id="hpp-kodawari-checkbox-2"></div>
+    <div id="hpp-kodawari-checkbox-3"></div>
+</div>
+<pre id="test"><script>
+
+JSAN.use( "Test.More" );
+plan({ tests: 17 });
+
+Recruit.UI.key = 'a450fa593ee3f2a4';
+
+is( typeof HotPepper, 'function' );
+is( typeof HotPepper.UI, 'function' );
+
+(function (){
+    var p = new HotPepper.UI.Kodawari.Checkbox({
+        on_update_hook: function ( success ){
+            ok( success, 'basic' );
+            ok( !this.is_error );
+            is( this.label, 'こだわり' );
+            var elm = $( '#hpp-kodawari-checkbox' );
+            cmpOK( elm.find( '.rui-checkbox-input' ).length, '>', 1 );
+            cmpOK( elm.find( '.rui-checkbox-label' ).length, '>', 1 );
+        }
+    });
+})();
+(function (){
+    var p = new HotPepper.UI.Kodawari.Checkbox({
+        id: 'hpp-kodawari-checkbox-2',
+        template: 'table_2c',
+        on_update_hook: function ( success ){
+            ok( success, 'template' );
+            ok( !this.is_error );
+            var elm = $( '#hpp-kodawari-checkbox-2' );
+            ok( elm.find( 'table' ) );
+            is( elm.find( 'tr:first > td' ).length, 2 );
+        }
+    });
+})();
+(function (){
+    var p = new HotPepper.UI.Kodawari.Checkbox({
+        id: 'hpp-kodawari-checkbox-3',
+        val: [ 'wedding', 'lunch', 'free_drink' ],
+        on_update_hook: function ( success ){
+            ok( success, 'val' );
+            ok( !this.is_error );
+            var elm = $( '#hpp-kodawari-checkbox-3' );
+            var ch = elm.find( 'input[checked]' );
+            is( ch.length, 3 );
+            var arr = [];
+            var arr2 = [];
+            $.each( ch, function (i,d){
+                var v = $( d ).attr( 'checked' );
+                if( v ){
+                    arr.push( $(d).attr( 'name' ) );
+                    arr2.push( $(d).val() );
+                }
+            });
+            isDeeply( arr, [ 'wedding', 'free_drink', 'lunch' ] );
+            isDeeply( arr2, [1,1,1] );
+        }
+    });
+})();
+
+// NG's
+(function (){
+    var p = new HotPepper.UI.Kodawari.Checkbox({
+        id: 'hpp-kodawari-checkbox-x'
+    });
+    ok( p.is_error );
+})();
+</script></pre>
+</body>
+</html>

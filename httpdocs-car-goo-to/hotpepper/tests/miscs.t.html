@@ -1,0 +1,156 @@
+<html>
+<head>
+<script type="text/javascript" src="../../recruit/tests/js/JSAN.js"></script>
+<script type="text/javascript" src="../../recruit/docs/js/jquery-1.2.3.js"></script>
+<script type="text/javascript" src="../../recruit.ui.js"></script>
+<script type="text/javascript" src="../../hotpepper.ui.js"></script>
+</head>
+<body>
+<div style="display:none">
+    <select id="hpp-genre-sel"></select>
+    <select id="hpp-genre-sel-2"></select>
+    <select id="hpp-food-sel"></select>
+    <select id="hpp-food-sel-2"></select>
+    <select id="hpp-budget-sel"></select>
+    <select id="hpp-budget-sel-2"></select>
+    <div id="hpp-kodawari-checkbox"></div>
+    <select id="hpp-order-sel"></select>
+    <select id="hpp-order-sel-2"></select>
+</div>
+<pre id="test"><script>
+
+JSAN.use( "Test.More" );
+plan({ tests: 46 });
+
+Recruit.UI.key = 'a450fa593ee3f2a4';
+
+is( typeof HotPepper, 'function' );
+is( typeof HotPepper.UI, 'function' );
+
+// HotPepper.UI.Genre.Pulldown
+(function (){
+    var p = new HotPepper.UI.Genre.Pulldown({
+        on_update_hook: function ( success ){
+            ok( success, 'genre pulldown - default' );
+            ok( !this.is_error );
+            is( this.label, 'ジャンル' );
+            var elm = $( '#hpp-genre-sel' );
+            is( elm.attr( 'name' ), 'genre' );
+            var opt = elm.find( 'option' );
+            cmpOK( opt.length, '>', 1 );
+            is( $( opt[0] ).text(), '指定なし' );
+        }
+    });
+})();
+(function (){
+    var init = 'G003';
+    var p = new HotPepper.UI.Genre.Pulldown({
+        id : 'hpp-genre-sel-2',
+        val: init,
+        on_update_hook: function ( success ){
+            ok( success, 'genre pulldown - with val' );
+            ok( !this.is_error );
+            var elm = $( '#hpp-genre-sel-2' );
+            is( elm.val(), init );
+            is( elm.find( 'option[value=' + init + ']' ).text(), '創作料理' );
+        }
+    });
+})();
+
+// HotPepper.UI.Food.Pulldown
+(function (){
+    var p = new HotPepper.UI.Food.Pulldown({
+        on_update_hook: function ( success ){
+            ok( success, 'food pulldown - default' );
+            ok( !this.is_error );
+            is( this.label, '料理' );
+            var elm = $( '#hpp-food-sel' );
+            is( elm.attr( 'name' ), 'food' );
+            var opt = elm.find( 'option' );
+            cmpOK( opt.length, '>', 1 );
+            is( $( opt[0] ).text(), '指定なし' );
+        }
+    });
+})();
+(function (){
+    var init = 'R005';
+    var p = new HotPepper.UI.Food.Pulldown({
+        id : 'hpp-food-sel-2',
+        val: init,
+        on_update_hook: function ( success ){
+            ok( success, 'food pulldown - with val' );
+            ok( !this.is_error );
+            var elm = $( '#hpp-food-sel-2' );
+            is( elm.val(), init );
+            is( elm.find( 'option[value=' + init + ']' ).text(), '焼き鳥・鶏料理' );
+        }
+    });
+})();
+
+// HotPepper.UI.Budget.Pulldown
+(function (){
+    var p = new HotPepper.UI.Budget.Pulldown({
+        on_update_hook: function ( success ){
+            ok( success, 'budget pulldown - default' );
+            ok( !this.is_error );
+            is( this.label, '予算' );
+            var elm = $( '#hpp-budget-sel' );
+            is( elm.attr( 'name' ), 'budget' );
+            var opt = elm.find( 'option' );
+            cmpOK( opt.length, '>', 1 );
+            is( $( opt[0] ).text(), '指定なし' );
+        }
+    });
+})();
+(function (){
+    var init = 'B002';
+    var p = new HotPepper.UI.Budget.Pulldown({
+        id : 'hpp-budget-sel-2',
+        val: init,
+        on_update_hook: function ( success ){
+            ok( success, 'budget pulldown - with val' );
+            ok( !this.is_error );
+            var elm = $( '#hpp-budget-sel-2' );
+            is( elm.val(), init );
+            is( elm.find( 'option[value=' + init + ']' ).text(), '2001～3000円' );
+        }
+    });
+})();
+
+// HotPepper.UI.Kodawari.Checkbox
+(function (){
+    var p = new HotPepper.UI.Kodawari.Checkbox();
+    ok( p, 'kodawari checkbox - default' );
+    ok( !p.is_error );
+    is( p.label, 'こだわり' );
+    var elm = $( '#hpp-kodawari-checkbox' );
+    is( elm.find( 'input' ).length, 31, 'input' );
+    is( elm.find( 'span.rui-checkbox-label' ).length, 31, 'label' );
+})();
+
+// HotPepper.UI.Order.Pulldown
+(function (){
+    var p = new HotPepper.UI.Order.Pulldown();
+    ok( p, 'order pulldown - default' );
+    ok( !p.is_error );
+    is( p.label, '並び順' );
+    var elm = $( '#hpp-order-sel' );
+    is( elm.attr( 'name' ), 'order' );
+    var opt = elm.find( 'option' );
+    cmpOK( opt.length, '>', 1 );
+    is( $( opt[0] ).text(), 'オススメ順' );
+})();
+(function (){
+    var init = 3;
+    var p = new HotPepper.UI.Order.Pulldown({
+        id : 'hpp-order-sel-2',
+        val: init
+    });
+    ok( p, 'order pulldown - with val' );
+    var elm = $( '#hpp-order-sel-2' );
+    is( elm.val(), init );
+    is( elm.find( 'option[value=' + init + ']' ).text(), '小エリア順' );
+})();
+</script></pre>
+</body>
+</html>

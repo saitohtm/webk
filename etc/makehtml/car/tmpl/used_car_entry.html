@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+<meta name="keyword" content="自動車サイト,自動車メディア,カーメディア,車,車情報,情報誌登録" xml:lang="ja" lang="ja"/>
+<meta name="description" content="自動車関連サイトの登録窓口。" xml:lang="ja" lang="ja"/>
+<title>自動車サイト登録画面</title>
+<!--METATOP-->
+<link href="/css/bootstrap-responsive.css" rel="stylesheet">
+<link href="/css/bootstrap-formhelpers.css" rel="stylesheet">
+<link href="/css/bootstrap-formhelpers-countries.flags.css" rel="stylesheet">
+<script src="/js/bootstrap-formhelpers-datepicker.en_US.js"></script>
+<script src="/js/bootstrap-formhelpers-datepicker.js"></script>
+</head>
+<body>
+<!--HEADER-->
+<!--AD_HEADER-->
+	
+注意文:<br><br>
+
+<form action="/used_car_entry.htm" method="post">
+
+<font color="#002595">■</font>分類<br /><br />
+<select name="brand" required>
+<option value="">選択してください</option>
+<option value="1">車を売りたい</option>
+<option value="2">車のパーツを売りたい</option>
+</select><br><br>
+
+<font color="#002595">■</font>車種タイプ<br /><br />
+<select name="type_of_car" required>
+<option value="">選択してください</option>
+<!--TYPE_OF_CAR_LIST-->
+</select><br><br>
+
+<font color="#002595">■</font>排気量区分<br /><br />
+<select name="engine_displacement" required>
+<option value="">選択してください</option>
+<!--ENGINE_DISPLACEMENT_LIST-->
+</select><br><br>
+
+<font color="#002595">■</font>年式<br /><br />
+<select name="year_of_car" required>
+<option value="">選択してください</option>
+<!--YEAR_OF_CAR_LIST-->
+</select><br><br>
+
+<font color="#002595">■</font>走行距離<br /><br />
+<select name="mileage" required>
+<option value="">選択してください</option>
+<!--MILEAGE_LIST-->
+</select><br><br>
+
+<font color="#002595">■</font>あなたの車種のブランド<br /><br />
+<select name="brand" required>
+<option value="">選択してください</option>
+<!--BRAND_LIST-->
+</select><br><br>
+
+別㌻
+<font color="#002595">■</font>車種名<br /><br />
+<input name="car_name" type="text" placeholder="セレナ" required><br>
+
+<font color="#002595">■</font>車種詳細グレード<br /><br />
+<input name="car_grade" type="text" placeholder="ハイウェイスター"><br>
+
+
+<div class="control-group">
+    <label class="control-label" for="fileInput">ファイル入力</label>
+    <div class="controls">
+    <input class="input-file" id="fileInput" type="file">
+    </div>
+    <div class="controls">
+    <input class="input-file" id="fileInput" type="file">
+    </div>
+    <div class="controls">
+    <input class="input-file" id="fileInput" type="file">
+    </div>
+</div>
+
+
+<font color="#002595">■</font>郵便番号<br /><br />
+<input name="zipcode" type="text" placeholder="123-1234" required><br>
+
+<font color="#002595">■</font>エリア<br /><br />
+<select name="year" required>
+<option value="">選択してください</option>
+<!--PREF_LIST-->
+</select><br><br>
+
+<font color="#002595">■</font>メールアドレス<br /><br />
+<input name="mailaddress" type="text" placeholder="" required><br>
+
+<font color="#002595">■</font>掲載日時<br /><br />
+<input name="mailaddress" type="text" placeholder="" required><br>
+
+
+<div class="bfh-datepicker">
+  <div class="input-prepend bfh-datepicker-toggle" data-toggle="bfh-datepicker">
+    <span class="add-on"><i class="icon-calendar"></i></span>
+    <input type="text" class="input-medium" readonly>
+  </div>
+  <div class="bfh-datepicker-calendar">
+    <table class="calendar table table-bordered">
+      <thead>
+        <tr class="months-header">
+          <th class="month" colspan="4">
+            <a class="previous" href="#"><i class="icon-chevron-left"></i></a>
+            <span></span>
+            <a class="next" href="#"><i class="icon-chevron-right"></i></a>
+          </th>
+          <th class="year" colspan="3">
+            <a class="previous" href="#"><i class="icon-chevron-left"></i></a>
+            <span></span>
+            <a class="next" href="#"><i class="icon-chevron-right"></i></a>
+          </th>
+        </tr>
+        <tr class="days-header">
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<font color="#002595">■</font>パスワード<br /><br />
+<input name="pass" type="password" placeholder="" required><br>
+
+<button class="btn primary" type="submit">登録</button>
+</form>
+
+<!--FOOTER-->
+</body>
+</html>

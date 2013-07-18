@@ -1,0 +1,44 @@
+#!/usr/bin/perl
+
+use Cache::Memcached;
+use Waao::Utility;
+
+my $domain = $ENV{'SERVER_NAME'};
+
+print << "END_OF_HTML";
+Content-type: application/xml;
+
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.google.com/schemas/sitemap/0.84"
+  xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0">
+END_OF_HTML
+
+my $memd = new Cache::Memcached {
+   'servers' => [ "localhost:11211" ],
+   'debug' => 0,
+   'compress_threshold' => 1_000,
+};
+
+my $memkey = "trendperson";
+my $today_trend;
+$today_trend = $memd->get( $memkey );
+
+if($today_trend){
+	my $cnt = 0;
+	foreach my $keyword (@{$today_trend->{rank}}){
+		$cnt++;
+		my $str_encode = &str_encode($keyword);
+print << "END_OF_HTML";
+<url>
+<loc>http://$domain/search.html?guid=ON&amp;q=$str_encode</loc>
+<mobile:mobile/>
+</url>
+END_OF_HTML
+	}
+}
+
+print << "END_OF_HTML";
+</urlset>
+END_OF_HTML
+
+1;

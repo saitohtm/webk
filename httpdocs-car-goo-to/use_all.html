@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>例 組み合わせ - 中古車検索 - カーセンサー - Recruit UI Library</title>
+<link rel="stylesheet" href="use_all.css" type="text/css" />
+<script type="text/javascript" src="/recruit/docs/js/jquery-1.2.3.js"></script>
+<script type="text/javascript" src="/recruit/docs/js/jquery.form.js"></script>
+<script type="text/javascript" src="/recruit.ui.js"></script>
+<script type="text/javascript" src="/carsensor.ui.js"></script>
+<script type="text/javascript">
+$(function (){
+    Recruit.UI.key = '9a62bda886ec7031';
+    Recruit.UI.Base.Pulldown.first_opt_text = '-';
+
+    new CarSensor.UI.CountryBrand.Pulldown();
+    new CarSensor.UI.Places.Pulldown();
+    new CarSensor.UI.Body.Checkbox();
+    new CarSensor.UI.Color.Pulldown();
+    new CarSensor.UI.Person.Pulldown();
+    new CarSensor.UI.Price.Pulldown();
+    new CarSensor.UI.Mission.Pulldown();
+    new CarSensor.UI.Kodawari.Checkbox();
+    new CarSensor.UI.Year.Pulldown();
+    new CarSensor.UI.Odd.Pulldown();
+    new CarSensor.UI.UsedCar.Order.Pulldown();
+
+    $( '#form-block form' ).submit( function (){
+        jsonp_request();
+        return false;
+    });
+});
+
+function jsonp_request ( start ){
+    if( !start ){ start = 1 }
+    var ruip = $( '#rui-page' ).html( 'loading...' );
+    var ruir = $( '#rui-result' ).empty();
+    $( '#rui-page-foot' ).empty();
+
+    var url = 'http://webservice.recruit.co.jp/carsensor/usedcar/v1/?'
+        + 'key=' + Recruit.UI.key + '&format=jsonp&callback=?'
+        + '&start=' + start + '&'
+        + $( '#form-block form' ).formSerialize();
+
+    $.getJSON( url, function ( json ){
+        var res = json.results;
+        // error check
+        if( res.error ){
+            ruip.html( res.error[0].message );
+            return false;
+        }
+        // auto paginate
+        var page = new Recruit.UI.Page.Simple( json );
+        page.paginate({
+            request: jsonp_request,
+            sub_uis: [{
+                id: 'rui-page-foot',
+                template: '<span class="rui-page-back"><a '
+                    + 'href="">&lt;前へ</a>　</span><span '
+                    + 'class="rui-page-next"><a href="">次へ&gt;</a></span>'
+            }]
+        });
+        // display results
+        var ol = $( '<ol></ol>' ).attr( 'start', start );
+        $.each( res.usedcar, function (){
+            var text = ( typeof this.price == 'string' )? '価格' + this.price + ' ' : this.price / 10000 + '万円 ';
+            text += this.brand.name + ' ' + this.model + ' ' + this.grade;
+            var shop = this.shop.name + ' (' + this.shop.pref.name + ')';
+            var li = $( '<li style="clear:both">'
+                + '<img src="' + this.photo.main.s + '"'
+                + ' style="float:left;margin:0 10px 10px 0">'
+                + '<a href="' + this.urls.pc + '">' + text + '</a>'
+                + '<br>' + shop + '</li>' );
+            ol.append( li );
+        });
+        ruir.append( ol );
+    });
+}
+</script>
+</head>
+<body>
+<h1>組み合わせ - 中古車検索 </h1>
+<div id="form-block">
+<div id="form-block-inner">
+    <form action="">
+        <div class="ui-block" style="margin-bottom:0">
+            <label>ブランド</label>
+            <select id="car-country-sel"></select>
+        </div>
+        <div class="ui-block">
+            <label>&nbsp;</label>
+            <select id="car-brand-sel"></select>
+        </div>
+        <div class="ui-block">
+            <label>車種名</label>
+            <input type="text" name="model"/>
+        </div>
+        <div class="ui-block" style="margin-bottom:0">
+            <label>エリア</label>
+            <select id="car-large-area-sel"></select>
+        </div>
+        <div class="ui-block">
+            <label>&nbsp;</label>
+            <select id="car-pref-sel"></select>
+        </div>
+        <div class="ui-block">
+            <label>ボディタイプ</label>
+            <table><tr><td>
+            <div id="car-body-checkbox"></div>
+            </td></tr></table>
+        </div>
+        <div class="ui-block" style="clear:both">
+            <label>カラー</label>
+            <select id="car-color-sel"></select>
+        </div>
+        <div class="ui-block" style="margin-bottom:0">
+            <label>価格帯</label>
+            <select id="car-price-min-sel"></select>
+        </div>
+        <div class="ui-block">
+            <label>&nbsp;</label>
+            <select id="car-price-max-sel"></select>
+        </div>
+        <div class="ui-block" style="margin-bottom:0">
+            <label>年式</label>
+            <select id="car-year-min-sel"></select>
+        </div>
+        <div class="ui-block">
+            <label>&nbsp;</label>
+            <select id="car-year-max-sel"></select>
+        </div>
+        <div class="ui-block" style="margin-bottom:0">
+            <label>走行距離</label>
+            <select id="car-odd-min-sel"></select>
+        </div>
+        <div class="ui-block">
+            <label>&nbsp;</label>
+            <select id="car-odd-max-sel"></select>
+        </div>
+        <div class="ui-block">
+            <label>定員数</label>
+            <select id="car-person-sel"></select>
+        </div>
+        <div class="ui-block">
+            <label>ミッション</label>
+            <select id="car-mission-sel"></select>
+        </div>
+        <div class="ui-block">
+            <label>こだわり</label>
+            <table><tr><td>
+            <div id="car-kodawari-checkbox"></div>
+            </td></tr></table>
+        </div>
+        <div class="ui-block">
+            <label>キーワード</label>
+            <input type="text" name="keyword"/>
+        </div>
+        <div class="ui-block">
+            <label>並び順</label>
+            <select id="car-usedcar-order-sel"></select>
+        </div>
+        <div class="ui-block">
+            <label>&nbsp;</label>
+            <input type="submit" value="検索" />
+        </div>
+        <input type="hidden" name="count" value="10"/>
+    </form>
+</div>
+</div>
+<div id="result-block">
+<div id="result-block-inner">
+    <div id="rui-page"></div>
+    <div id="rui-result"></div>
+    <div id="rui-page-foot"></div>
+</div>
+</div>
+
+</body>
+</html>

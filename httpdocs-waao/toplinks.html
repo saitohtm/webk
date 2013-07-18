@@ -1,0 +1,16 @@
+#!/usr/local/bin/perl -w
+use lib qw(/var/www/vhosts/waao.jp/etc/lib /var/www/vhosts/waao.jp/lib/Waao);
+use DBI;
+use Seolinks;
+
+my $html .= &toplink();
+
+print << "END_OF_HTML";
+Content-type: text/plain; charset=shift_jis
+
+$html
+END_OF_HTML
+
+
+exit(0);
+

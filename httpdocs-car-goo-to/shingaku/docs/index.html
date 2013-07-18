@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>リクルート進学ネット - リクルート WEBサービス UI Library</title>
+<link rel="stylesheet" href="../../recruit/docs/css/yui.reset-fonts-grids-base.css" type="text/css" />
+<link rel="stylesheet" href="../../recruit/docs/css/style.css" type="text/css" />
+<link rel="stylesheet" href="./css/style.css" type="text/css" />
+<script type="text/javascript" src="../../recruit/docs/js/jquery-1.2.3.js"></script>
+<script type="text/javascript" src="../../recruit/docs/js/jquery.form.js"></script>
+<script type="text/javascript" src="../../recruit.ui.js"></script>
+<script type="text/javascript" src="../../shingaku.ui.js"></script>
+<script type="text/javascript">
+$(function (){
+    Recruit.UI.key = 'a450fa593ee3f2a4';
+    new Shingaku.UI.Pref.Pulldown();
+    new Shingaku.UI.Order.Pulldown();
+    new Shingaku.UI.Category.Pulldown();
+    new Shingaku.UI.Category.Checkbox();
+
+    $( 'form' ).submit( function (){
+        alert( $( this ).formSerialize() );
+        return false;
+    });
+});
+</script>
+</head>
+<body>
+<div id="doc" class="yui-t4">                   
+<div id="hd">
+    <div id="hd-logo">
+        <a href="http://webservice.recruit.co.jp/">
+        <img src="../../recruit/docs/img/rws_logo.gif" border="0"/></a>
+    </div>
+    <div id="hd-main">
+        <h1 id="top"><a href="../../index.html">リクルート進学ネット</a></h1>
+        <p>Shingaku.UI.*: a part of Recruit Web Service UI Library</p>
+    </div>
+</div><!-- end hd -->
+
+<div id="bd">
+<div id="yui-main">
+<div class="yui-b cont">
+    <div class="breadcrumb">
+        <a href="../../">TOP</a> &gt; リクルート進学ネット
+    </div>
+    <h2 id="synopsis">概要</h2>
+    <p><img src="img/logo.gif"
+    style="float:left;margin-bottom:10px;margin-right:5px"/><a
+        href="http://webservice.recruit.co.jp/shingaku/">リクルート進学ネット WEBサービス</a>を活用したサイトを構築する際、便利に使えるユーザーインターフェース系のJavascriptライブラリです。</p>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h2 id="libs">提供ライブラリ一覧</h2>
+    <h3>エリア選択</h3>
+    <dl>
+        <dt id="libs-pref-pulldown"><a href="pref.pulldown.html">エリア選択 プルダウン</a></dt>
+        <dd>学校検索APIのレスポンス結果を「北海道」「東京」等の地域で絞り込む為のプルダウンを自動生成するモジュール。Shingaku.UI.Pref.Pulldown<div class="sample">
+            <form action="">
+            <select id="shin-pref-sel"></select>
+            <input class="submit-btn" type="submit" value="値を確認" />
+            </form>
+        </div>
+        <p class="to-desc"><a href="pref.pulldown.html">&gt;&gt; 詳細ページへ</a></p><p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p></dd>
+    </dl>
+    <h3>カテゴリ選択</h3>
+    <dl>
+        <dt id="libs-category-pulldown"><a
+        href="category.pulldown.html">カテゴリ選択 プルダウン</a></dt>
+        <dd>学校検索APIのレスポンス結果を「国立大学」「予備校」等のカテゴリで絞り込む為のプルダウンを自動生成するモジュール。Shingaku.UI.Category.Pulldown<div class="sample">
+            <form action="">
+            <select id="shin-category-sel"></select>
+            <input class="submit-btn" type="submit" value="値を確認" />
+            </form>
+        </div>
+        <p class="to-desc"><a href="category.pulldown.html">&gt;&gt; 詳細ページへ</a></p><p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p></dd>
+        <dt id="libs-category-checkbox"><a
+        href="category.checkbox.html">カテゴリ選択 チェックボックス</a></dt>
+        <dd>チェックボックス型のUI。Shingaku.UI.Category.Checkbox<div class="sample">
+            <form action="">
+            <div id="shin-category-checkbox"></div>
+            <div class="submit"><input type="submit" value="値を確認" /></div>
+            </form>
+        </div>
+        <p class="to-desc"><a href="category.checkbox.html">&gt;&gt; 詳細ページへ</a></p><p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p></dd>
+    </dl>
+    <h3>並び順選択</h3>
+    <dl>
+        <dt id="libs-order-pulldown"><a href="order.pulldown.html">並び順選択 プルダウン</a></dt>
+        <dd>学校検索APIのレスポンス結果の並び順を選択する為のプルダウンを自動生成するモジュール。Shingaku.UI.Order.Pulldown<div class="sample">
+            <form action="">
+            <select id="shin-order-sel"></select>
+            <input class="submit-btn" type="submit" value="値を確認" />
+            </form>
+        </div>
+        <p class="to-desc"><a href="order.pulldown.html">&gt;&gt; 詳細ページへ</a></p><p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p></dd>
+    </dl>
+    <h2 id="samples">サンプルコード</h2>
+    <p>上記ライブラリをすべて使用した場合のサンプルです:</p>
+    <pre style="padding:20px"><a href="../samples/use_all.html">組み合わせ利用 サンプルコード</a></pre>
+    <p>その他個別ライブラリごとのサンプルコードはそれらの詳細ページを参照のこと。</p>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h2 id="updates">更新履歴</h2>
+    <dl class="updates">
+        <dt>2008.02.27</dt>
+        <dd>v1.0 初回リリース</dd>
+    </dl>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+</div><!-- end yui-b -->
+</div><!-- end yui-main -->
+<div class="yui-b navi">
+<div class="banner">
+    <a href="../../index.html"><img src="../../recruit/docs/img/rui-logo-banner.jpg"/></a>
+</div>
+<h3>INDEX</h3>
+<ul>
+    <li><a href="#synopsis">概要</a></li>
+    <li><a href="#libs">提供ライブラリ一覧</a>
+        <ul class="nobullet" style="margin-top:10px;font-size:1em">
+            <li>エリア選択
+                <ul class="nobullet2">
+                <li><a href="#libs-pref-pulldown">プルダウン</a></li>
+                </ul>
+            </li>
+            <li>カテゴリ選択
+                <ul class="nobullet2">
+                <li><a href="#libs-category-pulldown">プルダウン</a></li>
+                <li><a href="#libs-category-checkbox">チェックボックス</a></li>
+                </ul>
+            </li>
+            <li>並び順選択
+                <ul class="nobullet2">
+                <li><a href="#libs-order-pulldown">プルダウン</a></li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    <li><a href="#samples">サンプルコード</a></li>
+    <li><a href="#updates">更新履歴</a></li>
+</ul>
+<h3 style="margin-top:20px">その他</h3>
+<ul class="nobullet">
+    <li><a href="http://webservice.recruit.co.jp/shingaku/">リクルート進学ネット WEBサービス</a></li>
+    <li><a href="http://mtl.recruit.co.jp/contact.html">お問い合わせ</a></li>
+
+</ul>
+</div><!-- end yui-b navi -->
+</div><!-- end bd -->
+
+<div id="ft">
+<div class="inner">
+<div class="yui-gc">
+    <div class="yui-u first">
+    本コンテンツはリクルートが提供する実験サービスです
+    </div>
+    <div class="yui-u">
+    <p><a href="http://mtl.recruit.co.jp/"><img src="../../recruit/docs/img/mtl_logo.gif" border="0" alt="メディアテクノロジーラボ"></a></p>
+    </div>
+</div>
+</div><!-- end inner-->
+</div><!-- end ft -->
+</div><!-- end doc -->
+
+</body>
+</html>

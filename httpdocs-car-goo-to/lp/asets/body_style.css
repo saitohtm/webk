@@ -1,0 +1,82 @@
+/*******************************************************/
+/* Untimate SEO Templates.                             */
+/* This file Makes by ASY! SEO School JAPAN.           */
+/* We have More Free SEO Templetes.                    */
+/* http://dokodemo.rankuappu.com/templates/index.html  */
+/* Please Visit Our Website.                           */
+/*******************************************************/
+/*　不許複製・配布　*/
+/* BODY Desine.                                        */
+body {
+	background: #FFFFFF;
+	font: 16px/150% "ＭＳ Ｐゴシック", Osaka;
+	color: #000000;
+	padding: 0px;
+	margin: 0px;
+}
+.top_layer {
+	width: 800px;
+	background: url(images/background.jpg);
+	padding-bottom: 7px;
+	position: relative;
+	border-top: 1px solid #666666;
+}
+.middle_layer {
+	width: 660px;
+	text-align: left;
+	background: url(images/background.jpg);
+	border-bottom: 1px solid #FFFFFF;
+	padding-right: 70px;
+	padding-left: 70px;
+	border-top: 1px solid #FFFFFF;
+}
+.bottom_layer {
+	width: 660px;
+	position: relative;
+	padding: 0px 70px;
+	font-size: 10px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	background: url(images/background.jpg);
+	border-top: 0px solid #FFFFFF;
+	border-right-width: 0px;
+	border-bottom-width: 0px;
+	border-left-width: 0px;
+	border-right-color: #FFFFFF;
+	border-bottom-color: #FFFFFF;
+	border-left-color: #FFFFFF;
+}
+.image_hidariyose {
+	padding: 0px;
+	float: left;
+	margin-top: 0px;
+	margin-right: 16px;
+	margin-bottom: 0px;
+}
+.talk {
+	background: url(images/talk.gif) no-repeat left top;
+	padding: 30px;
+	border: 1px solid #CCCCCC;
+	font-size: 14px;
+	display: block;
+	position: relative;
+	left: 30px;
+	width: 500px;
+	line-height: 150%;
+}.face_photo {
+	background: url(images/face.gif) no-repeat;
+	padding: 5px 5px 20px;
+	float: left;
+	margin-right: 24px;
+	margin-top: -16px;
+	margin-left: -10px;
+}
+.top_image {
+	background: url(images/top_back.gif) no-repeat center center;
+	padding: 10px;
+	margin: 0px -5px;
+}
+p {
+	margin-right: 12px;
+	margin-left: 12px;
+}

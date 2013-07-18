@@ -1,0 +1,100 @@
+#!/usr/local/bin/perl -w
+
+use DBI;
+use CGI;
+use URI::Escape;
+
+my $html=new CGI;
+my $fileupload = $html->param('newsfile');
+
+my $blogstr;
+if($fileupload){
+	my $cnt;
+	my $datetime;
+	my $title;
+	my $body;
+    while(<$fileupload>) {
+		$cnt++;
+		if($cnt == 1){
+        	$datetime = $_;
+			$blogstr .= $_.qq{<br>};
+        }else{
+			unless($cnt % 2){
+				$title = $_;
+				$blogstr .= &_makelinks($title).qq{<br>};
+			}else{
+				$body = $_;
+				$blogstr .= &_makelinks($body).qq{<br>};
+				&_set_db($datetime,$title,$body);
+			}
+        }
+    }
+    close $fileupload;
+}
+
+print "Content-type: text/html\n\n";
+
+print << "END_OF_HTML";
+<html>
+<HEAD><meta http-equiv="content-type" CONTENT="text/html;charset=Shift_JIS">
+<meta http-equiv="Pragma" CONTENT="no-cache">
+<meta http-equiv="Cache-Control" CONTENT="no-cache">
+</HEAD>
+<body>
+<title>File Upload</title>
+■ブログ掲載テキスト<br>
+<textarea rows="10" cols="100">
+$blogstr
+</textarea>
+</body>
+</html>
+END_OF_HTML
+
+
+exit;
+
+sub _set_db(){
+	my $datetime = shift;
+	my $title = shift;
+	my $body = shift;
+	
+	my $dbh = &_db_connect();
+
+eval{
+	my $sth = $dbh->prepare( qq{ insert into topics (`titlestr`,`news`,`insdate`) values(?,?,?)} );
+	$sth->execute($title,$body,$datetime);
+};
+	$dbh->disconnect;
+
+	return;
+}
+
+sub _db_connect(){
+
+	my $dsn = 'DBI:mysql:waao';
+	my $user = 'mysqlweb';
+	my $password = 'WaAoqzxe7h6yyHz';
+	my $dbh = DBI->connect($dsn,$user,$password,{RaiseError => 1, AutoCommit => 0});
+
+	return $dbh;
+}
+sub _makelinks(){
+	my $str = shift;
+	my $makestr;
+	my @vals = split(/:::/, $str);
+	foreach my $val (@vals) {
+		if($val=~/^:/){
+			$val =~s/^://;
+			my $str_encode = &str_encode($val);
+			$makestr .= qq{<a href="http://waao.jp/$str_encode/search/">$val</a>};
+		}else{
+			$makestr .= $val;
+		}
+	}
+	
+	return $makestr;
+}
+sub str_encode(){
+	my $str = shift;
+	return uri_escape($str);
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>updateday</key><string>2010-06-18</string>
+		<key>updatefiles</key>
+		<array>
+			<string>http://waao.jp/zipupdata/20100618/01HOKKAI.CSV</string>
+			<string>http://waao.jp/zipupdata/20100618/27OSAKA.CSV</string>
+			<string>http://waao.jp/zipupdata/20100618/13TOKYO.CSV</string>
+		</array>
+	</dict>
+</array>
+</plist>

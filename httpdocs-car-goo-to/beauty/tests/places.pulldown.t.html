@@ -1,0 +1,483 @@
+<html>
+<head>
+<script type="text/javascript" src="../../recruit/tests/js/JSAN.js"></script>
+<script type="text/javascript" src="../../recruit/docs/js/jquery-1.2.3.js"></script>
+<script type="text/javascript" src="../../recruit.ui.js"></script>
+<script type="text/javascript" src="../../beauty.ui.js"></script>
+</head>
+<body>
+<div style="display:none">
+    <select id="bty-service-area-sel"></select>
+    <select id="bty-service-area-sel-2"></select>
+    <select id="bty-service-area-sel-4"></select>
+    <br />
+    <select id="bty-middle-area-sel"></select>
+    <select id="bty-middle-area-sel-2"></select>
+    <select id="bty-middle-area-sel-3"></select>
+    <select id="bty-middle-area-sel-5"></select>
+    <br />
+    <select id="bty-small-area-sel"></select>
+    <select id="bty-small-area-sel-2"></select>
+    <select id="bty-small-area-sel-3"></select>
+    <select id="bty-small-area-sel-5"></select>
+    <br />
+    <select id="combo-bty-service-area-sel"></select>
+    <select id="combo-bty-middle-area-sel"></select>
+    <select id="combo-bty-small-area-sel"></select>
+    <br />
+    <select id="combo-bty-service-area-sel-2"></select>
+    <select id="combo-bty-middle-area-sel-2"></select>
+    <br />
+    <select id="combo-bty-middle-area-sel-3"></select>
+    <select id="combo-bty-small-area-sel-3"></select>
+    <br />
+    <select id="combo-bty-middle-area-sel-4"></select>
+    <br />
+    <select id="combo-bty-service-area-sel-5"></select>
+    <select id="combo-bty-middle-area-sel-5"></select>
+    <select id="combo-bty-small-area-sel-5"></select>
+    <br />
+    <select id="combo-bty-service-area-sel-6"></select>
+    <select id="combo-bty-middle-area-sel-6"></select>
+    <select id="combo-bty-small-area-sel-6"></select>
+    <br />
+    <select id="combo-bty-service-area-sel-7"></select>
+</div>
+<pre id="test"><script type="text/javascript">
+
+JSAN.use( "Test.More" );
+plan({ tests: 100 });
+
+is( typeof Beauty, 'function' );
+is( typeof Beauty.UI, 'function' );
+is( typeof Beauty.UI.Places, 'function' );
+
+// set API key
+Recruit.UI.key = 'a450fa593ee3f2a4';
+
+// サービスエリア - 正常系
+(function (){
+    // デフォルト
+    new Beauty.UI.Places.ServiceArea.Pulldown({
+        on_update_hook: function ( success ){
+            ok( success, 'service area - default' );
+            var elm = $( '#bty-service-area-sel' );
+            var opt = elm.find( 'option' );
+            is( elm.length, 1 );
+            ok( opt.length > 1 );
+            is( $( opt[1] ).val(), 'SA' );
+            is( $( opt[3] ).val(), 'SC' );
+            is( $( opt[0] ).text(), '指定なし' );
+            is( $( opt[1] ).text(), '関東' );
+            is( $( opt[3] ).text(), '東海' );
+        }
+    });
+    // 初期値 val を指定
+    new Beauty.UI.Places.ServiceArea.Pulldown({
+        id: 'bty-service-area-sel-4',
+        val: 'SB',
+        on_update_hook: function ( success ){
+            ok( success, 'area - val' );
+            var elm = $( '#bty-service-area-sel-4' );
+            var opt = elm.find( 'option' );
+            is( elm.length, 1 );
+            ok( opt.length > 1 );
+            is( elm.val(), 'SB' );
+        }
+    });
+})();
+
+// サービスエリア - 異常系
+(function (){
+    // APIキーを間違えたら
+    var ar = new Beauty.UI.Places.ServiceArea.Pulldown({
+        id: 'bty-service-area-sel-2',
+        on_update_hook: function ( success ){
+            ok( !success, 'area - wrong api key' );
+            ok( this.driver.errstr.match( /APIキー.+?正しくありません/ ) );
+            var elm = $( '#bty-service-area-sel-2' );
+            var opt = elm.find( 'option' );
+            is( elm.length, 1 );
+            is( opt.length, 1 );
+        },
+        prm: {
+            key: 'wrong_key'
+        }
+    });
+})();
+// サービスエリア - 異常系 - プルダウン要素が存在しなかったら
+(function (){
+    var ar = new Beauty.UI.Places.ServiceArea.Pulldown({
+        id: 'bty-service-area-sel-xxx'
+    });
+    is( ar.is_error, true );
+    ok( ar.error_msg.match(
+        /HTML要素が見つかりません/ ), 'area - no elm' );
+})();
+
+// 中エリア - 正常系
+(function (){
+    // デフォルト
+    new Beauty.UI.Places.MiddleArea.Pulldown({
+        area: 'SA',
+        on_update_hook: function ( success ){
+            ok( success, 'middle area - default' );
+            var elm = $( '#bty-middle-area-sel' );
+            var opt = elm.find( 'option' );
+            is( elm.length, 1 );
+            ok( opt.length > 0 );
+            is( $( opt[0] ).text(), '指定なし' );
+            is( $( opt[2] ).val(), 'AB' );
+            is( $( opt[2] ).text(), '池袋' );
+        }
+    });
+    // 初期値 val を指定 
+    new Beauty.UI.Places.MiddleArea.Pulldown({
+        id: 'bty-middle-area-sel-5',
+        service_area: 'SA',
+        val: 'AB', // 池袋
+        on_update_hook: function ( success ){
+            ok( success, 'middle area - val' );
+            var elm = $( '#bty-middle-area-sel-5' );
+            var opt = elm.find( 'option' );
+            is( elm.length, 1 );
+            ok( opt.length > 0 );
+            is( elm.val(), 'AB' );
+        }
+    });
+})();
+// 中エリア - 異常系
+(function (){
+    // APIキーを間違えたら
+    var ar = new Beauty.UI.Places.MiddleArea.Pulldown({
+        id: 'bty-middle-area-sel-2',
+        service_area: 'SA',
+        on_update_hook: function ( success ){
+            ok( !success, 'middle area - wrong api key' );
+            ok( this.driver.errstr.match( /APIキー.+?正しくありません/ ) );
+            var elm = $( '#bty-middle-area-sel-2' );
+            var opt = elm.find( 'option' );
+            is( elm.length, 1 );
+            is( opt.length, 1 );
+        },
+        prm: {
+            key: 'wrong_key'
+        }
+    });
+})();
+// 中エリア - 異常系 - プルダウン要素が存在しなかったら
+(function (){
+    var ar = new Beauty.UI.Places.MiddleArea.Pulldown({
+        id: 'bty-middle-area-sel-xxx',
+        service_area: 'SA'
+    });
+    is( ar.is_error, true );
+    ok( ar.error_msg.match(
+        /HTML要素が見つかりません/ ),
+        'middle area - no elm' );
+})();
+// 中エリア - 異常系 - サービスエリアを指定しなかったら
+(function (){
+    var ar = new Beauty.UI.Places.MiddleArea.Pulldown({
+        id: 'bty-middle-area-sel-3'
+    });
+    var elm = $( '#bty-middle-area-sel-3' );
+    var opt = elm.find( 'option' );
+    is( elm.length, 1 );
+    is( opt.length, 1 );
+    ok( ar.is_error );
+    ok( ar.error_msg.match( /service_areaが指定されていません/ ) );
+})();
+
+// 小エリア - 正常系
+(function (){
+    // デフォルト
+    new Beauty.UI.Places.SmallArea.Pulldown({
+        middle_area: 'AD',
+        on_update_hook: function ( success ){
+            ok( success, 'small area - default' );
+            var elm = $( '#bty-small-area-sel' );
+            var opt = elm.find( 'option' );
+            is( elm.length, 1 );
+            ok( opt.length > 0 );
+            is( $( opt[0] ).text(), '指定なし' );
+            is( $( opt[4] ).val(), 'X010' );
+            is( $( opt[4] ).text(), '原宿' );
+        }
+    });
+    // 初期値 val を指定 
+    new Beauty.UI.Places.SmallArea.Pulldown({
+        id: 'bty-small-area-sel-5',
+        middle_area: 'AB',
+        val: 'X005',
+        with_tour_count: true,
+        on_update_hook: function ( success ){
+            ok( success, 'small area - val' );
+            var elm = $( '#bty-small-area-sel-5' );
+            var opt = elm.find( 'option' );
+            is( elm.length, 1 );
+            ok( opt.length > 0 );
+            is( elm.val(), 'X005' );
+        }
+    });
+})();
+// 小エリア - 異常系
+(function (){
+    // APIキーを間違えたら
+    var ar = new Beauty.UI.Places.SmallArea.Pulldown({
+        id: 'bty-small-area-sel-2',
+        middle_area: 'AB',
+        on_update_hook: function ( success ){
+            ok( !success, 'small area - wrong api key' );
+            ok( this.driver.errstr.match( /APIキー.+?正しくありません/ ) );
+            var elm = $( '#bty-small-area-sel-2' );
+            var opt = elm.find( 'option' );
+            is( elm.length, 1 );
+            is( opt.length, 1 );
+        },
+        prm: {
+            key: 'wrong_key'
+        }
+    });
+})();
+// 小エリア - 異常系 - プルダウン要素が存在しなかったら
+(function (){
+    var ar = new Beauty.UI.Places.SmallArea.Pulldown({
+        id: 'bty-small-area-sel-xxx',
+        middle_area: 'AB'
+    });
+    is( ar.is_error, true );
+    ok( ar.error_msg.match(
+        /HTML要素が見つかりません/ ),
+        'small area - no elm' );
+})();
+// 小エリア - 異常系 - 国を指定しなかったら
+(function (){
+    var ar = new Beauty.UI.Places.SmallArea.Pulldown({
+        id: 'bty-small-area-sel-3'
+    });
+    var elm = $( '#bty-small-area-sel-3' );
+    var opt = elm.find( 'option' );
+    is( elm.length, 1 );
+    is( opt.length, 1 );
+    ok( ar.is_error );
+    ok( ar.error_msg.match( /middle_areaが指定されていません/ ) );
+})();
+
+// コンビネーション - 基本形
+(function (){
+    var p = new Beauty.UI.Places.Pulldown({
+        service_area: {
+            id: 'combo-bty-service-area-sel',
+            on_update_hook: function ( success ){
+                ok( success, 'combo - basic' );
+                // プルダウン存在チェック
+                var elm_ar = $( '#combo-bty-service-area-sel' );
+                var opt_ar = elm_ar.find( 'option' );
+                is( elm_ar.length, 1 );
+                ok( opt_ar.length > 1 );
+                var elm_co = $( '#combo-bty-middle-area-sel' );
+                var opt_co = elm_co.find( 'option' );
+                is( elm_co.length, 1 );
+                is( opt_co.length, 1 );
+                var elm_ci = $( '#combo-bty-small-area-sel' );
+                var opt_ci = elm_ci.find( 'option' );
+                is( elm_ci.length, 1 );
+                is( opt_ci.length, 1 );
+                // 連動更新チェック
+                p.middle_area.driver.on_update_hook = function ( success ){
+                    ok( success, 'middle area 連動更新' );
+                    var elm_co = $( '#combo-bty-middle-area-sel' );
+                    var opt_co = elm_co.find( 'option' );
+                    cmpOK( opt_co.length, '>', 1 );
+                    // 中エリア更新
+                    p.middle_area.driver.on_update_hook = function ( success ){
+                        ok( success, 'small area 連動更新' );
+                        var elm_ci = $( '#combo-bty-small-area-sel' );
+                        var opt_ci = elm_ci.find( 'option' );
+                        cmpOK( opt_ci.length, '>', 1 );
+                    };
+                    p.middle_area.elm.val( 'IN' ).change(); // 国更新
+                };
+                p.service_area.elm.val( 'AAS' ).change(); // エリア更新
+            }
+        },
+        middle_area: { id: 'combo-bty-middle-area-sel' },
+        small_area:    { id: 'combo-bty-small-area-sel' }
+    });
+})();
+// コンビネーション - ServiceArea + MiddleArea のみ
+(function (){
+    new Beauty.UI.Places.Pulldown({
+        service_area: {
+            id: 'combo-bty-service-area-sel-2',
+            on_update_hook: function ( success ){
+                ok( success, 'combo - service area + middle area' );
+                // プルダウン存在チェック
+                var elm_ar = $( '#combo-bty-service-area-sel-2' );
+                var opt_ar = elm_ar.find( 'option' );
+                is( elm_ar.length, 1 );
+                ok( opt_ar.length > 1 );
+                var elm_co = $( '#combo-bty-middle-area-sel-2' );
+                var opt_co = elm_co.find( 'option' );
+                is( elm_co.length, 1 );
+                is( opt_co.length, 1 );
+            }
+        },
+        middle_area: { id: 'combo-bty-middle-area-sel-2' },
+        small_area:   { id: 'combo-bty-small-area-sel-2' }
+    });
+})();
+// コンビネーション - MiddleArea + SmallArea のみ
+(function (){
+    new Beauty.UI.Places.Pulldown({
+        service_area: { id: 'combo-bty-service-area-sel-3' },
+        middle_area: {
+            id: 'combo-bty-middle-area-sel-3',
+            service_area: 'SA',
+            on_update_hook: function ( success ){
+                ok( success, 'combo - middle area + small area' );
+                // プルダウン存在チェック
+                var elm_co = $( '#combo-bty-middle-area-sel-3' );
+                var opt_co = elm_co.find( 'option' );
+                is( elm_co.length, 1 );
+                cmpOK( opt_co.length, '>', 1 );
+                var elm_ci = $( '#combo-bty-small-area-sel-3' );
+                var opt_ci = elm_co.find( 'option' );
+                is( elm_ci.length, 1 );
+                cmpOK( opt_ci.length, '>', 1 );
+            }
+        },
+        small_area: { id: 'combo-bty-small-area-sel-3' }
+    });
+})();
+// コンビネーション - 単品利用 (middle area)
+(function (){
+    new Beauty.UI.Places.Pulldown({
+        service_area: { id: 'combo-bty-service-area-sel-4' },
+        middle_area: {
+            id: 'combo-bty-middle-area-sel-4',
+            service_area: 'SB',
+            on_update_hook: function ( success ){
+                ok( success, 'combo - middle area standalone' );
+                // プルダウン存在チェック
+                var elm_co = $( '#combo-bty-middle-area-sel-4' );
+                var opt_co = elm_co.find( 'option' );
+                is( elm_co.length, 1 );
+                cmpOK( opt_co.length, '>', 1 );
+            }
+        },
+        small_area: { id: 'combo-bty-small-area-sel-4' }
+    });
+})();
+
+
+// find_item_by_code
+(function (){
+    var p = new Beauty.UI.Places.Pulldown();
+    p.find_item_by_code({
+        small_area: 'X005',
+        callback: function ( itm ){
+            ok( itm, 'find_item_by_code - small area' );
+            is( itm.name, '西口・北口・目白・板橋' );
+            is( itm.middle_area.name, '池袋' );
+            is( itm.service_area.name, '関東' );
+        }
+    });
+    p = new Beauty.UI.Places.Pulldown();
+    p.find_item_by_code({
+        middle_area: 'AB',
+        callback: function ( itm ){
+            ok( itm, 'find_item_by_code - middle area' );
+            is( itm.name, '池袋' );
+            is( itm.service_area.name, '関東' );
+        }
+    });
+    p = new Beauty.UI.Places.Pulldown();
+    p.find_item_by_code({
+        service_area: 'SA',
+        callback: function ( itm ){
+            ok( itm, 'find_item_by_code - service area' );
+            is( itm.name, '関東' );
+        }
+    });
+})();
+
+// コンビネーション - デフォルト small area 値つき
+(function (){
+    new Beauty.UI.Places.Pulldown({
+        service_area: {
+            id: 'combo-bty-service-area-sel-5',
+            on_update_hook: function ( success ){
+                ok( success, 'combo - with default small area - service area' );
+                is( $( '#combo-bty-service-area-sel-5' ).val(), 'SA' );
+            }
+        },
+        middle_area: {
+            id: 'combo-bty-middle-area-sel-5',
+            on_update_hook: function ( success ){
+                ok( success, 'combo - with default small area - middle area' );
+                is( $( '#combo-bty-middle-area-sel-5' ).val(), 'AB' );
+            }
+        },
+        small_area: {
+            id: 'combo-bty-small-area-sel-5',
+            val: 'X005',
+            on_update_hook: function ( success ){
+                ok( success, 'combo - with default small area - small area' );
+                is( $( '#combo-bty-small-area-sel-5' ).val(), 'X005' );
+            }
+        }
+    });
+})();
+// コンビネーション - デフォルト middle area 値つき
+(function (){
+    new Beauty.UI.Places.Pulldown({
+        service_area: {
+            id: 'combo-bty-service-area-sel-6',
+            on_update_hook: function ( success ){
+                ok( success, 'combo - with default middle area - service area' );
+                is( $( '#combo-bty-service-area-sel-6' ).val(), 'SA' );
+            }
+        },
+        middle_area: {
+            id: 'combo-bty-middle-area-sel-6',
+            val: 'AB',
+            on_update_hook: function ( success ){
+                ok( success, 'combo - with default middle area - middle area' );
+                is( $( '#combo-bty-middle-area-sel-6' ).val(), 'AB' );
+            }
+        },
+        small_area: {
+            id: 'combo-bty-small-area-sel-6',
+            on_update_hook: function ( success ){
+                ok( success, 'combo - with default middle area - small area' );
+                cmpOK( $( '#combo-bty-small-area-sel-6 option' ).length, '>', 1 );
+            }
+        }
+    });
+})();
+// コンビネーション - デフォルト middle area 値つき
+// service area プルダウンのみ存在
+(function (){
+    new Beauty.UI.Places.Pulldown({
+        service_area: {
+            id: 'combo-bty-service-area-sel-7',
+            on_update_hook: function ( success ){
+                ok( success, 'combo - with default middle area 2 - service area' );
+                is( $( '#combo-bty-service-area-sel-7' ).val(), 'SA' );
+            }
+        },
+        middle_area: {
+            id: 'combo-bty-middle-area-sel-7',
+            val: 'AB',
+            on_update_hook: function ( success ){
+                ok( success, 'combo - with default middle area 2 - middle area' );
+                is( $( '#combo-bty-middle-area-sel-7' ).length, 0 );
+            }
+        }
+    });
+})();
+</script></pre>
+</body>
+</html>

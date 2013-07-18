@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>テスト エリア選択 プルダウン - カーセンサー - Recruit UI Library</title>
+<style type="text/css">
+select {
+    width: 150px;
+    margin-bottom: 5px;
+}
+</style>
+<script type="text/javascript" src="../../recruit/docs/js/jquery-1.2.3.js"></script>
+<script type="text/javascript" src="../../recruit/docs/js/jquery.form.js"></script>
+<script type="text/javascript" src="../../recruit.ui.js"></script>
+<script type="text/javascript" src="../../carsensor.ui.js"></script>
+<script type="text/javascript">
+$(function (){
+    Recruit.UI.key = 'a450fa593ee3f2a4';
+    new CarSensor.UI.Places.Pulldown();
+    new CarSensor.UI.Places.Pulldown({
+        large_area: { id: 'c2', val: '1' }, 
+        pref:       { id: 'b2' }
+    });
+    new CarSensor.UI.Places.Pulldown({
+        large_area: { id: 'c3' }, 
+        pref:       { id: 'b3', val: '12' }
+    });
+    new CarSensor.UI.Places.Pulldown({
+        large_area: { id: 'c4' }
+    });
+    new CarSensor.UI.Places.Pulldown({
+        pref:       { id: 'b5', large_area: '2' }
+    });
+
+    $( 'form' ).submit( function (){
+        alert( $( this ).formSerialize() );
+        return false;
+    });
+});
+</script>
+</head>
+<body>
+<h1>エリア選択 プルダウン</h1>
+<div class="sample">
+    <h2>基本形</h2>
+    <form id="sample-form" action="">
+    <select id="car-large-area-sel"></select>
+    <select id="car-pref-sel"></select>
+    <input type="submit" value="値を確認" />
+    </form>
+</div>
+<div class="sample">
+    <h2>大エリア 初期値あり</h2>
+    <form id="sample-form" action="">
+    <select id="c2"></select>
+    <select id="b2"></select>
+    <input type="submit" value="値を確認" /> 関東
+    </form>
+</div>
+<div class="sample">
+    <h2>都道府県 初期値あり</h2>
+    <form id="sample-form" action="">
+    <select id="c3"></select>
+    <select id="b3"></select>
+    <input type="submit" value="値を確認" /> 千葉
+    </form>
+</div>
+<div class="sample">
+    <h2>大エリアのみ</h2>
+    <form id="sample-form" action="">
+    <select id="c4"></select>
+    <input type="submit" value="値を確認" />
+    </form>
+</div>
+<div class="sample">
+    <h2>都道府県のみ</h2>
+    <form id="sample-form" action="">
+    <select id="b5"></select>
+    <input type="submit" value="値を確認" /> 関西
+    </form>
+</div>
+
+</body>
+</html>

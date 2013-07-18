@@ -1,0 +1,64 @@
+body {
+	padding-top: 60px;
+	padding: 10px;
+	margin: 0;
+}
+
+#message1 {
+	display: inline-block;
+	width: 6em;
+	text-align: center;
+	background: green;
+	visibility: hidden;
+	color: #FFFFFF;
+}
+
+#message2 {
+	display: inline-block;
+	width: 6em;
+	text-align: center;
+	background: red;
+	visibility: hidden;
+	color: #FFFFFF;
+}
+
+#grid-content {
+	overflow: hidden;
+	height: 0;
+	border: 1px solid #3B5998;
+	background-color: #EEEEEE;
+//	background-image: url(./images/vgrid_back.gif);
+	background-repeat: repeat;
+
+}
+
+#grid-content div {
+	width: 200px;
+	height: auto;
+//	border: 1px solid #FF0000;
+	background-color: #000000;
+//	background-color: #3B5998;
+	color: #FFFFFF;
+	margin: 5px;
+	padding: 3px;
+
+//   -webkit-box-shadow: 0 10px 6px -6px #777;
+//    -moz-box-shadow: 0 10px 6px -6px #777;
+//       box-shadow: 0 10px 6px -6px #777;
+}
+
+//#grid-content div h3 {
+//	line-height: 1.1em;
+//	margin: 0;
+//	padding: 0;
+//	color: #FFFFFF;
+//}
+
+
+#grid-content div p {
+	margin: 0;
+	padding: 0;
+}
+
+
+

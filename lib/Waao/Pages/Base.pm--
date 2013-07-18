@@ -1,0 +1,10 @@
+package Waao::Pages::Base;
+
+use strict;
+
+sub new(){
+	my $class = shift;
+
+	return bless $self, $class;
+}
+1;

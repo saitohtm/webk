@@ -1,0 +1,354 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>ビューティー - リクルート WEBサービス UI Library</title>
+<link rel="stylesheet" href="../../recruit/docs/css/yui.reset-fonts-grids-base.css" type="text/css" />
+<link rel="stylesheet" href="../../recruit/docs/css/style.css" type="text/css" />
+<link rel="stylesheet" href="./css/style.css" type="text/css" />
+<script type="text/javascript" src="../../recruit/docs/js/jquery-1.2.3.js"></script>
+<script type="text/javascript" src="../../recruit/docs/js/jquery.form.js"></script>
+<script type="text/javascript" src="../../recruit.ui.js"></script>
+<script type="text/javascript" src="../../beauty.ui.js"></script>
+<script type="text/javascript">
+$(function (){
+    Recruit.UI.key = 'a450fa593ee3f2a4';
+    new Beauty.UI.Places.Pulldown();
+    new Beauty.UI.HairImage.Pulldown();
+    new Beauty.UI.HairLength.Pulldown();
+    new Beauty.UI.HairRyou.Pulldown();
+    new Beauty.UI.HairShitsu.Pulldown();
+    new Beauty.UI.HairFutosa.Pulldown();
+    new Beauty.UI.HairKuse.Pulldown();
+    new Beauty.UI.HairKaogata.Pulldown();
+    new Beauty.UI.Kodawari.Pulldown();
+    new Beauty.UI.Kodawari.Checkbox();
+    new Beauty.UI.KodawariSetsubi.Pulldown();
+    new Beauty.UI.KodawariSetsubi.Checkbox();
+    new Beauty.UI.KodawariMenu.Pulldown();
+    new Beauty.UI.KodawariMenu.Checkbox();
+    new Beauty.UI.Order.Pulldown();
+
+    $( 'form' ).submit( function (){
+        alert( $( this ).formSerialize() );
+        return false;
+    });
+});
+</script>
+</head>
+<body>
+<div id="doc" class="yui-t4">                   
+<div id="hd">
+    <div id="hd-logo">
+        <a href="http://webservice.recruit.co.jp/">
+        <img src="../../recruit/docs/img/rws_logo.gif" border="0"/></a>
+    </div>
+    <div id="hd-main">
+        <h1 id="top"><a href="../../index.html">ビューティー</a></h1>
+        <p>Beauty.UI.*: a part of Recruit Web Service UI Library</p>
+    </div>
+</div><!-- end hd -->
+
+<div id="bd">
+<div id="yui-main">
+<div class="yui-b cont">
+    <div class="breadcrumb">
+        <a href="../../">TOP</a> &gt; ビューティー
+    </div>
+    <h2 id="synopsis">概要</h2>
+    <p><img src="img/logo.gif"
+    style="float:left;margin-bottom:10px;margin-right:5px"/><a
+        href="http://webservice.recruit.co.jp/beauty/">ビューティー WEBサービス</a>を活用したサイトを構築する際、便利に使えるユーザーインターフェース系のJavascriptライブラリです。</p>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h2 id="libs">提供ライブラリ一覧</h2>
+    <h3>エリア選択</h3>
+    <dl>
+        <dt id="libs-places-pulldown"><a href="places.pulldown.html">エリア選択 プルダウン</a></dt>
+        <dd>関東 &gt; 渋谷・青山 &gt; センター街 ...といった地域を選択する為の4つのプルダウンを自動生成するモジュール。これらプルダウンが相互連動します。Beauty.UI.Places.Pulldown<div
+            class="sample">
+            <form action="">
+            <span class="lbl">サービスエリア:</span> <select
+                id="bty-service-area-sel"></select><br  style="clear:both"/>
+            <span class="lbl">中エリア:</span> <select
+                id="bty-middle-area-sel"></select><br  style="clear:both"/>
+            <span class="lbl">小エリア:</span> <select 
+                id="bty-small-area-sel"></select>
+            <div class="submit"><input type="submit" value="値を確認" /></div>
+            </form>
+        </div>
+        <p class="to-desc"><a href="places.pulldown.html">&gt;&gt; 詳細ページへ</a></p><p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p></dd>
+    </dl>
+    <h3>イメージ選択</h3>
+    <dl>
+        <dt id="libs-hair-image-pulldown"><a
+        href="hair-image.pulldown.html">イメージ選択 プルダウン</a></dt>
+        <dd>サロン検索APIのレスポンス結果を髪型イメージで絞り込む為のプルダウンを自動生成するモジュール。Beauty.UI.HairImage.Pulldown<div class="sample">
+            <form action="">
+            <select id="bty-hair-image-sel"></select>
+            <input class="submit-btn" type="submit" value="値を確認" />
+            </form>
+        </div>
+        <p class="to-desc"><a href="hair-image.pulldown.html">&gt;&gt; 詳細ページへ</a></p><p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p></dd>
+
+    </dl>
+    <h3>髪の長さ選択</h3>
+    <dl>
+        <dt id="libs-hair-length-pulldown"><a
+        href="hair-length.pulldown.html">髪の長さ選択 プルダウン</a></dt>
+        <dd>サロン検索APIのレスポンス結果を髪の長さで絞り込む為のプルダウンを自動生成するモジュール。Beauty.UI.HairLength.Pulldown<div class="sample">
+            <form action="">
+            <select id="bty-hair-length-sel"></select>
+            <input class="submit-btn" type="submit" value="値を確認" />
+            </form>
+        </div>
+        <p class="to-desc"><a href="hair-length.pulldown.html">&gt;&gt; 詳細ページへ</a></p><p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p></dd>
+    </dl>
+    <h3>髪の量選択</h3>
+    <dl>
+        <dt id="libs-hair-ryou-pulldown"><a
+        href="hair-ryou.pulldown.html">髪の量選択 プルダウン</a></dt>
+        <dd>サロン検索APIのレスポンス結果を髪の量で絞り込む為のプルダウンを自動生成するモジュール。Beauty.UI.HairRyou.Pulldown<div class="sample">
+            <form action="">
+            <select id="bty-hair-ryou-sel"></select>
+            <input class="submit-btn" type="submit" value="値を確認" />
+            </form>
+        </div>
+        <p class="to-desc"><a href="hair-ryou.pulldown.html">&gt;&gt; 詳細ページへ</a></p><p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p></dd>
+    </dl>
+    <h3>髪の質選択</h3>
+    <dl>
+        <dt id="libs-hair-shitsu-pulldown"><a
+        href="hair-shitsu.pulldown.html">髪の質選択 プルダウン</a></dt>
+        <dd>サロン検索APIのレスポンス結果を髪の質で絞り込む為のプルダウンを自動生成するモジュール。Beauty.UI.HairShitsu.Pulldown<div class="sample">
+            <form action="">
+            <select id="bty-hair-shitsu-sel"></select>
+            <input class="submit-btn" type="submit" value="値を確認" />
+            </form>
+        </div>
+        <p class="to-desc"><a href="hair-shitsu.pulldown.html">&gt;&gt; 詳細ページへ</a></p><p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p></dd>
+    </dl>
+    <h3>髪の太さ選択</h3>
+    <dl>
+        <dt id="libs-hair-futosa-pulldown"><a
+        href="hair-futosa.pulldown.html">髪の太さ選択 プルダウン</a></dt>
+        <dd>サロン検索APIのレスポンス結果を髪の太さで絞り込む為のプルダウンを自動生成するモジュール。Beauty.UI.HairFutosa.Pulldown<div class="sample">
+            <form action="">
+            <select id="bty-hair-futosa-sel"></select>
+            <input class="submit-btn" type="submit" value="値を確認" />
+            </form>
+        </div>
+        <p class="to-desc"><a href="hair-futosa.pulldown.html">&gt;&gt; 詳細ページへ</a></p><p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p></dd>
+    </dl>
+    <h3>髪のクセ選択</h3>
+    <dl>
+        <dt id="libs-hair-kuse-pulldown"><a
+        href="hair-kuse.pulldown.html">髪のクセ選択 プルダウン</a></dt>
+        <dd>サロン検索APIのレスポンス結果を髪のクセで絞り込む為のプルダウンを自動生成するモジュール。Beauty.UI.HairKuse.Pulldown<div class="sample">
+            <form action="">
+            <select id="bty-hair-kuse-sel"></select>
+            <input class="submit-btn" type="submit" value="値を確認" />
+            </form>
+        </div>
+        <p class="to-desc"><a href="hair-kuse.pulldown.html">&gt;&gt; 詳細ページへ</a></p><p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p></dd>
+    </dl>
+    <h3>顔型選択</h3>
+    <dl>
+        <dt id="libs-hair-kaogata-pulldown"><a
+        href="hair-kaogata.pulldown.html">顔型選択 プルダウン</a></dt>
+        <dd>サロン検索APIのレスポンス結果を顔の形で絞り込む為のプルダウンを自動生成するモジュール。Beauty.UI.HairKaogata.Pulldown<div class="sample">
+            <form action="">
+            <select id="bty-hair-kaogata-sel"></select>
+            <input class="submit-btn" type="submit" value="値を確認" />
+            </form>
+        </div>
+        <p class="to-desc"><a href="hair-kaogata.pulldown.html">&gt;&gt; 詳細ページへ</a></p><p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p></dd>
+    </dl>
+    <h3>こだわり選択</h3>
+    <dl>
+        <dt id="libs-kodawari-pulldown"><a href="kodawari.pulldown.html">こだわり選択 プルダウン</a></dt>
+        <dd>サロン検索APIのレスポンス結果をこだわり条件で絞り込む為のプルダウンを自動生成するモジュール。Beauty.UI.Kodawari.Pulldown<div class="sample">
+            <form action="">
+            <select id="bty-kodawari-sel"></select>
+            <input class="submit-btn" type="submit" value="値を確認" />
+            </form>
+        </div>
+        <p class="to-desc"><a href="kodawari.pulldown.html">&gt;&gt; 詳細ページへ</a></p><p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p></dd>
+        <dt id="libs-kodawari-checkbox"><a href="kodawari.checkbox.html">こだわり選択 チェックボックス</a></dt>
+        <dd>チェックボックス型のUI。Beauty.UI.Kodawari.Checkbox<div class="sample">
+            <form action="">
+            <div id="bty-kodawari-checkbox"></div>
+            <div class="submit"><input type="submit" value="値を確認" /></div>
+            </form>
+        </div>
+        <p class="to-desc"><a href="kodawari.checkbox.html">&gt;&gt; 詳細ページへ</a></p><p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p></dd>
+    </dl>
+    <h3>こだわり設備選択</h3>
+    <dl>
+        <dt id="libs-kodawari-setsubi-pulldown"><a href="kodawari-setsubi.pulldown.html">こだわり設備選択 プルダウン</a></dt>
+        <dd>サロン検索APIのレスポンス結果を設備に対するこだわり条件で絞り込む為のプルダウンを自動生成するモジュール。Beauty.UI.KodawariSetsubi.Pulldown<div class="sample">
+            <form action="">
+            <select id="bty-kodawari-setsubi-sel"></select>
+            <input class="submit-btn" type="submit" value="値を確認" />
+            </form>
+        </div>
+        <p class="to-desc"><a href="kodawari-setsubi.pulldown.html">&gt;&gt; 詳細ページへ</a></p><p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p></dd>
+        <dt id="libs-kodawari-setsubi-checkbox"><a
+        href="kodawari-setsubi.checkbox.html">こだわり設備選択 チェックボックス</a></dt>
+        <dd>チェックボックス型のUI。Beauty.UI.KodawariSetsubi.Checkbox
+        <div class="sample">
+            <form action="">
+            <div id="bty-kodawari-setsubi-checkbox"></div>
+            <div class="submit"><input type="submit" value="値を確認" /></div>
+            </form>
+        </div>
+        <p class="to-desc"><a href="kodawari-setsubi.checkbox.html">&gt;&gt; 詳細ページへ</a></p><p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p></dd>
+    </dl>
+    <h3>こだわりメニュー選択</h3>
+    <dl>
+        <dt id="libs-kodawari-menu-pulldown"><a href="kodawari-menu.pulldown.html">こだわりメニュー選択 プルダウン</a></dt>
+        <dd>サロン検索APIのレスポンス結果をこだわりのメニュー条件で絞り込む為のプルダウンを自動生成するモジュール。Beauty.UI.KodawariMenu.Pulldown<div class="sample">
+            <form action="">
+            <select id="bty-kodawari-menu-sel"></select>
+            <input class="submit-btn" type="submit" value="値を確認" />
+            </form>
+        </div>
+        <p class="to-desc"><a href="kodawari-menu.pulldown.html">&gt;&gt; 詳細ページへ</a></p><p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p></dd>
+        <dt id="libs-kodawari-menu-checkbox"><a
+        href="kodawari-menu.checkbox.html">こだわりメニュー選択 チェックボックス</a></dt>
+        <dd>チェックボックス型のUI。Beauty.UI.KodawariMenu.Checkbox
+        <div class="sample">
+            <form action="">
+            <div id="bty-kodawari-menu-checkbox"></div>
+            <div class="submit"><input type="submit" value="値を確認" /></div>
+            </form>
+        </div>
+        <p class="to-desc"><a href="kodawari-menu.checkbox.html">&gt;&gt; 詳細ページへ</a></p><p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p></dd>
+    </dl>
+    <h3>並び順選択</h3>
+    <dl>
+        <dt id="libs-order-pulldown"><a href="order.pulldown.html">並び順選択 プルダウン</a></dt>
+        <dd>サロン検索APIのレスポンス結果の並び順を選択する為のプルダウンを自動生成するモジュール。Beauty.UI.Order.Pulldown<div class="sample">
+            <form action="">
+            <select id="bty-order-sel"></select>
+            <input class="submit-btn" type="submit" value="値を確認" />
+            </form>
+        </div>
+        <p class="to-desc"><a href="order.pulldown.html">&gt;&gt; 詳細ページへ</a></p><p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p></dd>
+    </dl>
+    <h2 id="samples">サンプルコード</h2>
+    <p>上記ライブラリをすべて使用した場合のサンプルです:</p>
+    <pre style="padding:20px"><a href="../samples/use_all.html">組み合わせ利用 サンプルコード</a></pre>
+    <p>その他個別ライブラリごとのサンプルコードはそれらの詳細ページを参照のこと。</p>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h2 id="updates">更新履歴</h2>
+    <dl class="updates">
+        <dt>2008.03.26</dt>
+        <dd>v1.01 クラスメソッド Beauty.UI.Places.find_place_by_code を インスタンスメソッド Beauty.UI.Places.Pulldown#find_item_by_code に変更</dd>
+        <dt>2008.02.02</dt>
+        <dd>v1.00 初回リリース</dd>
+    </dl>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+</div><!-- end yui-b -->
+</div><!-- end yui-main -->
+<div class="yui-b navi">
+<div class="banner">
+    <a href="../../index.html"><img src="../../recruit/docs/img/rui-logo-banner.jpg"/></a>
+</div>
+<h3>INDEX</h3>
+<ul>
+    <li><a href="#synopsis">概要</a></li>
+    <li><a href="#libs">提供ライブラリ一覧</a>
+        <ul class="nobullet" style="margin-top:10px;font-size:1em">
+            <li>エリア選択
+                <ul class="nobullet2">
+                <li><a href="#libs-places-pulldown">プルダウン</a></li>
+                </ul>
+            </li>
+            <li>イメージ選択
+                <ul class="nobullet2">
+                <li><a href="#libs-hair-image-pulldown">プルダウン</a></li>
+                </ul>
+            </li>
+            <li>髪の長さ選択
+                <ul class="nobullet2">
+                <li><a href="#libs-hair-length-pulldown">プルダウン</a></li>
+                </ul>
+            </li>
+            <li>髪の量
+                <ul class="nobullet2">
+                <li><a href="#libs-hair-ryou-pulldown">プルダウン</a></li>
+                </ul>
+            </li>
+            <li>髪の質
+                <ul class="nobullet2">
+                <li><a href="#libs-hair-shitsu-pulldown">プルダウン</a></li>
+                </ul>
+            </li>
+            <li>髪の太さ
+                <ul class="nobullet2">
+                <li><a href="#libs-hair-futosa-pulldown">プルダウン</a></li>
+                </ul>
+            </li>
+            <li>髪のクセ選択
+                <ul class="nobullet2">
+                <li><a href="#libs-hair-kuse-pulldown">プルダウン</a></li>
+                </ul>
+            </li>
+            <li>顔型選択
+                <ul class="nobullet2">
+                <li><a href="#libs-hair-kaogata-pulldown">プルダウン</a></li>
+                </ul>
+            </li>
+            <li>こだわり選択
+                <ul class="nobullet2">
+                <li><a href="#libs-kodawari-pulldown">プルダウン</a></li>
+                <li><a href="#libs-kodawari-checkbox">チェックボックス</a></li>
+                </ul>
+            </li>
+            <li>こだわり設備選択
+                <ul class="nobullet2">
+                <li><a href="#libs-kodawari-setsubi-pulldown">プルダウン</a></li>
+                <li><a href="#libs-kodawari-setsubi-checkbox">チェックボックス</a></li>
+                </ul>
+            </li>
+            <li>こだわりメニュー選択
+                <ul class="nobullet2">
+                <li><a href="#libs-kodawari-menu-pulldown">プルダウン</a></li>
+                <li><a href="#libs-kodawari-menu-checkbox">チェックボックス</a></li>
+                </ul>
+            </li>
+            <li>並び順選択
+                <ul class="nobullet2">
+                <li><a href="#libs-order-pulldown">プルダウン</a></li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    <li><a href="#samples">サンプルコード</a></li>
+    <li><a href="#updates">更新履歴</a></li>
+</ul>
+<h3 style="margin-top:20px">その他</h3>
+<ul class="nobullet">
+    <li><a href="http://webservice.recruit.co.jp/beauty/">ビューティー WEBサービス</a></li>
+    <li><a href="http://mtl.recruit.co.jp/contact.html">お問い合わせ</a></li>
+
+</ul>
+</div><!-- end yui-b navi -->
+</div><!-- end bd -->
+
+<div id="ft">
+<div class="inner">
+<div class="yui-gc">
+    <div class="yui-u first">
+    本コンテンツはリクルートが提供する実験サービスです
+    </div>
+    <div class="yui-u">
+    <p><a href="http://mtl.recruit.co.jp/"><img src="../../recruit/docs/img/mtl_logo.gif" border="0" alt="メディアテクノロジーラボ"></a></p>
+    </div>
+</div>
+</div><!-- end inner-->
+</div><!-- end ft -->
+</div><!-- end doc -->
+
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1"/>
+<meta name="format-detection" content="telephone=no" />
+
+<meta name="keyword" content="アプリ,app,まとめ,使える,役に立つ,人気,iphone,android,スマフォ,スマートフォン,smart,検索" xml:lang="ja" lang="ja"/>
+<meta name="description" content="日本最大級のアプリセール情報配信サイト「アプリーズ(applease)」。本当に使える！楽しい！アプリをスマフォで見やすくまとめで教えます！" xml:lang="ja" lang="ja"/>
+<meta name="title" content="日本最大級のアプリセール情報・アプリまとめ情報配信サイト！本当に使えるアプリ探しならアプリーズ(applease)スマフォ版" xml:lang="ja" lang="ja"/>
+<title>日本最大級のアプリセール情報・アプリまとめ情報配信サイト！本当に使えるアプリ探しならアプリーズ(applease)スマフォ版</title>
+<link rel="stylesheet" href="/jquery.mobile-1.0rc1.min.css" />
+<link rel="stylesheet" href="/css/smartphone.css">
+<script type="text/javascript" src="/jquery-1.6.4.js"></script>
+<script src="/js/jquery.easing.1.3.js" type="text/javascript" charset="UTF-8"></script>
+<script src="/js/jquery.vgrid.min.js" type="text/javascript" charset="UTF-8"></script>
+<script type="text/javascript">
+//<![CDATA[
+$(function(){
+	var hsort_flg = false;
+
+	//setup
+	var vg = $("#grid-content").vgrid({
+		easing: "easeOutQuint",
+		useLoadImageEvent: true,
+		useFontSizeListener: true,
+		time: 400,
+		delay: 20,
+		fadeIn: {
+			time: 500,
+			delay: 50
+		},
+		onStart: function(){
+			$("#message1")
+				.css("visibility", "visible")
+				.fadeOut("slow",function(){
+					$(this).show().css("visibility", "hidden");
+				});
+		},
+		onFinish: function(){
+			$("#message2")
+				.css("visibility", "visible")
+				.fadeOut("slow",function(){
+					$(this).show().css("visibility", "hidden");
+				});
+		}
+	});
+	$(window).load(function(e){
+		vg.vgrefresh();
+	});
+
+
+});
+//]]>
+</script>
+<script type="text/javascript" src="/my.js"></script>
+<script type="text/javascript" src="/jquery.mobile-1.0rc1.min.js"></script>
+<script src='http://a.adimg.net/javascripts/AdLantisLoader.js' type='text/javascript' charset='utf-8'></script>
+
+
+</head>
+<body>
+<div id="home" data-role="page">
+<div data-role="header" data-position="fixed">
+<h1><img src="/img/applease02.png" height="20"></h1>
+<a href="/smart/nemu/" data-icon="home" data-iconpos="text" data-direction="reverse">Menu</a>
+<a href="/smart/search/" data-icon="search" data-iconpos="notext" data-rel="dialog" data-transition="fade">Search</a>
+</div>
+
+<table width=100%>
+<tr bgcolor="#ffffff">
+<td width=50%>
+<img src="/img/apple_thum.gif" height="30"><br/>
+セールapp：8,982件<br />
+アプリ数：388,455件<br />
+    <a href="/smart/iphone/" data-role="button" >iPhone</a>
+</td>
+<td width=50%>
+<img src="/img/android_thum.jpg" height="30"><br/>
+セールapp：55件<br />
+アプリ数：41,114件<br />
+    <a href="/smart/android/" data-role="button" >Android</a>
+</td>
+</tr>
+<tr bgcolor="#ffffff">
+<td colspan=2>
+<br />
+<img src="/img/E00F_20.gif" height=25>applease(アプリーズ)とは、
+「お得で役に立つアプリを見つけやすく！」をコンセプトにしたアプリキュレーションサービスです。
+</td>
+</tr>
+</table>
+<div data-role="header">
+　iphone app
+</div>
+<div data-role="content">
+<ul data-role="listview">
+<li><a href="/smart/iphone/sale-iphone-app-1/">セールアプリ</a></li>
+<li><a href="/smart/iphone/new-iphone-app-1/">新着アプリ</a></li>
+</ul>
+</div>
+<div data-role="header">
+　Android app
+</div>
+<div data-role="content">
+<ul data-role="listview">
+<li><a href="/smart/android/sale-android-app-1/">セールアプリ</a></li>
+<li><a href="/smart/android/new-android-app-1/">新着アプリ</a></li>
+</ul>
+</div>
+
+<div data-role="header">
+<h2>オススメスマフォサイト</h2>
+</div>
+
+<div data-role="content">
+<ul data-role="listview">
+<li><a href="http://smax.tv/sitelist/"><img src="/img/ol01s.gif" height="25" class="ui-li-icon"> カテゴリ別に探す</a></li>
+<li><img src="/img/E011_20.gif" height="25" class="ui-li-icon"><a href="http://www.applease.info/smf/" target="_blank">アプリ比較レビュー</a></li>
+<li><img src="/img/E10E_20.gif" height="25" class="ui-li-icon"><a href="http://www.facebookranking.info/smf/" target="_blank">facebookランキング</a></li>
+<li><img src="/img/E155_20.gif" height="25" class="ui-li-icon"><a href="/hospital/" target="_blank">全国病院検索</a></li>
+</ul>
+</div>
+
+</div><!--home-->
+
+</body>
+</html>

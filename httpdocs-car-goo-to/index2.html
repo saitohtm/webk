@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" CONTENT="text/html; charset=UTF-8">
+
+<link rel="stylesheet" href="/recruit/docs/css/yui.reset-fonts-grids-base.css" type="text/css" />
+<link rel="stylesheet" href="/recruit/docs/css/style.css" type="text/css" />
+<link rel="stylesheet" href="/css/style.css" type="text/css" />
+<style type="text/css">
+#bd .cont div.price select { width: 120px }
+#bd .cont div.year select {
+    font-size: 0.8em;
+    width: 150px;
+}
+</style>
+<script type="text/javascript" src="/recruit/docs/js/jquery-1.2.3.js"></script>
+<script type="text/javascript" src="/recruit/docs/js/jquery.form.js"></script>
+<script type="text/javascript" src="/recruit.ui.js"></script>
+<script type="text/javascript" src="/carsensor.ui.js"></script>
+<script type="text/javascript">
+$(function (){
+    Recruit.UI.key = '9a62bda886ec7031';
+    new CarSensor.UI.CountryBrand.Pulldown();
+    new CarSensor.UI.Places.Pulldown();
+    new CarSensor.UI.Body.Pulldown();
+    new CarSensor.UI.Body.Checkbox();
+    new CarSensor.UI.Color.Pulldown();
+    new CarSensor.UI.Color.Checkbox();
+    new CarSensor.UI.Person.Pulldown();
+    new CarSensor.UI.Price.Pulldown();
+    new CarSensor.UI.Mission.Pulldown();
+    new CarSensor.UI.Kodawari.Checkbox();
+    new CarSensor.UI.Year.Pulldown();
+    new CarSensor.UI.Odd.Pulldown();
+    new CarSensor.UI.UsedCar.Order.Pulldown();
+    new CarSensor.UI.Catalog.Order.Pulldown();
+
+
+});
+</script>
+
+</head>
+<body>
+
+            <form action="aho" method=get>
+            <span class="lbl">国:</span> <select
+                id="car-country-sel"></select><br  style="clear:both"/>
+            <span class="lbl">ブランド:</span> <select 
+                id="car-brand-sel"></select>
+            <div class="submit"><input type="submit" value="値を確認" /></div>
+            </form>
+<br />
+
+</body>
+</html>

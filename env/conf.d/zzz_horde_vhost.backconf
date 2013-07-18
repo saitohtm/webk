@@ -1,0 +1,85 @@
+<VirtualHost  111.68.23.225:80>
+	ServerName horde.webmail
+	ServerAlias horde.webmail.*
+	ServerAdmin root@waao.jp
+
+	Include /etc/psa-webmail/horde/conf.d/*
+
+	UseCanonicalName Off
+
+	DocumentRoot /usr/share/psa-horde
+	Alias /horde/ /usr/share/psa-horde/
+	Alias /imp/ /usr/share/psa-horde/imp/
+
+	
+
+	<Directory /usr/share/psa-horde>
+		<IfModule sapi_apache2.c>
+			php_admin_flag engine on
+			php_admin_flag magic_quotes_gpc off
+			php_admin_flag safe_mode off
+
+			php_admin_value open_basedir "/usr/share/psa-horde:/etc/psa-webmail/horde:/etc/psa:/tmp:/var/tmp:/var/log/psa-horde:/usr/share/doc:/usr/share/psa-pear"
+			php_admin_value include_path "/usr/share/psa-horde:/usr/share/psa-horde/lib:/usr/share/psa-pear:."
+		</IfModule>
+
+		<IfModule mod_php5.c>
+			php_admin_flag engine on
+			php_admin_flag magic_quotes_gpc off
+			php_admin_flag safe_mode off
+
+			php_admin_value open_basedir "/usr/share/psa-horde:/etc/psa-webmail/horde:/etc/psa:/tmp:/var/tmp:/var/log/psa-horde:/usr/share/doc:/usr/share/psa-pear"
+			php_admin_value include_path "/usr/share/psa-horde:/usr/share/psa-horde/lib:/usr/share/psa-pear:."
+		</IfModule>
+
+		Order allow,deny
+		Allow from all
+	</Directory>
+</VirtualHost>
+
+<IfModule mod_ssl.c>
+<VirtualHost  111.68.23.225:443>
+	ServerName horde.webmail
+	ServerAlias horde.webmail.*
+	ServerAdmin root@waao.jp
+
+	Include /etc/psa-webmail/horde/conf.d/*
+
+	UseCanonicalName Off
+
+	DocumentRoot /usr/share/psa-horde
+	Alias /horde/ /usr/share/psa-horde/
+	Alias /imp/ /usr/share/psa-horde/imp/
+
+	SSLEngine on
+	SSLVerifyClient none
+	SSLCertificateFile /etc/httpd/conf/httpd.pem
+
+	
+
+	<Directory /usr/share/psa-horde>
+		<IfModule sapi_apache2.c>
+			php_admin_flag engine on
+			php_admin_flag magic_quotes_gpc off
+			php_admin_flag safe_mode off
+
+			php_admin_value open_basedir "/usr/share/psa-horde:/etc/psa-webmail/horde:/etc/psa:/tmp:/var/tmp:/var/log/psa-horde:/usr/share/doc:/usr/share/psa-pear"
+			php_admin_value include_path "/usr/share/psa-horde:/usr/share/psa-horde/lib:/usr/share/psa-pear:."
+		</IfModule>
+
+		<IfModule mod_php5.c>
+			php_admin_flag engine on
+			php_admin_flag magic_quotes_gpc off
+			php_admin_flag safe_mode off
+
+			php_admin_value open_basedir "/usr/share/psa-horde:/etc/psa-webmail/horde:/etc/psa:/tmp:/var/tmp:/var/log/psa-horde:/usr/share/doc:/usr/share/psa-pear"
+			php_admin_value include_path "/usr/share/psa-horde:/usr/share/psa-horde/lib:/usr/share/psa-pear:."
+		</IfModule>
+
+		SSLRequireSSL
+
+		Order allow,deny
+		Allow from all
+	</Directory>
+</VirtualHost>
+</IfModule>

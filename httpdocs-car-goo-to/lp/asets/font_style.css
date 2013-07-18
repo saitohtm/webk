@@ -1,0 +1,109 @@
+/*******************************************************/
+/* Untimate SEO Templates.                             */
+/* This file Makes by ASY! SEO School JAPAN.           */
+/* We have More Free SEO Templetes.                    */
+/* http://dokodemo.rankuappu.com/templates/index.html  */
+/* Please Visit Our Website.                           */
+/*******************************************************/
+/*　不許複製・配布　*/
+/* FONT Desine.                                        */
+.top_layer p {
+	color: #000000;
+	text-align: left;
+	margin: 0px 70px;
+	font-size: 12px;
+	line-height: 100%;
+}
+.catch-copy {
+	font-size: 18px;
+	font-weight: bold;
+	color: #000000;
+	padding: 24px;
+	line-height: 175%;
+	background: url(images/catchback.gif);
+	border-top: 1px solid #CCCCCC;
+	border-right: 1px solid #666666;
+	border-bottom: 1px solid #666666;
+	border-left: 1px solid #999999;
+}
+.middle_layer p {
+	color: #000000;
+	margin: 24px;
+}
+.bottom_layer a {
+	color: #333333;
+	text-decoration: none;
+}
+h1 {
+	font-size: 12px;
+	color: #666666;
+	margin-top: 4px;
+	margin-bottom: 0px;
+	text-align: center;
+	line-height: 100%;
+}
+h2 {
+	font-size: 24px;
+	margin-bottom: -7px;
+	padding-top: 26px;
+	padding-bottom: 0px;
+	background: url(images/h2back.gif) no-repeat center center;
+	height: 50px;
+	text-align: center;
+}
+h3 {
+	font-size: 22px;
+	margin-top: 24px;
+	margin-bottom: -7px;
+	padding-top: 22px;
+	padding-bottom: 0px;
+	background: url(images/h3back.gif) no-repeat center center;
+	text-align: center;
+	height: 45px;
+}h4 {
+	font-size: 16px;
+	font-weight: bold;
+	color: #990000;
+	text-align: center;
+	background: url(images/h4back.gif) no-repeat center center;
+	height: 44px;
+	padding-bottom: 0px;
+	padding-top: 20px;
+	margin-bottom: -14px;
+}
+.wakaba {
+	font-size: x-small;
+	line-height: 100%;
+}
+
+.for-search {
+	color: #999999;
+	font-size: 10px;
+	line-height: 100%;
+}
+.suisensya {
+	font-size: 12px;
+	border-bottom: 1px solid #CCCCCC;
+	position: relative;
+	float: right;
+	top: 6px;
+}
+ul {
+	margin-left: 64px;
+	list-style: url(images/check.gif);
+	color: #FF0000;
+}
+.tokuten {
+	float: left;
+	padding-right: 24px;
+	margin-left: 24px;
+}
+.price {
+	font-size: 28px;
+	font-weight: bold;
+	background: url(images/price.gif) no-repeat center;
+	width: 500px;
+	height: 35px;
+	line-height: 100%;
+	padding: 55px 165px 0px 0px;
+}

@@ -1,0 +1,232 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>ホットペッパー - リクルート WEBサービス UI Library</title>
+<link rel="stylesheet" href="../../recruit/docs/css/yui.reset-fonts-grids-base.css" type="text/css" />
+<link rel="stylesheet" href="../../recruit/docs/css/style.css" type="text/css" />
+<link rel="stylesheet" href="./css/style.css" type="text/css" />
+<script type="text/javascript" src="../../recruit/docs/js/jquery-1.2.3.js"></script>
+<script type="text/javascript" src="../../recruit/docs/js/jquery.form.js"></script>
+<script type="text/javascript" src="../../recruit.ui.js"></script>
+<script type="text/javascript" src="../../hotpepper.ui.js"></script>
+<script type="text/javascript">
+$(function (){
+    Recruit.UI.key = 'a450fa593ee3f2a4';
+    new HotPepper.UI.Places.Pulldown();
+    new HotPepper.UI.Genre.Pulldown();
+    new HotPepper.UI.Food.Pulldown();
+    new HotPepper.UI.Budget.Pulldown();
+    new HotPepper.UI.PartyCapacity.Pulldown();
+    new HotPepper.UI.Kodawari.Checkbox();
+    new HotPepper.UI.Order.Pulldown();
+
+    $( 'form' ).submit( function (){
+        alert( $( this ).formSerialize() );
+        return false;
+    });
+});
+</script>
+</head>
+<body>
+<div id="doc" class="yui-t4">                   
+<div id="hd">
+    <div id="hd-logo">
+        <a href="http://webservice.recruit.co.jp/">
+        <img src="../../recruit/docs/img/rws_logo.gif" border="0"/></a>
+    </div>
+    <div id="hd-main">
+        <h1 id="top"><a href="../../index.html">ホットペッパー</a></h1>
+        <p>HotPepper.UI.*: a part of Recruit Web Service UI Library</p>
+    </div>
+</div><!-- end hd -->
+
+<div id="bd">
+<div id="yui-main">
+<div class="yui-b cont">
+    <div class="breadcrumb">
+        <a href="../../">TOP</a> &gt; ホットペッパー
+    </div>
+    <h2 id="synopsis">概要</h2>
+    <p><img src="img/logo.gif"
+    style="float:left;margin-bottom:10px;margin-right:5px"/><a
+        href="http://webservice.recruit.co.jp/hotpepper/">ホットペッパー WEBサービス</a>を活用したサイトを構築する際、便利に使えるユーザーインターフェース系のJavascriptライブラリです。</p>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h2 id="libs">提供ライブラリ一覧</h2>
+    <h3>エリア選択</h3>
+    <dl>
+        <dt id="libs-places-pulldown"><a href="places.pulldown.html">エリア選択 プルダウン</a></dt>
+        <dd>関東 &gt; 東京 &gt; 渋谷・原宿 &gt; センター街・公園通り
+        ...といった地域を選択する為の4つのプルダウンを自動生成するモジュール。これらプルダウンが相互連動します。HotPepper.UI.Places.Pulldown<div
+            class="sample">
+            <form action="">
+            <span class="lbl">大サービスエリア:</span> <select
+                id="hpp-large-service-area-sel"></select><br style="clear:both"/>
+            <span class="lbl">サービスエリア:</span> <select
+                id="hpp-service-area-sel"></select><br  style="clear:both"/>
+            <span class="lbl">中エリア:</span> <select
+                id="hpp-middle-area-sel"></select><br  style="clear:both"/>
+            <span class="lbl">小エリア:</span> <select id="hpp-small-area-sel"></select>
+            <div class="submit"><input type="submit" value="値を確認" /></div>
+            </form>
+        </div>
+        <p class="to-desc"><a href="places.pulldown.html">&gt;&gt; 詳細ページへ</a></p><p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p></dd>
+    </dl>
+    <h3>ジャンル選択</h3>
+    <dl>
+        <dt id="libs-genre-pulldown"><a href="genre.pulldown.html">ジャンル選択 プルダウン</a></dt>
+        <dd>グルメサーチAPIのレスポンス結果をお店のジャンルで絞り込む為のプルダウンを自動生成するモジュール。HotPepper.UI.Genre.Pulldown<div class="sample">
+            <form action="">
+            <select id="hpp-genre-sel"></select>
+            <input class="submit-btn" type="submit" value="値を確認" />
+            </form>
+        </div>
+        <p class="to-desc"><a href="genre.pulldown.html">&gt;&gt; 詳細ページへ</a></p><p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p></dd>
+    </dl>
+    <h3>料理選択</h3>
+    <dl>
+        <dt id="libs-food-pulldown"><a href="food.pulldown.html">料理選択 プルダウン</a></dt>
+        <dd>グルメサーチAPIのレスポンス結果を料理の種類で絞り込む為のプルダウンを自動生成するモジュール。HotPepper.UI.Food.Pulldown<div class="sample">
+            <form action="">
+            <select id="hpp-food-sel"></select>
+            <input class="submit-btn" type="submit" value="値を確認" />
+            </form>
+        </div>
+        <p class="to-desc"><a href="food.pulldown.html">&gt;&gt; 詳細ページへ</a></p><p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p></dd>
+    </dl>
+    <h3>予算選択</h3>
+    <dl>
+        <dt id="libs-budget-pulldown"><a href="budget.pulldown.html">予算選択 プルダウン</a></dt>
+        <dd>グルメサーチAPIのレスポンス結果を予算で絞り込む為のプルダウンを自動生成するモジュール。HotPepper.UI.Budget.Pulldown<div class="sample">
+            <form action="">
+            <select id="hpp-budget-sel"></select>
+            <input class="submit-btn" type="submit" value="値を確認" />
+            </form>
+        </div>
+        <p class="to-desc"><a href="budget.pulldown.html">&gt;&gt; 詳細ページへ</a></p><p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p></dd>
+    </dl>
+    <h3>宴会収容人数選択</h3>
+    <dl>
+        <dt id="libs-party-capacity-pulldown"><a
+        href="party-capacity.pulldown.html">宴会収容人数選択 プルダウン</a></dt>
+        <dd>グルメサーチAPIのレスポンス結果を宴会・パーティの収容可能人数で絞り込む為のプルダウンを自動生成するモジュール。HotPepper.UI.PartyCapacity.Pulldown<div class="sample">
+            <form action="">
+            <select id="hpp-party-capacity-sel"></select>
+            <input class="submit-btn" type="submit" value="値を確認" />
+            </form>
+        </div>
+        <p class="to-desc"><a href="party-capacity.pulldown.html">&gt;&gt; 詳細ページへ</a></p><p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p></dd>
+    </dl>
+    <h3>こだわり選択</h3>
+    <dl>
+        <dt id="libs-kodawari-checkbox"><a href="kodawari.checkbox.html">こだわり選択 チェックボックス</a></dt>
+        <dd>「食べ放題」「個室あり」「ランチあり」等、お店のこだわり条件で結果を絞り込む為のチェックボックス群を自動生成するモジュール。HotPepper.UI.Kodawari.Checkbox<div class="sample">
+            <form action="">
+            <div id="hpp-kodawari-checkbox"></div>
+            <div class="submit"><input type="submit" value="値を確認" /></div>
+            </form>
+        </div>
+        <p class="to-desc"><a href="kodawari.checkbox.html">&gt;&gt; 詳細ページへ</a></p><p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p></dd>
+    </dl>
+    <h3>並び順選択</h3>
+    <dl>
+        <dt id="libs-order-pulldown"><a href="order.pulldown.html">並び順選択 プルダウン</a></dt>
+        <dd>グルメサーチAPIのレスポンス結果の並び順を選択する為のプルダウンを自動生成するモジュール。HotPepper.UI.Order.Pulldown<div class="sample">
+            <form action="">
+            <select id="hpp-order-sel"></select>
+            <input class="submit-btn" type="submit" value="値を確認" />
+            </form>
+        </div>
+        <p class="to-desc"><a href="order.pulldown.html">&gt;&gt; 詳細ページへ</a></p><p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p></dd>
+    </dl>
+    <h2 id="samples">サンプルコード</h2>
+    <p>上記ライブラリをすべて使用した場合のサンプルです:</p>
+    <pre style="padding:20px"><a href="../samples/use_all.html">組み合わせ利用 サンプルコード</a></pre>
+    <p>その他個別ライブラリごとのサンプルコードはそれらの詳細ページを参照のこと。</p>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h2 id="updates">更新履歴</h2>
+    <dl class="updates">
+        <dt>2008.03.31</dt>
+        <dd>v1.03<br/>* on_update_hook オプション指定のドキュメント追加<br/>* get_current_stat() メソッド追加</dd>
+        <dt>2008.03.26</dt>
+        <dd>v1.01 クラスメソッド HotPepper.UI.Places.find_place_by_code を インスタンスメソッド HotPepper.UI.Places.Pulldown#find_item_by_code に変更</dd>
+        <dt>2008.01.21</dt>
+        <dd>v1.00 初回リリース</dd>
+    </dl>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+</div><!-- end yui-b -->
+</div><!-- end yui-main -->
+<div class="yui-b navi">
+<div class="banner">
+    <a href="../../index.html"><img src="../../recruit/docs/img/rui-logo-banner.jpg"/></a>
+</div>
+<h3>INDEX</h3>
+<ul>
+    <li><a href="#synopsis">概要</a></li>
+    <li><a href="#libs">提供ライブラリ一覧</a>
+        <ul class="nobullet" style="margin-top:10px;font-size:1em">
+            <li>エリア選択
+                <ul class="nobullet2">
+                <li><a href="#libs-places-pulldown">プルダウン</a></li>
+                </ul>
+            </li>
+            <li>ジャンル選択
+                <ul class="nobullet2">
+                <li><a href="#libs-genre-pulldown">プルダウン</a></li>
+                </ul>
+            </li>
+            <li>料理選択
+                <ul class="nobullet2">
+                <li><a href="#libs-food-pulldown">プルダウン</a></li>
+                </ul>
+            </li>
+            <li>予算選択
+                <ul class="nobullet2">
+                <li><a href="#libs-budget-pulldown">プルダウン</a></li>
+                </ul>
+            </li>
+            <li>宴会収容人数選択
+                <ul class="nobullet2">
+                <li><a href="#libs-party-capacity-pulldown">プルダウン</a></li>
+                </ul>
+            </li>
+            <li>こだわり選択
+                <ul class="nobullet2">
+                <li><a href="#libs-kodawari-checkbox">チェックボックス</a></li>
+                </ul>
+            </li>
+            <li>並び順選択
+                <ul class="nobullet2">
+                <li><a href="#libs-order-pulldown">プルダウン</a></li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    <li><a href="#samples">サンプルコード</a></li>
+    <li><a href="#updates">更新履歴</a></li>
+</ul>
+<h3 style="margin-top:20px">その他</h3>
+<ul class="nobullet">
+    <li><a href="http://webservice.recruit.co.jp/hotpepper/">ホットペッパー WEBサービス</a></li>
+    <li><a href="http://mtl.recruit.co.jp/contact.html">お問い合わせ</a></li>
+
+</ul>
+</div><!-- end yui-b navi -->
+</div><!-- end bd -->
+
+<div id="ft">
+<div class="inner">
+<div class="yui-gc">
+    <div class="yui-u first">
+    本コンテンツはリクルートが提供する実験サービスです
+    </div>
+    <div class="yui-u">
+    <p><a href="http://mtl.recruit.co.jp/"><img src="../../recruit/docs/img/mtl_logo.gif" border="0" alt="メディアテクノロジーラボ"></a></p>
+    </div>
+</div>
+</div><!-- end inner-->
+</div><!-- end ft -->
+</div><!-- end doc -->
+
+</body>
+</html>

@@ -1,0 +1,530 @@
+@charset "UTF-8";
+
+/*
+	##### smart.goo.to #####
+	Copyright (C) waao All Rights Reserved.
+
+	[Base] Formatting browser's default styles
+		0. Reset
+		1. HTML, Body, Anchor
+		2. Headings
+		3. Lists
+		4. Tables
+		5. Forms
+		6. Others
+
+	[Layout] 
+		0. Base Layout
+		1. Header
+		2. Content
+		3. Footer
+
+	[Module] 
+		1. Common Module
+		90. Others
+		99. Clearfix
+*/
+
+/*/////////////////////////////////////////////////////////////
+[Base] 
+//////////////////////////////////////////////////////////////*/
+
+/* ------------------------------------------------------------
+	0. Reset
+------------------------------------------------------------ */
+html,body, div, dl, dt, dd, ul, ol, li, p,
+h1, h2, h3, h4, h5, h6,
+object, iframe, pre, code, p, blockquote,
+form, fieldset, legend,
+table, th, td, caption, tbody, tfoot, thead,
+article, aside, figure, footer, header,
+hgroup, menu, nav, section, audio, video, canvas {
+	margin: 0;
+	padding: 0;
+}
+article, aside, figure, footer, figcaption,
+header, hgroup, menu, 
+nav {
+	margin: 0;
+	padding: 0;
+	font-size: 100%;
+}
+section {
+	display: block;
+}
+
+/* ------------------------------------------------------------
+	1. Body, Anchor
+------------------------------------------------------------ */
+body {
+	-webkit-text-size-adjust: none; /* フォントサイズ自動調整OFF */
+	font-family: ArialMT, "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W3"; /* iPhoneバンドル */
+	font-size: 14px;
+	line-height: 1.0;
+}
+a {
+	color: #000;
+	-webkit-tap-highlight-color: rgba(00,33,99,0.3); /* タップ時の背景色 */
+}
+
+/* HTML5 の新要素をブロックレベルにする */
+article,aside,canvas,details,figcaption,figure,
+footer,header,hgroup,menu,nav,section,summary{
+	desplay:block;
+}
+
+
+
+.category ul:first-of-type li a.link-inactive:hover{
+opacity:0.8;
+}
+
+/* タブ色設定 */
+.category ul:first-of-type li a.link-active{
+    background: -webkit-gradient(linear, left top, left bottom, from(#d7d7d7), color-stop(50%, #cbcbcb), color-stop(51%, #c1c1c1), to(#bbbbbb));
+}
+
+
+
+/* ------------------------------------------------------------
+	2. Headings
+------------------------------------------------------------ */
+h1, h2, h3, h4, h5, h6 {
+	font-size: 100%;
+}
+
+/* ------------------------------------------------------------
+	3. Lists
+------------------------------------------------------------ */
+li {
+	list-style: none;
+}
+
+/* ------------------------------------------------------------
+	4. Tables
+------------------------------------------------------------ */
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	font-size: 100%;
+	empty-cells: show;
+}
+caption, th, td {
+	text-align: left;
+	vertical-align: top;
+	font-weight: normal;
+}
+
+/* ------------------------------------------------------------
+	5. Forms
+------------------------------------------------------------ */
+fieldset {
+	border: none;
+}
+input, textarea, select, label {
+	font-size: 100%;
+	vertical-align: middle;
+}
+textarea {
+	overflow: auto;
+}
+
+/* ------------------------------------------------------------
+	6. Others
+------------------------------------------------------------ */
+img {
+	border: none;
+	vertical-align: middle;
+}
+ul,ol {
+	list-style: none;
+}
+em, strong {
+	font-weight: bold;
+	font-style: normal;
+}
+mark {
+	font-weight: bold;
+}
+object {
+	vertical-align: middle;
+	outline: none;
+}
+blockquote, q {
+	quotes: none;
+}
+q:before, q:after {
+	content: '';
+}
+code {
+	font-family: monospace;
+}
+sup {
+	vertical-align: text-top;
+}
+sub {
+	vertical-align: text-bottom;
+}
+ins {
+	text-decoration: none;
+}
+del {
+	text-decoration: line-through;
+}
+abbr, acronym {
+	border: none;
+	font-variant: normal;
+}
+abbr[title], dfn[title] {
+	border-bottom: 1px dotted #333;
+	cursor: help;
+}
+address, caption, cite, code, dfn, var {
+	font-weight: normal;
+	font-style: normal;
+}
+hr {
+	display: none;
+}
+pre {
+	font-family: monospace;
+}
+
+/*/////////////////////////////////////////////////////////////
+[Layout] 
+//////////////////////////////////////////////////////////////*/
+
+/* ------------------------------------------------------------
+	0. Base Layout
+------------------------------------------------------------ */
+body {
+	padding: 10px;
+}
+
+.logo {
+	margin: 0 auto;
+	display: block;
+}
+
+.nav-topicpath {
+	padding: 3px 10px;
+	background-color: #FA400F;
+	font-size: 12px;
+}
+
+.nav-topicpath li {
+	float: left;
+}
+
+/* ぱんくずリストを作成 */
+.nav-topicpath li + li:before {
+	margin: 0 3px;
+	content: ">";
+}
+
+.nav-topicpath li a {
+	padding: 3px 0;
+}
+
+.page-heading {
+	padding: 12px;
+	color: #FA400F;
+	background-image: url(../img/bg_header.png);
+	background-repeat: repeat-x;
+	background-position: left top;
+	font-size: 18px;
+	text-align: center;
+}
+
+.block {
+	margin: auto 10px 12px 10px;
+	padding-bottom: 12px;
+	border-bottom: 1px dotted #FA400F;
+}
+
+.block:after {
+	content: '';
+	display: block;
+	clear: both;
+}
+
+.block-heading {
+	margin-bottom: 6px;
+	color: #000000;
+	font-size: 16px;
+}
+
+.block p {
+	margin-bottom: lem;
+}
+
+.block p:last-of-type{
+	margin-bottom: 0;
+}
+
+.image-right, .image-left {
+	width: 100px;
+	font-size: 12px;
+	text-align: center;
+}
+
+.image-right {
+	margin: 0 0 6px 6px;
+	floag: right;
+}
+
+.image-left {
+	margin: 0 6px 6px;
+	float: left;
+}
+
+.image-center {
+	margin: 0 auto 6px auto;
+	display: block;
+}
+
+.nav-reference {
+	margin: 10px;
+	text-align: right;
+}
+
+.nav-reference a {
+	padding: 3px 14px 3px 0;
+	background-image: url(../img/ico_next.png);
+	background-repeat: no-repeat;
+	background-position: right center;
+}
+
+.block .nav-reference {
+	margin: 10px 0;
+}
+
+.nav-home {
+	margin: auto 10px 12px;
+	text-align: right;
+}
+
+.nav-home a {
+	padding; 3px 0 3px 18px;
+	background-image; url(../img/ico_home.png);
+	background-repeat: no-repeat;
+	background-position: right center;
+}
+
+.global-footer {
+	padding: 12px 10px 6px;
+	background-color: #FA400F;
+	background-image; url(../img/bg_footer.png);
+	background-repeat: repeat-x;
+	background-position: left top;
+	font-size: 12px;
+	text-align: center;
+}
+
+/* ------------------------------------------------------------
+	1. Header
+------------------------------------------------------------ */
+body > header {
+	margin-bottom: 10px;
+	padding: 10px;
+	border: 5px solid #ccc;
+}
+body > header h1 {
+	font-size: 20px;
+}
+
+/* ------------------------------------------------------------
+	2. Content
+------------------------------------------------------------ */
+#content {
+	margin-bottom: 10px;
+	padding: 10px;
+	border: 5px solid #ccc;
+}
+#content h1 {
+	font-size: 20px;
+}
+
+/* ------------------------------------------------------------
+	3. Footer
+------------------------------------------------------------ */
+body > footer {
+	padding: 10px;
+	border: 5px solid #ccc;
+	text-align: center;
+}
+
+/* Navigation
+------------------------------------------------- */
+body > footer nav {
+	margin-bottom: 10px;
+	border: 3px solid #ccc;
+}
+body > footer nav:after {
+	content : '';
+	display : block;
+	clear : both;
+}
+body > footer nav li {
+	float: left;
+	width: 33%;
+}
+body > footer nav li:first-child {
+	width: 34%;
+}
+body > footer nav a {
+	display: block;
+	padding: 10px 0;
+	border-left: 1px solid #ccc;
+	text-decoration: none;
+}
+body > footer nav li:first-child a {
+	border-left: 0;
+}
+
+/* Copyright
+------------------------------------------------- */
+body > footer .copyright {
+	font-size: 14px;
+}
+
+/* search services class */
+
+.searchlink {
+	width:100%;overflow-x:hidden;
+}
+
+.searchlink .searchlinks{
+	display:table;width:100%;-webkit-user-select:none;
+}
+
+.searchlink .searchlinks ul{
+	display:table-row;
+}
+
+.searchlink .searchlinks ul li{
+	display:none;padding-top:8px;padding-bottom:6px;vertical-align:top;
+}
+
+.searchlink .searchlinks ul li:first-child{
+	padding-left:10px;
+}
+
+.searchlink .searchlinks ul li:last-child{
+	padding-right:10px;
+}
+
+.searchlink .searchlinks ul li a{
+	display:block;width:100px;margin:0 auto;
+}
+
+.searchlink .searchlinks ul li .v, .searchlink .searchlinks ul li .h{
+	width:60px;height:60px;margin:0 20px;background-position:50% 50%;background-color:#eee;background-repeat:no-repeat;outline:1px solid #9fb7d4;
+}
+
+.searchlink .searchlinks ul li .v{
+	-webkit-background-size:auto 60px;
+}
+
+.searchlink .searchlinks ul li .h{
+	-webkit-background-size:60px auto;
+}
+
+.searchlink .searchlinks ul li .caption{
+	display:block;font-size:10px;text-align:center;color:#000;padding-top:3px;word-break:break-all;width:100px;
+}
+
+.searchlink .searchlinks ul li a .caption .title{
+	font-size:11px;color:#011b8f;overflow:visible;white-space:nowrap;
+}
+
+.searchlink nav{
+	display:block;background:-webkit-gradient(linear,left top,left bottom,from(#fefefe),to(#d7e0fc));height:28px;border-top:1px solid #9fb7d4;border-bottom:1px solid #9fb7d4;position:relative;
+}
+
+.searchlink nav a{display:block;position:absolute;width:73px;height:28px;line-height:29px;font-size:12px;color:#000;}
+.searchlink nav a.disable{color:#9f9f9f;}#photo-prev
+{padding-left:33px;background-position:left -78px;}#photo-next
+{padding-right:33px;background-position:right 8px;right:0;text-align:right;}#photo-prev
+.disable{background-position:left -121px;-webkit-tap-highlight-color:rgba(0,0,0,0);}#photo-next
+.disable{background-position:right -35px;-webkit-tap-highlight-color:rgba(0,0,0,0);}
+.searchlink nav pagenation{-webkit-border-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAATAgMAAAACIK4YAAAADFBMVEX///////+ft9TH1ebDmepeAAAALklEQVQImWPYGhoaGt7AkAuk4hwYJIFUJAMtKWkgVcnAwLZq1aolDAyMQF4AAwAI3h5POCVeXAAAAABJRU5ErkJggg==) 0 10 0 10 stretch stretch;border-width:0 10px;display:block;padding-top:5px;height:14px;position:absolute;top:-1px;left:50%;margin-left:-56px;width:92px;overflow:hidden;}
+.searchlink nav 
+.pagenation mark{background:#808080;-webkit-border-radius:4px 4px;display:block;height:8px;width:8px;float:left;}
+.searchlink nav 
+
+
+/*/////////////////////////////////////////////////////////////
+[Module] 
+//////////////////////////////////////////////////////////////*/
+
+/* ------------------------------------------------------------
+	1. Common Elements
+------------------------------------------------------------ */
+
+/* Title
+------------------------------------------------- */
+
+/* Text
+------------------------------------------------- */
+
+/* List
+------------------------------------------------- */
+
+/* Form
+------------------------------------------------- */
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+	width: 95%;
+	margin-bottom: 5px;
+	padding: 10px 5px;
+}
+input[type="password"] {
+	width: 50%;
+}
+
+/* ------------------------------------------------------------
+	2. Common Module
+------------------------------------------------------------ */
+
+/* ------------------------------------------------------------
+	90. Others
+------------------------------------------------------------ */
+
+/* for Voice Browser */
+.hidden {
+	position: absolute;
+	width: 0;
+	height: 0;
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+}
+
+/* Noscript Message */
+p#msgNoscript {
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 9999;
+	width: 100%;
+	padding: 5px 0;
+	border-top: 1px solid #f00;
+	border-bottom: 1px solid #f00;
+	background: #fcc;
+	color: #f00;
+	line-height: 1.2;
+	text-align: center;
+	opacity: 0.7;
+}
+
+/* ------------------------------------------------------------
+	99. Clearfix
+------------------------------------------------------------ */
+.group:after {
+	content : '';
+	display : block;
+	clear : both;
+}

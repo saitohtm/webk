@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>例 エリア選択 プルダウン on_update_hook サンプル- ホットペッパー - Recruit UI Library</title>
+<style type="text/css">
+select {
+    width: 200px;
+    margin-bottom: 5px;
+}
+</style>
+<script type="text/javascript" src="../../recruit/docs/js/jquery-1.2.3.js"></script>
+<script type="text/javascript" src="../../recruit/docs/js/jquery.form.js"></script>
+<script type="text/javascript" src="../../recruit.ui.js"></script>
+<script type="text/javascript" src="../../hotpepper.ui.js"></script>
+<script type="text/javascript">
+$(function (){
+    Recruit.UI.key = 'a450fa593ee3f2a4';
+    new HotPepper.UI.Places.Pulldown({
+        large_service_area: {
+            on_update_hook: function ( success, json ){
+                var obj = this.get_current_stat();
+                show_list( 'large_service_area', obj );
+            }
+        },
+        service_area: {
+            on_update_hook: function ( success, json ){
+                var obj = this.get_current_stat();
+                show_list( 'service_area', obj );
+            }
+        },
+        middle_area: {
+            on_update_hook: function ( success, json ){
+                var obj = this.get_current_stat();
+                show_list( 'middle_area', obj );
+            }
+        },
+        small_area: {
+            on_update_hook: function ( success, json ){
+                var obj = this.get_current_stat();
+                show_list( 'small_area', obj );
+            }
+        }
+    });
+
+    $( '#sample-form' ).submit( function (){
+        alert( $( this ).formSerialize() );
+        return false;
+    });
+});
+
+function show_list ( msg, obj ){
+    // メッセージ表示
+    $( '#msg' ).html( 'status: ' + msg + ' updated' );
+    // 下層プルダウンの選択肢が刷新されたので、中身を表示
+    var disp = $( '#list' );
+    disp.empty();
+    $.each( obj.list, function ( i,d ){
+        // d.text で選択肢の名称が、d.val で選択肢の値がそれぞれ取得可能
+        disp.append( '<li>' + d.text + ' (' + d.val + ')</li>' );
+    });
+}
+</script>
+</head>
+<body>
+<h1>エリア選択 プルダウン on_update_hook サンプル</h1>
+<div class="sample">
+    <form id="sample-form" action="">
+    <select id="hpp-large-service-area-sel"></select><br />
+    <select id="hpp-service-area-sel"></select><br />
+    <select id="hpp-middle-area-sel"></select><br />
+    <select id="hpp-small-area-sel"></select><br />
+    <input type="submit" value="値を確認" />
+    </form>
+    <h3 id="msg"></h3>
+    <ul id="list"></ul>
+</div>
+
+</body>
+</html>

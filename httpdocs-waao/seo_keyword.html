@@ -1,0 +1,407 @@
+#!/usr/local/bin/perl -w
+use DBI;
+
+my $date;
+my ($sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst) = localtime(time);
+
+print << "END_OF_HTML";
+Content-type: text/plain; charset=shift_jis
+
+END_OF_HTML
+
+if($hour <= 2 ){
+	&_hadult();
+}elsif($hour <= 4 ){
+	&_bookmark();
+}elsif($hour <= 6 ){
+	&_prof();
+}elsif($hour <= 8 ){
+	&_ana();
+}elsif($hour <= 10 ){
+	&_qa();
+}elsif($hour <= 12 ){
+	&_nice();
+}elsif($hour <= 14 ){
+	&_keyword();
+}elsif($hour <= 16 ){
+	&_real();
+}elsif($hour <= 18 ){
+	&_artist();
+}elsif($hour <= 20 ){
+	&_blog();
+}elsif($hour <= 22 ){
+	&_idol();
+}else{
+	&_av();
+}
+
+exit(0);
+
+# デバッグ
+
+	&_ana();
+print << "END_OF_HTML";
+<hr>
+END_OF_HTML
+	&_idol();
+print << "END_OF_HTML";
+<hr>
+END_OF_HTML
+	&_prof();
+print << "END_OF_HTML";
+<hr>
+END_OF_HTML
+	&_av();
+print << "END_OF_HTML";
+<hr>
+END_OF_HTML
+	&_artist();
+print << "END_OF_HTML";
+<hr>
+END_OF_HTML
+	&_blog();
+print << "END_OF_HTML";
+<hr>
+END_OF_HTML
+	&_keyword();
+print << "END_OF_HTML";
+<hr>
+END_OF_HTML
+	&_bookmark();
+print << "END_OF_HTML";
+<hr>
+END_OF_HTML
+	&_qa();
+print << "END_OF_HTML";
+<hr>
+END_OF_HTML
+	&_real();
+print << "END_OF_HTML";
+<hr>
+END_OF_HTML
+	&_nice();
+print << "END_OF_HTML";
+<hr>
+END_OF_HTML
+	&_hadult();
+print << "END_OF_HTML";
+<hr>
+END_OF_HTML
+
+exit;
+
+sub _ana(){
+
+	my $dbh = &_db_connect();
+
+	# 10件表示
+	my $html;
+	$html .= qq{<a href="http://ana.goo.to/" title="女子アナ名鑑">女子アナ名鑑</a> };
+	my $sth = $dbh->prepare(qq{ select id, inital, keyword from keyword where ana >= 1 order by rand() limit 10} );
+	$sth->execute();
+	my ($keyword_id, $inital, $keyword);
+	while(my @row = $sth->fetchrow_array) {
+		($keyword_id, $inital, $keyword) = @row;
+		my $dir = int($keyword_id / 1000);
+		my $file = $keyword_id % 1000;
+		$html .= qq{<a href="http://ana.goo.to/$dir/$keyword_id/" title="$keyword">$keyword</a> };
+	}
+print << "END_OF_HTML";
+$html
+END_OF_HTML
+
+	$dbh->disconnect;
+
+	return;
+}
+
+sub _idol(){
+
+	my $dbh = &_db_connect();
+
+	# 10件表示
+	my $html;
+	$html .= qq{<a href="http://idol.goo.to/" title="アイドル名鑑">アイドル名鑑</a> };
+	my $sth = $dbh->prepare(qq{ select id, inital, keyword from keyword where person = 1 order by rand() limit 10} );
+	$sth->execute();
+	my ($keyword_id, $inital, $keyword);
+	while(my @row = $sth->fetchrow_array) {
+		($keyword_id, $inital, $keyword) = @row;
+		my $dir = int($keyword_id / 1000);
+		my $file = $keyword_id % 1000;
+		$html .= qq{<a href="http://idol.goo.to/$dir/$keyword_id/" title="$keyword">$keyword</a> };
+	}
+print << "END_OF_HTML";
+$html
+END_OF_HTML
+
+	$dbh->disconnect;
+
+	return;
+}
+
+sub _prof(){
+
+	my $dbh = &_db_connect();
+
+	# 10件表示
+	my $html;
+	$html .= qq{<a href="http://prof.waao.jp/" title="タレント名鑑">タレント名鑑</a> };
+	my $sth = $dbh->prepare(qq{ select id, inital, keyword from keyword where blood is not null order by rand() limit 10} );
+	$sth->execute();
+	my ($keyword_id, $inital, $keyword);
+	while(my @row = $sth->fetchrow_array) {
+		($keyword_id, $inital, $keyword) = @row;
+		my $dir = int($keyword_id / 1000);
+		my $file = $keyword_id % 1000;
+		$html .= qq{<a href="http://prof.waao.jp/$dir/$keyword_id/" title="$keyword">$keyword</a> };
+	}
+print << "END_OF_HTML";
+$html
+END_OF_HTML
+
+	$dbh->disconnect;
+
+	return;
+}
+
+sub _av(){
+
+	my $dbh = &_db_connect();
+
+	# 10件表示
+	my $html;
+	$html .= qq{<a href="http://av.goo.to/" title="AV女優名鑑">AV女優名鑑</a> };
+	my $sth = $dbh->prepare(qq{ select id, inital, keyword from keyword where av = 1 order by rand() limit 10} );
+	$sth->execute();
+	my ($keyword_id, $inital, $keyword);
+	while(my @row = $sth->fetchrow_array) {
+		($keyword_id, $inital, $keyword) = @row;
+		my $dir = int($keyword_id / 1000);
+		my $file = $keyword_id % 1000;
+		$html .= qq{<a href="http://av.goo.to/$inital/$keyword_id/" title="$keyword">$keyword</a> };
+	}
+print << "END_OF_HTML";
+$html
+END_OF_HTML
+
+	$dbh->disconnect;
+
+	return;
+}
+
+sub _artist(){
+
+	my $dbh = &_db_connect();
+
+	# 10件表示
+	my $html;
+	$html .= qq{<a href="http://artist.goo.to/" title="歌手・アーティスト名鑑">歌手・アーティスト名鑑</a> };
+	my $sth = $dbh->prepare(qq{ select id, inital, keyword from keyword where artist = 1 order by rand() limit 10} );
+	$sth->execute();
+	my ($keyword_id, $inital, $keyword);
+	while(my @row = $sth->fetchrow_array) {
+		($keyword_id, $inital, $keyword) = @row;
+		my $dir = int($keyword_id / 1000);
+		my $file = $keyword_id % 1000;
+		$html .= qq{<a href="http://artist.goo.to/$inital/$keyword_id/" title="$keyword">$keyword</a> };
+	}
+print << "END_OF_HTML";
+$html
+END_OF_HTML
+
+	$dbh->disconnect;
+
+	return;
+}
+
+sub _blog(){
+
+	my $dbh = &_db_connect();
+
+	# 10件表示
+	my $html;
+	$html .= qq{<a href="http://blog.waao.jp/" title="ブログ名鑑">ブログ名鑑</a> };
+	my $sth = $dbh->prepare(qq{ select id, inital, keyword from keyword where blogurl is not null order by rand() limit 10} );
+	$sth->execute();
+	my ($keyword_id, $inital, $keyword);
+	while(my @row = $sth->fetchrow_array) {
+		($keyword_id, $inital, $keyword) = @row;
+		my $dir = int($keyword_id / 1000);
+		my $file = $keyword_id % 1000;
+		$html .= qq{<a href="http://blog.waao.jp/$dir/$keyword_id/" title="$keyword">$keyword</a> };
+	}
+print << "END_OF_HTML";
+$html
+END_OF_HTML
+
+	$dbh->disconnect;
+
+	return;
+}
+
+sub _keyword(){
+
+	my $dbh = &_db_connect();
+
+	# 10件表示
+	my $html;
+	$html .= qq{<a href="http://keyword.waao.jp/" title="人気キーワード">人気キーワード</a> };
+	my $sth = $dbh->prepare(qq{ select id, inital, keyword from keyword order by rand() limit 10} );
+	$sth->execute();
+	my ($keyword_id, $inital, $keyword);
+	while(my @row = $sth->fetchrow_array) {
+		($keyword_id, $inital, $keyword) = @row;
+		my $dir = int($keyword_id / 1000);
+		my $file = $keyword_id % 1000;
+		$html .= qq{<a href="http://keyword.waao.jp/$dir/$keyword_id/" title="$keyword">$keyword</a> };
+	}
+print << "END_OF_HTML";
+$html
+END_OF_HTML
+
+	$dbh->disconnect;
+
+	return;
+}
+
+sub _bookmark(){
+
+	my $dbh = &_db_connect();
+
+	# 10件表示
+	my $html;
+	$html .= qq{<a href="http://b.goo.to/" title="人気携帯サイト">人気携帯サイト</a> };
+	my $sth = $dbh->prepare(qq{ select id, inital, keyword from keyword order by rand() limit 10} );
+	$sth->execute();
+	my ($keyword_id, $inital, $keyword);
+	while(my @row = $sth->fetchrow_array) {
+		($keyword_id, $inital, $keyword) = @row;
+		my $dir = int($keyword_id / 1000);
+		my $file = $keyword_id % 1000;
+		$html .= qq{<a href="http://b.goo.to/$dir/$keyword_id/" title="$keyword">$keyword</a> };
+	}
+print << "END_OF_HTML";
+$html
+END_OF_HTML
+
+	$dbh->disconnect;
+
+	return;
+}
+
+sub _qa(){
+
+	my $dbh = &_db_connect();
+
+	# 10件表示
+	my $html;
+	$html .= qq{<a href="http://qa.goo.to/" title="知恵袋名鑑">知恵袋名鑑</a> };
+	my $sth = $dbh->prepare(qq{ select id, question from qanda order by rand() limit 1} );
+	$sth->execute();
+	my ($keyword_id, $keyword);
+	while(my @row = $sth->fetchrow_array) {
+		($keyword_id, $keyword) = @row;
+		my $dir = int($keyword_id / 1000);
+		my $file = $keyword_id % 1000;
+		$html .= qq{<a href="http://qa.goo.to/$dir/$keyword_id/" title="$keyword">$keyword</a> };
+	}
+print << "END_OF_HTML";
+$html
+END_OF_HTML
+
+	$dbh->disconnect;
+
+	return;
+}
+
+sub _real(){
+
+	my $dbh = &_db_connect();
+
+	# 10件表示
+	my $html;
+	$html .= qq{<a href="http://real.waao.jp/" title="先読み検索">先読み検索</a> };
+	my $sth = $dbh->prepare(qq{ select id, keyword from keyword where yahookeyword is not null order by rand() limit 10} );
+	$sth->execute();
+	my ($keyword_id, $keyword);
+	while(my @row = $sth->fetchrow_array) {
+		($keyword_id, $keyword) = @row;
+		my $dir = int($keyword_id / 1000);
+		my $file = $keyword_id % 1000;
+		$html .= qq{<a href="http://real.waao.jp/$dir/$keyword_id/" title="$keyword">$keyword</a> };
+	}
+print << "END_OF_HTML";
+$html
+END_OF_HTML
+
+	$dbh->disconnect;
+
+	return;
+}
+
+sub _nice(){
+
+	my $dbh = &_db_connect();
+
+	# 10件表示
+	my $html;
+	$html .= qq{<a href="http://nice.waao.jp/" title="いいね検索">いいね検索</a> };
+	my $sth = $dbh->prepare(qq{ select no,afname from afseo order by rand() limit 10} );
+	$sth->execute();
+	my ($keyword_id, $keyword);
+	while(my @row = $sth->fetchrow_array) {
+		($keyword_id, $keyword) = @row;
+		my $dir = int($keyword_id / 1000);
+		my $file = $keyword_id % 1000;
+		$html .= qq{<a href="http://nice.waao.jp/$keyword_id/" title="$keyword">$keyword</a> };
+	}
+print << "END_OF_HTML";
+$html
+END_OF_HTML
+
+	$dbh->disconnect;
+
+	return;
+}
+
+
+sub _hadult(){
+
+	my $dbh = &_db_connect();
+
+	# 10件表示
+	my $html;
+	$html .= qq{<a href="http://h.waao.jp/" title="どすけべ検索">どすけべ検索</a> };
+	my $sth = $dbh->prepare(qq{ select id, keyword from keyword where ero =1 order by rand() limit 10} );
+	$sth->execute();
+	my ($keyword_id, $keyword);
+	while(my @row = $sth->fetchrow_array) {
+		($keyword_id, $keyword) = @row;
+		my $dir = int($keyword_id / 1000);
+		my $file = $keyword_id % 1000;
+		$html .= qq{<a href="http://h.waao.jp/$dir/$keyword_id/" title="$keyword">$keyword</a> };
+	}
+print << "END_OF_HTML";
+$html
+END_OF_HTML
+
+	$dbh->disconnect;
+
+	return;
+}
+
+sub _db_connect(){
+
+	my $dsn = 'DBI:mysql:waao';
+	my $user = 'mysqlweb';
+	my $password = 'WaAoqzxe7h6yyHz';
+	my $dbh = DBI->connect($dsn,$user,$password,{RaiseError => 1, AutoCommit => 0});
+
+	return $dbh;
+}
+sub str_encode(){
+	my $str = shift;
+	return uri_escape($str);
+}
+

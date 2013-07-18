@@ -1,0 +1,345 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>エリア選択 プルダウン - ホットペッパー - リクルート WEBサービス UI Library</title>
+<link rel="stylesheet" href="../../recruit/docs/css/yui.reset-fonts-grids-base.css" type="text/css" />
+<link rel="stylesheet" href="../../recruit/docs/css/style.css" type="text/css" />
+<link rel="stylesheet" href="./css/style.css" type="text/css" />
+<script type="text/javascript" src="../../recruit/docs/js/jquery-1.2.3.js"></script>
+<script type="text/javascript" src="../../recruit/docs/js/jquery.form.js"></script>
+<script type="text/javascript" src="../../recruit.ui.js"></script>
+<script type="text/javascript" src="../../HotPepper.UI.js"></script>
+<script type="text/javascript" src="../../hotpepper.ui.js"></script>
+<script type="text/javascript">
+$(function (){
+    Recruit.UI.key = 'a450fa593ee3f2a4';
+    new HotPepper.UI.Places.Pulldown();
+    new HotPepper.UI.Places.Pulldown({
+        large_service_area: {
+            id: 'hpp-large-service-area-sel-2',
+            first_opt_text: '▼大サービスエリア'
+        },
+        service_area: {
+            id: 'hpp-service-area-sel-2',
+            first_opt_text: '▼サービスエリア'
+        },
+        middle_area: {
+            id: 'hpp-middle-area-sel-2',
+            first_opt_text: '▼中エリア'
+        },
+        small_area: {
+            id: 'hpp-small-area-sel-2',
+            first_opt_text: '▼小エリア'
+        }
+    });
+    new HotPepper.UI.Places.Pulldown({
+        large_service_area: {
+            id: 'hpp-large-service-area-sel-3'
+        },
+        service_area: {
+            id: 'hpp-service-area-sel-3'
+        },
+        middle_area: {
+            id: 'hpp-middle-area-sel-3'
+        },
+        small_area: {
+            id: 'hpp-small-area-sel-3',
+            val: 'X005'
+        }
+    });
+    new HotPepper.UI.Places.Pulldown({
+        large_service_area: {
+            id: 'hpp-large-service-area-sel-4'
+        },
+        service_area: {
+            id: 'hpp-service-area-sel-4'
+        }
+    });
+    new HotPepper.UI.Places.Pulldown({
+        middle_area: {
+            id: 'hpp-middle-area-sel-5',
+            service_area: 'SA11'
+        },
+        small_area: {
+            id: 'hpp-small-area-sel-5'
+        }
+    });
+});
+</script>
+</head>
+<body>
+<div id="doc" class="yui-t4">                   
+<div id="hd">
+    <div id="hd-logo">
+        <a href="http://webservice.recruit.co.jp/">
+        <img src="../../recruit/docs/img/rws_logo.gif" border="0"/></a>
+    </div>
+    <div id="hd-main">
+        <h1 id="top"><a href="../../index.html">エリア選択 プルダウン </a></h1>
+        <p>ホットペッパー - HotPepper.UI.Places.Drilldown - by Recruit Web Service UI Library</p>
+    </div>
+</div><!-- end hd -->
+
+<div id="bd">
+<div id="yui-main">
+<div class="yui-b cont">
+    <div class="breadcrumb">
+        <a href="../../">TOP</a> &gt; <a href="./">ホットペッパー</a> &gt;
+        エリア選択 プルダウン
+    </div>
+    <h2 id="synopsis">概要</h2>
+    <p>関東 &gt; 東京 &gt; 渋谷・原宿 &gt; センター街・公園通り
+    ...といった地域を選択する為のユーザーインターフェースを自動生成するモジュール。相互連動更新する、一般的な4つのプルダウンUIを提供。</p> 
+    <p>必要な選択肢情報を、必要なタイミングで動的に取得/生成する為、大量の都市マスタデータ等を事前に読み込む必要無く、快適なUIを提供する事ができます。</p>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h2 id="sample">サンプル</h2>
+    <div class="sample">
+        <form action="">
+        <span class="lbl">大サービスエリア:</span> <select id="hpp-large-service-area-sel"></select><br style="clear:both"/>
+        <span class="lbl">サービスエリア:</span>     <select id="hpp-service-area-sel"></select><br  style="clear:both"/>
+        <span class="lbl">中エリア:</span>     <select id="hpp-middle-area-sel"></select><br  style="clear:both"/>
+        <span class="lbl">小エリア:</span>   <select id="hpp-small-area-sel"></select>
+        </form>
+    </div>
+    <p>大サービスエリアを選ぶとその下のサービスエリアの選択肢が、サービスエリアを選ぶと中エリアの選択肢が、中エリアを選ぶと小エリアの選択肢が、それぞれ該当地域のものに自動的に切り替わります。</p>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h2 id="requirement">動作条件</h2>
+    <ul>
+        <li><a href="http://jquery.com/">jQuery</a> v1.2 以降</li>
+    </ul>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h2 id="reuseable-code">簡易なコード例</h2>
+    <pre style="padding:20px"><a
+    href="../samples/places.pulldown.html">コピペする事で手軽に再利用が可能なコード例はこちら</a></pre>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h2 id="howto">使い方</h2>
+    <p>下記のように必要なファイルを読み込んだうえで...</p>
+    <pre>&lt;script type=&quot;text/javascript&quot; src=&quot;jquery.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;recruit.ui.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;hotpepper.ui.js&quot;&gt;&lt;/script&gt;</pre>
+    <p>プルダウンを表示させたい場所にこのようなHTMLを書き...</p>
+    <pre>&lt;select id=&quot;hpp-large-service-area-sel&quot;&gt;&lt;/select&gt;<br
+    />&lt;select id=&quot;hpp-service-area-sel&quot;&gt;&lt;/select&gt;<br
+    />&lt;select id=&quot;hpp-middle-area-sel&quot;&gt;&lt;/select&gt;<br
+    />&lt;select id=&quot;hpp-small-area-sel&quot;&gt;&lt;/select&gt;</pre>
+    <p>最後にこのようなjavascriptコードを書くことで任意のタイミングでプルダウンが自動生成されます。</p>
+    <pre>Recruit.UI.key = 'ご自身のAPIキー';
+new HotPepper.UI.Places.Pulldown();</pre> 
+    <p>jQueryを使って、ページ表示と同時にプルダウン生成したい場合はこちら:</p>
+    <pre>$(function (){
+    Recruit.UI.key = 'ご自身のAPIキー';
+    new HotPepper.UI.Places.Pulldown();
+});</pre> 
+    <p>ご自身のAPIキーをお持ちでない方は<a
+        href="http://webservice.recruit.co.jp/register">こちらの画面からリクルートWEBサービスに登録する事で取得する</a>事ができます。</p>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h2 id="options">オプション機能</h2>
+    <p>他のプルダウン系UIと同じく、コンストラクタの引数にパラメーターを与える事でオプション機能が利用できます。その際には以下の例に示すように、大サービスエリア・サービスエリア・中エリア・小エリア
+    - 4つのプルダウンそれぞれが個別のパラメーター空間を持つ形になります。</p>
+    <h3 id="opt-a">各プルダウンのid値を指定したい</h3>
+    <p>デフォルトでは &quot;hpp-large-service-area-sel&quot;
+    等のid値でHTML中のプルダウン(SELECTタグ)を探しにいきますが、これを任意のid値で指定したい場合は以下のように書きます:</p>
+    <pre>new HotPepper.UI.Places.Pulldown({
+    large_service_area: { id: 'my-lsa-sel' },
+    service_area:       { id: 'my-sa-sel'  },
+    middle_area:        { id: 'my-ma-sel'  },
+    small_area:         { id: 'my-sma-sel' }
+});</pre>
+    <p>いずれかひとつだけの指定ももちろん可能です。</p>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h3 id="opt-b">プルダウンの初期値 &quot;指定なし&quot; を別の文言に変えたい</h3>
+    <p>以下のように指定する事で文言を変えられます:</p>
+    <pre>new HotPeper.Places.Pulldown({
+    large_service_area: { first_opt_text: '▼大サービスエリア' },
+    service_area:       { first_opt_text: '▼サービスエリア'  },
+    middle_area:        { first_opt_text: '▼中エリア'  },
+    small_area:         { first_opt_text: '▼小エリア' }
+});</pre>
+    <p>このようにそれぞれ個別に指定します。</p>
+    <p>実際の動作例:</p>
+    <div class="sample">
+        <span class="lbl">大サービスエリア:</span> <select
+            id="hpp-large-service-area-sel-2"></select><br style="clear:both"/>
+        <span class="lbl">サービスエリア:</span> <select
+            id="hpp-service-area-sel-2"></select><br  style="clear:both"/>
+        <span class="lbl">中エリア:</span> <select
+            id="hpp-middle-area-sel-2"></select><br  style="clear:both"/>
+        <span class="lbl">小エリア:</span> <select id="hpp-small-area-sel-2"></select>
+    </div>
+    <h4>全部のプルダウンに対してまとめて一括で指定したい</h4>
+    <p><a href="../../abroad/docs/dept.pulldown.html#opt-b-2">&gt;&gt; こちらの記述を参照してください。</a></p>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h3 id="opt-d">プルダウンの初期値を設定</h3>
+    <p>各プルダウンに予め何らかの地域を最初から設定しておきたい場合は以下のように書きます:</p>
+    <pre>// アクアシティをデフォルトに
+new HotPepper.UI.Places.Pulldown({
+    small_area: { val: 'X005' }
+});</pre>
+    <p>実際の動作例:</p>
+    <div class="sample">
+        <span class="lbl">大サービスエリア:</span> <select
+            id="hpp-large-service-area-sel-3"></select><br style="clear:both"/>
+        <span class="lbl">サービスエリア:</span> <select
+            id="hpp-service-area-sel-3"></select><br  style="clear:both"/>
+        <span class="lbl">中エリア:</span> <select
+            id="hpp-middle-area-sel-3"></select><br  style="clear:both"/>
+        <span class="lbl">小エリア:</span> <select id="hpp-small-area-sel-3"></select>
+    </div>
+    <p>同様に large_service_area または service_area または middle_area を指定する事も可能です:</p>
+    <pre>// 東京をデフォルトに
+new HotPepper.UI.Places.Pulldown({
+    service_area: { val: 'SA11' }
+});</pre>
+    <pre>// お台場をデフォルトに
+new HotPepper.UI.Places.Pulldown({
+    middle_area: { val: 'Y007' }
+});</pre>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h3 id="opt-f">一部のプルダウンだけを使いたい</h3>
+    <p>大サービスエリアとサービスエリアだけを使いたい:</p>
+    <pre>&lt;select id=&quot;hpp-large-service-area-sel&quot;&gt;&lt;/select&gt;<br
+    />&lt;select id=&quot;hpp-service-area-sel&quot;&gt;&lt;/select&gt;</pre>
+    <pre>new HotPepper.UI.Places.Pulldown();</pre>
+    <p>実際の動作例:</p>
+    <div class="sample">
+        <span class="lbl">大サービスエリア:</span> <select
+            id="hpp-large-service-area-sel-4"></select><br style="clear:both"/>
+        <span class="lbl">サービスエリア:</span> <select
+            id="hpp-service-area-sel-4"></select><br  style="clear:both"/>
+    </div>
+    <p>上記のように、最上位レベルである大サービスエリアから任意の下位エリアまでを使いたい際には、何も気にすることなく必要なプルダウンだけ用意しておけばOKです。しかし、下位エリアの一部だけを使いたい場合は下記のような記述が必要になります。</p>
+    <p>中エリアと小エリアだけを使いたい:</p>
+    <pre>&lt;select id=&quot;hpp-middle-area-sel&quot;&gt;&lt;/select&gt;<br
+    />&lt;select id=&quot;hpp-small-area-sel&quot;&gt;&lt;/select&gt;</pre>
+    <pre>new HotPepper.UI.Places.Pulldown({
+    middle_area: { service_area: 'SA11' }
+});</pre>
+    <p>実際の動作例:</p>
+    <div class="sample">
+        <span class="lbl">中エリア:</span> <select
+            id="hpp-middle-area-sel-5"></select><br style="clear:both"/>
+        <span class="lbl">小エリア:</span> <select
+            id="hpp-small-area-sel-5"></select><br  style="clear:both"/>
+    </div>
+    <p>中エリア(middle_area)の選択肢を表示させるには、必ずどの上位エリア(service_area)に属しているのかを伝える必要がある為、上記例のように
+    middle_area のオプション指定にて、service_area は 'SA11' (東京)
+    だよ、と伝えている形になります。
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h3 id="opt-e">任意のコード値から、エリア名を判別したい</h3>
+    <p>小エリアコード 'X076' のエリア名は？このエリアが属する中エリアやサービスエリアや大サービスエリアのコード値および名称は？などを調べるには以下のインスタンスメソッドを使います:</p>
+    <pre>var places = HotPepper.UI.Places.Pulldown();
+places.find_item_by_code({
+    small_area: 'X076',
+    callback: function ( itm ){
+        itm.name;  // アクアシティ
+        itm.code;  // X076
+        itm.middle_area.name;  // お台場
+        itm.middle_area.code;  // Y007
+        itm.service_area.name; // 東京
+        itm.service_area.code; // SA11
+        itm.large_service_area.name;    // 関東
+        itm.large_service_area.code;    // SS10
+    }
+});</pre>
+    <p>JSONP形式の通信にてWebサービスから情報を取得する為、上記の例のように引数 callback にて結果を処理するための関数を定義する形になります。</p>
+    <p>同様に large_service_area_area または service_area または middle_area で調べる事も可能です:</p>
+    <pre>var places = HotPepper.UI.Places.Pulldown();
+places.find_item_by_code({
+    service_area: 'SA12',
+    callback: function ( itm ){
+        itm.name;       // 神奈川
+        itm.code;       // SA12
+        itm.large_service_area.name;  // 関東
+        itm.large_service_area.code;  // SS10
+    }
+});</pre>
+    <p>同メソッドで返されるオブジェクトの中身は HotPepper
+    Webサービスの各エリア系マスタAPIが返す単体レコードの中身と同一です。詳しくは<a
+        href="http://webservice.recruit.co.jp/hotpepper/reference.html">これらAPIのドキュメント</a>を参照してください。</p>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h3 id="opt-g">選択肢が刷新されたタイミングで任意の処理を実行したい</h3>
+    <p>インスタンス生成時のオプション指定 - on_update_hook - を各要素ごとに指定することで、プルダウンの選択肢が刷新される度に任意の処理を実施できます:</p>
+<pre>HotPepper.UI.Places.Pulldown({
+    large_service_area: {
+        on_update_hook: function (){
+            alert( 'large_service_area updated' );
+        }
+    },
+    service_area: {
+        on_update_hook: function (){
+            alert( 'service_area updated' );
+        }
+    },
+    middle_area: {
+        on_update_hook: 同上...
+    },
+    small_area: {
+        on_update_hook: 同上...
+    }
+});</pre>
+    <p>各 on_update_hook 処理内で出来ること・便利に利用できるメソッド等については、<a href="../../abroad/docs/dept.pulldown.html#opt-e">こちらのドキュメント</a>を参照ください。</p>
+    <p>簡単なサンプルコードはこちら:</p>
+    <pre><a href="../samples/places.pulldown.on_update_hook.html">on_update_hook サンプルコード</a></pre>
+    <p>これを有効活用する事により、「ユーザがプルダウン値を選択したら、下層プルダウンの情報を元に xxx を画面に別途表示」といったカスタマイズUIを作成することができるようになります。</p>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h3 id="opt-h">現在のプルダウン内容を取得</h3>
+    <p>各プルダウンごとの get_current_stat() メソッドにより、現在選択中の値や全選択肢のリスト等の便利情報を取得する事ができます:</p>
+<pre>var p = new HotPepper.UI.Places.Pulldown();
+var lsa_stat = p.large_service_area.get_current_stat();
+var sa_stat  = p.service_area.get_current_stat();
+var ma_stat  = p.middle_area.get_current_stat();
+var sma_stat = p.small_area.get_current_stat();</pre>
+    <p>各戻り値 *_stat の中身については、<a href="../../abroad/docs/dept.pulldown.html#opt-f">こちらのドキュメント</a>を参照ください。</p>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+</div><!-- end yui-b -->
+</div><!-- end yui-main -->
+<div class="yui-b navi">
+<div class="banner">
+    <a href="../../index.html"><img src="../../recruit/docs/img/rui-logo-banner.jpg"/></a>
+</div>
+<h3>INDEX</h3>
+<ul>
+    <li><a href="#synopsis">概要</a></li>
+    <li><a href="#sample">サンプル</a></li>
+    <li><a href="#requirement">動作条件</a></li>
+    <li><a href="#reuseable-code">簡易なコード例</a></li>
+    <li><a href="#howto">使い方</a></li>
+    <li>オプション機能
+        <ul class="nobullet" style="margin-top:10px;font-size:1em">
+            <li><a href="#opt-a">各プルダウンのid値を指定したい</a>
+            <li><a href="#opt-b">プルダウンの初期値 &quot;指定なし&quot;
+            を別の文言に変えたい</a>
+            <li><a href="#opt-d">プルダウンの初期値を設定</a>
+            <li><a href="#opt-f">一部のプルダウンだけを使いたい</a>
+            <li><a href="#opt-e">任意のコード値から、都市や国名を判別したい</a>
+            <li><a href="#opt-g">選択肢が刷新されたタイミングで任意の処理を実行したい</a>
+            <li><a href="#opt-h">現在のプルダウン内容を取得</a>
+        </ul>
+    </li>
+</ul>
+<h3 style="margin-top:20px">その他</h3>
+<ul class="nobullet">
+    <li><a href="http://webservice.recruit.co.jp/hotpepper/">ホットペッパー WEBサービス</a></li>
+    <li><a href="http://mtl.recruit.co.jp/contact.html">お問い合わせ</a></li>
+
+</ul>
+</div><!-- end yui-b navi -->
+</div><!-- end bd -->
+
+<div id="ft">
+<div class="inner">
+<div class="yui-gc">
+    <div class="yui-u first">
+    本コンテンツはリクルートが提供する実験サービスです
+    </div>
+    <div class="yui-u">
+    <p><a href="http://mtl.recruit.co.jp/"><img src="../../recruit/docs/img/mtl_logo.gif" border="0" alt="メディアテクノロジーラボ"></a></p>
+    </div>
+</div>
+</div><!-- end inner-->
+</div><!-- end ft -->
+</div><!-- end doc -->
+
+</body>
+</html>

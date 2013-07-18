@@ -1,0 +1,48 @@
+<link rel="stylesheet" href="/jquery.mobile-1.3.0.min.css" />
+<link rel="stylesheet" href="/css/smartphone.css">
+<script type="text/javascript" src="/jquery-1.6.4.js"></script>
+<script src="/js/jquery.easing.1.3.js" type="text/javascript" charset="UTF-8"></script>
+<script src="/js/jquery.vgrid.min.js" type="text/javascript" charset="UTF-8"></script>
+<script type="text/javascript">
+//<![CDATA[
+$(function(){
+	var hsort_flg = false;
+
+	//setup
+	var vg = $("#grid-content").vgrid({
+		easing: "easeOutQuint",
+		useLoadImageEvent: true,
+		useFontSizeListener: true,
+		time: 400,
+		delay: 20,
+		fadeIn: {
+			time: 500,
+			delay: 50
+		},
+		onStart: function(){
+			$("#message1")
+				.css("visibility", "visible")
+				.fadeOut("slow",function(){
+					$(this).show().css("visibility", "hidden");
+				});
+		},
+		onFinish: function(){
+			$("#message2")
+				.css("visibility", "visible")
+				.fadeOut("slow",function(){
+					$(this).show().css("visibility", "hidden");
+				});
+		}
+	});
+	$(window).load(function(e){
+		vg.vgrefresh();
+	});
+
+
+});
+//]]>
+</script>
+<script type="text/javascript" src="/my.js"></script>
+<script type="text/javascript" src="/jquery.mobile-1.3.0.min.js"></script>
+<script src='http://a.adimg.net/javascripts/AdLantisLoader.js' type='text/javascript' charset='utf-8'></script>
+

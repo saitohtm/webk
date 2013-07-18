@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>テスト カテゴリ選択 プルダウン - eyeco - Recruit UI Library</title>
+<style type="text/css">
+select {
+    width: 150px;
+    margin-bottom: 5px;
+}
+</style>
+<script type="text/javascript" src="../../recruit/docs/js/jquery-1.2.3.js"></script>
+<script type="text/javascript" src="../../recruit/docs/js/jquery.form.js"></script>
+<script type="text/javascript" src="../../recruit.ui.js"></script>
+<script type="text/javascript" src="../../eyeco.ui.js"></script>
+<script type="text/javascript">
+$(function (){
+    Recruit.UI.key = 'a450fa593ee3f2a4';
+    new Eyeco.UI.Category.Pulldown();
+    new Eyeco.UI.Category.Pulldown({
+        large_category: { id: 'l2', val: '101' }, 
+        small_category: { id: 's2' }
+    });
+    new Eyeco.UI.Category.Pulldown({
+        large_category: { id: 'l3' }, 
+        small_category: { id: 's3', val: '101007' }
+    });
+    new Eyeco.UI.Category.Pulldown({
+        large_category: { id: 'l4' }
+    });
+    new Eyeco.UI.Category.Pulldown({
+        small_category: { id: 's5', large_category: '101' }
+    });
+
+    $( 'form' ).submit( function (){
+        alert( $( this ).formSerialize() );
+        return false;
+    });
+});
+</script>
+</head>
+<body>
+<h1>カテゴリ選択 プルダウン</h1>
+<div class="sample">
+    <h2>基本形</h2>
+    <form id="sample-form" action="">
+    <select id="eye-large-category-sel"></select>
+    <select id="eye-small-category-sel"></select>
+    <input type="submit" value="値を確認" />
+    </form>
+</div>
+<div class="sample">
+    <h2>大カテゴリ 初期値あり</h2>
+    <form id="sample-form" action="">
+    <select id="l2"></select>
+    <select id="s2"></select>
+    <input type="submit" value="値を確認" /> ヘルス＆ビューティー
+    </form>
+</div>
+<div class="sample">
+    <h2>小カテゴリ 初期値あり</h2>
+    <form id="sample-form" action="">
+    <select id="l3"></select>
+    <select id="s3"></select>
+    <input type="submit" value="値を確認" /> バスグッズ
+    </form>
+</div>
+<div class="sample">
+    <h2>大カテゴリのみ</h2>
+    <form id="sample-form" action="">
+    <select id="l4"></select>
+    <input type="submit" value="値を確認" />
+    </form>
+</div>
+<div class="sample">
+    <h2>小カテゴリのみ</h2>
+    <form id="sample-form" action="">
+    <select id="s5"></select>
+    <input type="submit" value="値を確認" /> ヘルス＆ビューティー
+    </form>
+</div>
+
+</body>
+</html>

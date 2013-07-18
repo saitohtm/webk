@@ -1,0 +1,79 @@
+﻿<!--META-->
+<meta name="keyword" content="Spot,travel,photo,trip" xml:lang="ja" lang="ja"/>
+<meta name="title" content="Wrold Travel Spot <!--ID-->" xml:lang="ja" lang="ja"/>
+<title>Wrold Travel Spot <!--ID-->"</title>
+<!--HEADER-->
+<div data-role="header">
+    <a href="/" data-icon="home" data-ajax="false">Home</a>
+    <h1>Wrold Travel Spot</h1>
+</div>
+<script>
+$(function() {
+
+	$('#google_plusone').socialbutton('google_plusone', {
+		lang: 'en',
+		size: 'medium'
+	});
+
+	$('#twitter').socialbutton('twitter', {
+		button: 'horizontal',
+        text: 'Wrold Travel Spot <!--ID-->'
+	});
+
+	$('#facebook_share').socialbutton('facebook_share', {
+	});
+
+	$('#pinterest').socialbutton('pinterest', {
+        media: '<!--PHOTO-->'
+    });
+
+});
+</script>
+
+
+<!--LIST-->
+
+<center>
+<a href="/super-car-photo/<!--PREID-->/" data-role="button" data-icon="arrow-l" data-inline="true">Prev</a>
+<a href="/super-car-photo/<!--NEXTID-->/" data-role="button" data-icon="arrow-r" data-inline="true">Next</a>
+</center>
+<hr>
+<ul style="list-style:none">
+<img src="/img/facebook.png" width="20"> Share Please！<br />
+<li style="float:left"><div id="pinterest"></div></li>
+<li style="float:left"><div id="facebook_share"></div></li>
+<li style="float:left"><div id="twitter"></div></li>
+</ul>
+<br />
+<br />
+<hr>
+
+<center>
+evaluation:<font color="red"><!--POINT--></font><br />
+<a href="/index.htm?good=1&id=<!--ID-->" data-role="button" data-inline="true" data-ajax="false">Good</a>
+<a href="/index.htm?bad=1&id=<!--ID-->" data-role="button" data-inline="true" data-ajax="false">Bad!</a>
+</center>
+<hr>
+<div data-role="fieldcontain">
+<form action="/index.htm"; method="post">
+<input type="hidden" name="id" value="<!--ID-->"/>
+
+<label for="textarea">Where is hear?</label>
+<textarea cols="40" rows="8" name="description" id="textarea"></textarea>
+     
+<button type="submit" data-transition="fade">Teaching</button>
+</form>
+
+</div>
+<br />
+<!--COMMENT-->
+<br />
+<img src="/img/E419_20.gif" height=20>RegistDate：<!--REGISTDATE-->
+<br />
+<img src="/img/E132_20.gif" height=20><a href="<!--URL-->" target="_blank" ref=nofollow>website</a>
+<br />
+<br />
+<!--FOOTER-->
+
+</body>
+</html>

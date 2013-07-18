@@ -1,0 +1,27 @@
+#!/usr/bin/perl
+use URI::Escape;
+use CGI;
+
+my $q = new CGI;
+my $namelist = $q->param('names');
+my @names = split(/\n/,$namelist);
+
+print << "END_OF_HTML";
+Content-type: text/html; charset=shift_jis
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD Compact HTML 1.0 Draft //EN"> 
+<html>
+<head>
+END_OF_HTML
+
+foreach my $name (@names){
+	$name =~s/\n//g;
+	$name =~s/\r//g;
+	my $e_name = uri_escape($name);
+	print qq{<a href="http://waao.jp/$e_name/search/">$name</a><br>\n};
+}
+
+print << "END_OF_HTML";
+</head>
+</html>
+END_OF_HTML

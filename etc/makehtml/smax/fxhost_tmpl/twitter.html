@@ -1,0 +1,67 @@
+<!--META-->
+<meta name="keyword" content="<!--NAME-->の写真,Twitter,人気,話題,芸能人,写真,画像" xml:lang="ja" lang="ja"/>
+<meta name="description" content="<!--NAME-->のTwitter:<!--NAME-->の写真　人気・話題の芸能人。評価の高い芸能人画像写真付きの芸能人検索。<!--PAGE-->ページ目" xml:lang="ja" lang="ja"/>
+<title><!--NAME-->のTwitter -photox-</title>
+<!--HEADER-->
+<!--HTML-->
+<!--AD_HEADER-->
+<div data-role="header">
+<h1><!--NAME-->のTwitter</h1>
+</div>
+<center>
+<a href="<!--URL-->" target="_blank" data-role="button" data-inline="true" data-ajax="false">正常に見れない人用</a>
+</center>
+<script src="http://widgets.twimg.com/j/2/widget.js"></script>
+<script>
+new TWTR.Widget({
+  version: 2,
+  type: 'profile',
+  rpp: 5,
+  interval: 6000,
+  width: 'auto',
+  height: 300,
+  theme: {
+    shell: {
+      background: '#333333',
+      color: '#ffffff'
+    },
+    tweets: {
+      background: '#000000',
+      color: '#ffffff',
+      links: '#4aed05'
+    }
+  },
+  features: {
+    scrollbar: false,
+    loop: false,
+    live: false,
+    hashtags: true,
+    timestamp: true,
+    avatars: true,
+    behavior: 'all'
+  }
+}).render().setUser("<!--URL-->").start();
+</script>
+<div data-role="header">
+<h2><!--NAME-->の写真メニュー</h2>
+</div>
+<div data-role="content">
+<ul data-role="listview">
+<li><a href="/keyword-<!--ID-->/"><img src="/img/E00F_20.gif" height="20" class="ui-li-icon"><!--NAME-->とは</a></li>
+<li><a href="/keyword-<!--ID-->/photolist-1/"><img src="/img/E008_20.gif" height="20" class="ui-li-icon"><!--NAME-->の写真</a></li>
+</ul>
+</div>
+
+<!--AD_IMOBILE-->
+<div data-role="header">
+<h2>話題の芸能人</h2>
+</div>
+<div id="grid-content">
+<!--GRID_TEMP-->
+</div>
+
+<center>
+<!--NAME-->のTwitter
+<!--FOOTER-->
+</body>
+</html>

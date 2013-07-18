@@ -1,0 +1,70 @@
+<meta http-equiv="content-type" CONTENT="text/html;charset=UTF-8">
+<meta name="robots" content="index,follow">
+<meta http-equiv="Expires" content="0">
+<meta http-equiv="Pragma" CONTENT="no-cache">
+<meta http-equiv="Cache-Control" CONTENT="no-cache">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <link href="/css/my.css" rel="stylesheet">
+	<link rel="stylesheet" href="/css/pc.css">
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/js/jquery-1.7.2.min.js"><\/script>')</script>
+
+<script src="/js/my.js" type="text/javascript"></script>
+<script src="/js/bootstrap.js" type="text/javascript"></script>
+
+<script src="/js/jquery.easing.1.3.js" type="text/javascript" charset="UTF-8"></script>
+<script src="/js/jquery.vgrid.min.js" type="text/javascript" charset="UTF-8"></script>
+
+<style type="text/css">
+body {
+padding-top: 60px;
+}
+</style>
+<script type="text/javascript">
+//<![CDATA[
+$(function(){
+	var hsort_flg = false;
+
+	//setup
+	var vg = $("#grid-content").vgrid({
+		easing: "easeOutQuint",
+		useLoadImageEvent: true,
+		useFontSizeListener: true,
+		time: 400,
+		delay: 20,
+		fadeIn: {
+			time: 500,
+			delay: 50
+		},
+		onStart: function(){
+			$("#message1")
+				.css("visibility", "visible")
+				.fadeOut("slow",function(){
+					$(this).show().css("visibility", "hidden");
+				});
+		},
+		onFinish: function(){
+			$("#message2")
+				.css("visibility", "visible")
+				.fadeOut("slow",function(){
+					$(this).show().css("visibility", "hidden");
+				});
+		}
+	});
+	$(window).load(function(e){
+		vg.vgrefresh();
+	});
+
+
+});
+//]]>
+</script>
+

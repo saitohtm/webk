@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1"/>
+<meta name="format-detection" content="telephone=no" />
+<meta name="google-site-verification" content="Oxt3KNZkObVOIRRdlbV2ppVaSYxhdE_EWIaKZvQaMwo" />
+<meta name="keyword" content="人,画像,芸能人,写真,人名検索" xml:lang="ja" lang="ja"/>
+<meta name="description" content="写真付き芸能人の人名検索。今話題の人が写真で分かる" xml:lang="ja" lang="ja"/>
+<title>写真付き芸能人の人名検索 毎日更新中 -PERSON's-</title>
+<link rel="stylesheet" href="/jquery.mobile-1.3.0.min.css" />
+<link rel="stylesheet" href="/css/smartphone.css">
+<script type="text/javascript" src="/jquery-1.6.4.js"></script>
+<script src="/js/jquery.easing.1.3.js" type="text/javascript" charset="UTF-8"></script>
+<script src="/js/jquery.vgrid.min.js" type="text/javascript" charset="UTF-8"></script>
+<script type="text/javascript">
+//<![CDATA[
+$(function(){
+	var hsort_flg = false;
+
+	//setup
+	var vg = $("#grid-content").vgrid({
+		easing: "easeOutQuint",
+		useLoadImageEvent: true,
+		useFontSizeListener: true,
+		time: 400,
+		delay: 20,
+		fadeIn: {
+			time: 500,
+			delay: 50
+		},
+		onStart: function(){
+			$("#message1")
+				.css("visibility", "visible")
+				.fadeOut("slow",function(){
+					$(this).show().css("visibility", "hidden");
+				});
+		},
+		onFinish: function(){
+			$("#message2")
+				.css("visibility", "visible")
+				.fadeOut("slow",function(){
+					$(this).show().css("visibility", "hidden");
+				});
+		}
+	});
+	$(window).load(function(e){
+		vg.vgrefresh();
+	});
+
+
+});
+//]]>
+</script>
+<script type="text/javascript" src="/my.js"></script>
+<script type="text/javascript" src="/jquery.mobile-1.3.0.min.js"></script>
+<script src='http://a.adimg.net/javascripts/AdLantisLoader.js' type='text/javascript' charset='utf-8'></script>
+
+
+</head>
+<body>
+<div id="home" data-role="page">
+<div data-role="header" data-position="fixed">
+<h1><img src="/img/logo.png" height="20"></h1>
+<a href="/?menu=1" data-icon="home" data-iconpos="text" data-direction="reverse">Menu</a>
+<a href="/?search=1" data-icon="search" data-iconpos="notext" data-rel="dialog" data-transition="fade">Search</a>
+</div>
+
+<center>
+<!-- i-mobile for PC client script -->
+<script type="text/javascript">
+	imobile_pid = "460";
+	imobile_asid = "101291";
+	imobile_width = 728;
+	imobile_height = 90;
+</script>
+<script type="text/javascript" src="http://spdeliver.i-mobile.co.jp/script/ads.js?20101001"></script>
+</center>
+<div data-role="header">
+<h2>今話題な人</h2>
+</div>
+
+<div data-role="footer" data-id="footer" data-position="fixed">
+	<div data-role="navbar">
+		<ul>
+			<li><a href="/pop-1/"><img src="/img/E10E_20.gif" height="10"> 人気</a></li>
+			<li><a href="/good-1/"><img src="/img/E10E_20.gif" height="10"> 評価</a></li>
+			<li><a href="/menu/"><img src="/img/E00F_20.gif" height="10"> カテゴリ</a></li>
+		</ul>
+	</div><!-- /navbar -->
+</div><!-- /footer -->
+</div><!--home-->
+
+</body>
+</html>

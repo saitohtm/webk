@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+<meta name="keyword" content="無料,アプリ開発,開発会社,iphone,android,アイフォン,アンドロイド,app,予算,実績,見積もり" xml:lang="ja" lang="ja"/>
+<meta name="description" content="アプリ開発をしたい人とアプリ開発をできる人を完全無料でマッチング。iphone,androidの実績ある開発会社から選べます" xml:lang="ja" lang="ja"/>
+<title>アプリ開発したい人とアプリ開発できる人を完全無料で結ぶ-アプリーズ(applease)-</title>
+<!--META-->
+</head>
+<body>
+<!--HEADER-->
+
+<!--SOCIAL_TAG-->
+
+<div class="container">
+
+<center>
+<img src="/img/toplogo.jpg" width=918 alt="本当に使えるアプリ探しならアプリーズ">
+</center>
+
+<h2>ジャンル選択<small> <!--DATETIME-->更新</small></h2>
+
+<a class="btn primary" href="//">ゲーム &raquo;</a> 
+<a class="btn primary" href="//">電子書籍 &raquo;</a> 
+<a class="btn primary" href="//">写真／カメラ &raquo;</a> 
+<a class="btn primary" href="//">音楽／動画 &raquo;</a> 
+<a class="btn primary" href="//">地図／GPS &raquo;</a> 
+<a class="btn primary" href="//">検索／ツール &raquo;</a> 
+<a class="btn primary" href="//">業務用 &raquo;</a> 
+<a class="btn primary" href="//">その他 &raquo;</a> 
+
+
+</div><!--/container-->
+
+    
+<div class="container-fluid">
+
+<form action="/index.htm" method="post">
+
+
+<table class="table table-bordered table-striped">
+<tbody>
+<tr>
+<td>対応OS</td>
+<td>
+<label class="checkbox inline">
+  <input type="checkbox" name="ios" value="1"> iOS
+  <img src="/img/apple.jpg" height=20>
+</label>
+<label class="checkbox inline">
+  <input type="checkbox" name="android" value="1"> Android
+  <img src="/img/android.jpg" height=20>
+</label>
+</td>
+</tr>
+
+<tr>
+<td>ジャンル</td>
+<td>
+<!--GENRELIST-->
+</td>
+</tr>
+
+<tr>
+<td>依頼範囲</td>
+<td>
+<!--ORDERLIST-->
+</td>
+</tr>
+
+<tr>
+<td>開発予算(上限)</td>
+<td>
+<select name ="s_yosan">
+<!--YOSANLIST-->
+</select> 万円
+</td>
+</tr>
+
+<tr>
+<td>納期</td>
+<td>
+<select name ="s_limit">
+<!--LIMITLIST-->
+</select>
+</td>
+</tr>
+
+<tr>
+<td>アプリ概要</td>
+<td>
+<textarea class="xxlarge" name="app" rows="15" cols="600"></textarea></td>
+</tr>
+
+<tr>
+<td>機能</td>
+<td>
+<!--KINOULIST-->
+</td>
+</tr>
+
+<tr>
+<td>想定画面数</td>
+<td>
+<select name ="s_gamen">
+<!--GAMENLIST-->
+</select>
+</td>
+</tr>
+
+<tr>
+<td>似ているアプリ</td>
+<td>
+<textarea class="xxlarge" name="likeapp" rows="15" cols="600"></textarea></td>
+</td>
+</tr>
+
+<tr>
+<td>法人・個人</td>
+<td>
+<label class="radio">
+  <input type="radio" name="company_type" value="1" checked>
+  法人
+</label>
+<label class="radio">
+  <input type="radio" name="company_type" value="2">
+  個人
+</label>
+</td>
+</tr>
+
+<tr>
+<td>担当者名</td>
+<td>
+<input name="tanto" type="text" required>
+</td>
+</tr>
+
+<tr>
+<td>住所</td>
+<td>
+郵便番号 
+<input name="zip" type="text" placeholder="9990000" required>
+<br />
+都道府県<br />
+<select name="s_pref">
+<!--PREFLIST-->
+</select>
+<br />
+<input name="address" type="text" placeholder="住所" required>
+</td>
+</tr>
+
+<tr>
+<td>E-mail</td>
+<td>
+<input name="email" type="text" placeholder="xxx@xxx.xx.jp" required>
+</td>
+</tr>
+
+<tr>
+<td>電話番号(任意)</td>
+<td>
+<input name="tel" type="text" placeholder="0312341234" required>
+</td>
+</tr>
+
+<tr>
+<td>検討度合い(任意)</td>
+<td>
+<select name="s_doai">
+<!--DOAILIST-->
+</select>
+</td>
+</tr>
+
+<tr>
+<td>その他要望</td>
+<td>
+<textarea class="xxlarge" name="yobo" rows="15" cols="600"></textarea></td>
+</td>
+</tr>
+
+</tbody>
+</table>
+
+<input name="entry" type="hidden" value=1><br>
+<button class="btn primary" type="submit">登録</button>
+</form>
+
+
+</div><!--/container-fluid-->
+
+
+
+<!--FOOTER-->
+</body>
+</html>
