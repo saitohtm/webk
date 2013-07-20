@@ -124,8 +124,8 @@ sub _review_iphone_list(){
 		if($img200=~/-75/){
 			$img200=~s/175/200/ig;
 		}else{
-			$img200=~s/\.jpg/\.200x200-75\.jpg/ig;
-			$img200=~s/\.png/\.200x200-75\.png/ig;
+			$img200=~s/\.jpg$/\.200x200-75\.jpg/i;
+			$img200=~s/\.png$/\.200x200-75\.png/i;
 		}
 		$eva=0 unless($eva);
 		my $star_str = &_star_img($eva);
@@ -234,8 +234,8 @@ sub _review_iphone_pre(){
 		$html = &_parts_set($html);
 
 		$data->{img200}=$data->{img100};
-		$data->{img200}=~s/\.jpg/\.200x200-75\.jpg/g;
-		$data->{img200}=~s/\.png/\.200x200-75\.png/g;
+		$data->{img200}=~s/\.jpg$/\.200x200-75\.jpg/i;
+		$data->{img200}=~s/\.png$/\.200x200-75\.png/i;
 
 		foreach my $key ( sort keys( %{$data} ) ) {
 			$html =~s/<!--$key-->/$data->{$key}/g;
@@ -1518,8 +1518,8 @@ sub _detail_dsp_iphone(){
 	if($app_data->{img200}=~/175/){
 		$app_data->{img200}=~s/175/200/g;
 	}else{
-		$app_data->{img200}=~s/\.jpg/\.200x200-75\.jpg/g;
-		$app_data->{img200}=~s/\.png/\.200x200-75\.png/g;
+		$app_data->{img200}=~s/\.jpg$/\.200x200-75\.jpg/i;
+		$app_data->{img200}=~s/\.png$/\.200x200-75\.png/i;
 	}
 	# カテゴリ名
 	my $sth = $self->{dbi}->prepare(qq{select name from app_category where id = ? limit 1});
@@ -1588,8 +1588,8 @@ sub _detail_dsp_iphone(){
 	$sth->execute($app_data->{genre_id},$rankdate);
 	while(my @row = $sth->fetchrow_array) {
 		my $img200 = $row[2];
-		$img200=~s/\.jpg/\.200x200-75\.jpg/ig;
-		$img200=~s/\.png/\.200x200-75\.png/ig;
+		$img200=~s/\.jpg$/\.200x200-75\.jpg/i;
+		$img200=~s/\.png$/\.200x200-75\.png/i;
 		my $eva = $row[3];
 		$eva=0 unless($eva);
 		my $star_str = &_star_img($eva);
