@@ -13,6 +13,14 @@ use Jcode;
 
 use Date::Simple ('date', 'today');
 
+# ２重起動防止
+if ($$ != `/usr/bin/pgrep -fo $0`) {
+print "exit \n";
+    exit 1;
+}
+print "start \n";
+
+
 my $dsn = 'DBI:mysql:waao';
 my $user = 'mysqlweb';
 my $password = 'WaAoqzxe7h6yyHz';
@@ -26,11 +34,6 @@ while(my @row = $sth->fetchrow_array) {
 	$maxid = $row[0];
 }
 $dbh->disconnect;
-
-my $today = today();
-my $y = $todya->year;
-
-http://www.toto-dream.com/dci/I/IPB/IPB02.do?op=lnkSeasonLotResultLstBIG&popupDispDiv=disp&meetingFiscalYear=2012
 
 my $max_i = $maxid + 20;
 for(my $i=$maxid; $i<=$max_i; $i++){

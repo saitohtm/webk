@@ -185,7 +185,8 @@ html, body {
 }
 body {
   margin: 0;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+/*  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+  font-family:'ƒqƒ‰ƒMƒmŠpƒS Pro W3', 'Hiragino Kaku Gothic Pro', ƒƒCƒŠƒI, Meiryo, '‚l‚r ‚oƒSƒVƒbƒN', sans-serif;
   font-size: 13px;
   font-weight: normal;
   line-height: 18px;

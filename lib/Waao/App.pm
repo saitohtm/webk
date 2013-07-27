@@ -1527,7 +1527,7 @@ sub _detail_dsp_iphone(){
 	while(my @row = $sth->fetchrow_array) {
 		$html =~s/<!--genre_name_jp-->/$row[0]/g;
 	}
-		
+
 	# サムネイルの取得
 	my $shotimgs;
 	my $shotimgs_full;

@@ -1,4 +1,4 @@
-﻿#!/usr/bin/perl
+#!/usr/bin/perl
 use lib qw(/var/www/vhosts/goo.to/etc/lib /var/www/vhosts/goo.to/lib/Waao);
 use DBI;
 use CGI qw( escape );
@@ -20,7 +20,8 @@ my $password = 'WaAoqzxe7h6yyHz';
 my $dbh = DBI->connect($dsn,$user,$password,{RaiseError => 1, AutoCommit => 0});
 
 
-for(my $i=1;$i<36814;$i++){
+#for(my $i=1;$i<36814;$i++){
+for(my $i=4146;$i<36814;$i++){
 	my $url = qq{http://www.tv-ranking.com/detail/$i.php};
 	my $get_url = `GET $url`;
 print "$url\n";
@@ -61,8 +62,8 @@ print "$url\n";
 			my $y = $2;
 			my $m = $4;
 			my $d = $5;
-			$birthday = sprintf("%04d-%02d-%02d",$y,$m,$d);			
-			&_birth($dbh,$keyword_id,$y,$m,$d,$birth);
+			$birthday = sprintf("%04d/%02d/%02d",$y,$m,$d);			
+			&_birth($dbh,$keyword_id,$y,$m,$d,$birthday);
 		}
 		if($line =~/<tr><th>カテゴリ<\/th><td>(.*)<\/td><\/tr>/){
 			my $category_list = $1;
@@ -129,18 +130,18 @@ print "$url\n";
 
 	}
 
-	print "$url\n";
+#	print "$url\n";
 	print "keyword : $keyword\n";
-	print "keyword_id : $keyword_id\n";
-	print "job : $job\n";
-	print "kana : $kana\n";
-	print "pref : $pref\n";
+#	print "keyword_id : $keyword_id\n";
+#	print "job : $job\n";
+#	print "kana : $kana\n";
+#	print "pref : $pref\n";
 	print "birthday : $birthday\n";
-	print "category : $category\n";
-	print "keywords : $keywords\n";
-	print "group : $group\n";
-	print "tag : $tag\n";
-	print "family : $family\n";
+#	print "category : $category\n";
+#	print "keywords : $keywords\n";
+#	print "group : $group\n";
+#	print "tag : $tag\n";
+#	print "family : $family\n";
 
 }
 
@@ -231,12 +232,15 @@ sub _birth(){
 	my $d = shift;
 	my $birth = shift;
 	
-	print "birthday $birth \n";
+	print "birthday $birth $y $m $d $keyword_id \n";
 
 eval{
 	my $sth = $dbh->prepare(qq{update keyword set birthday = ?,b_year=?,b_mon=?,b_day=? where id = ? limit 1});
 	$sth->execute($birth,$y,$m,$d,$keyword_id);
 };
+if($@){
+	print "$@\n";
+}
 	
 	return;
 }
