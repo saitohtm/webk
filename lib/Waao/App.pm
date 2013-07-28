@@ -38,11 +38,7 @@ sub _links_regist_top(){
 	$html = &_load_tmpl("link_regist.html");
 	$html = &_parts_set($html);
 
-print << "END_OF_HTML";
-Content-type: text/html; charset=UTF-8
-
-$html
-END_OF_HTML
+	&_output($html);
 
 	
 	return;
@@ -163,11 +159,7 @@ sub _review_iphone_list(){
 	}
 	$html =~s/<!--LIST-->/$list/g;
 
-print << "END_OF_HTML";
-Content-type: text/html; charset=UTF-8
-
-$html
-END_OF_HTML
+	&_output($html);
 
 	return;
 }
@@ -200,11 +192,7 @@ eval{
 	}
 };
 
-print << "END_OF_HTML";
-Content-type: text/html; charset=UTF-8
-
-$html
-END_OF_HTML
+	&_output($html);
 
 	return;
 }
@@ -250,11 +238,7 @@ sub _review_iphone_pre(){
 		$html = &_parts_set($html);
 	}
 
-print << "END_OF_HTML";
-Content-type: text/html; charset=UTF-8
-
-$html
-END_OF_HTML
+	&_output($html);
 
 	return;
 }
@@ -266,11 +250,7 @@ sub _review_iphone_top(){
 	$html = &_load_tmpl("review_iphone.html");
 	$html = &_parts_set($html);
 
-print << "END_OF_HTML";
-Content-type: text/html; charset=UTF-8
-
-$html
-END_OF_HTML
+	&_output($html);
 
 	return;
 }
@@ -363,11 +343,7 @@ sub _review_android_list(){
 	}
 	$html =~s/<!--LIST-->/$list/g;
 
-print << "END_OF_HTML";
-Content-type: text/html; charset=UTF-8
-
-$html
-END_OF_HTML
+	&_output($html);
 
 	return;
 }
@@ -400,11 +376,7 @@ eval{
 	}
 };
 
-print << "END_OF_HTML";
-Content-type: text/html; charset=UTF-8
-
-$html
-END_OF_HTML
+	&_output($html);
 
 	return;
 }
@@ -437,11 +409,7 @@ sub _review_android_pre(){
 		$html = &_parts_set($html);
 	}
 
-print << "END_OF_HTML";
-Content-type: text/html; charset=UTF-8
-
-$html
-END_OF_HTML
+	&_output($html);
 
 	return;
 }
@@ -453,11 +421,7 @@ sub _review_android_top(){
 	$html = &_load_tmpl("review_android.html");
 	$html = &_parts_set($html);
 
-print << "END_OF_HTML";
-Content-type: text/html; charset=UTF-8
-
-$html
-END_OF_HTML
+	&_output($html);
 
 	return;
 }
@@ -510,11 +474,7 @@ eval{
 
 # ニュースリリース登録
 
-print << "END_OF_HTML";
-Content-type: text/html; charset=UTF-8
-
-$html
-END_OF_HTML
+	&_output($html);
 
 	return;
 }
@@ -526,11 +486,7 @@ sub _press_top(){
 	$html = &_load_tmpl("press.html");
 	$html = &_parts_set($html);
 
-print << "END_OF_HTML";
-Content-type: text/html; charset=UTF-8
-
-$html
-END_OF_HTML
+	&_output($html);
 
 	return;
 }
@@ -596,12 +552,7 @@ eval{
 
 	$html =~s/<!--LIST-->/$list/g;
 
-
-print << "END_OF_HTML";
-Content-type: text/html; charset=UTF-8
-
-$html
-END_OF_HTML
+	&_output($html);
 
 	return;
 }
@@ -638,11 +589,7 @@ eval{
 	$sth->execute($self->{cgi}->param('url'));
 };
 	
-print << "END_OF_HTML";
-Content-type: text/html; charset=UTF-8
-
-$html
-END_OF_HTML
+	&_output($html);
 
 	return;
 }
@@ -655,11 +602,7 @@ sub _regist_top(){
 	$html = &_load_tmpl("regist.html");
 	$html = &_parts_set($html);
 
-print << "END_OF_HTML";
-Content-type: text/html; charset=UTF-8
-
-$html
-END_OF_HTML
+	&_output($html);
 
 	return;
 }
@@ -802,13 +745,12 @@ $sth2->execute($app_id,$data->{shot1},$data->{shot2},$data->{shot3},$data->{shot
 sub dispatch(){
 	my $self = shift;
 
+
 	# 切り替え
 	if($self->{cgi}->param('iphoneid')){
 		&_detail_dsp_iphone($self);
 		return;
-	}
-
-	if($self->{cgi}->param('androidid')){
+	}elsif($self->{cgi}->param('androidid')){
 		&_detail_dsp_android($self);
 		return;
 	}
@@ -916,11 +858,8 @@ sub dispatch(){
 	# レコメンド
 	my $list = &_recomment($self,$category);
 	$html =~s/<!--LIST-->/$list/g;
-print << "END_OF_HTML";
-Content-type: text/html; charset=UTF-8
 
-$html
-END_OF_HTML
+	&_output($html);
 
 	return;
 }
@@ -1148,11 +1087,7 @@ my $title;
 	$html =~s/<!--URL-->/$url/g;
 	$html =~s/<!--TITLE-->/$title/g;
 
-print << "END_OF_HTML";
-Content-type: text/html; charset=UTF-8
-
-$html
-END_OF_HTML
+	&_output($html);
 
 	return;
 }
@@ -1172,11 +1107,7 @@ eval{
 	$sth->execute($self->{cgi}->param('tmp_url'),$self->{cgi}->param('title'),$self->{cgi}->param('newstype'),$ymd,$self->{cgi}->param('moto'));
 };
 	
-print << "END_OF_HTML";
-Content-type: text/html; charset=UTF-8
-
-$html
-END_OF_HTML
+	&_output($html);
 
 	return;
 }
@@ -1188,11 +1119,7 @@ sub _fmfm_regist_top(){
 	$html = &_load_tmpl("fmfm_regist.html");
 	$html = &_parts_set($html);
 
-print << "END_OF_HTML";
-Content-type: text/html; charset=UTF-8
-
-$html
-END_OF_HTML
+	&_output($html);
 
 	return;
 }
@@ -1245,11 +1172,7 @@ sub _socialnews_date(){
 	$html =~s/<!--DATE-->/$date/g;
 	$html =~s/<!--LIST-->/$list/g;
 
-print << "END_OF_HTML";
-Content-type: text/html; charset=UTF-8
-
-$html
-END_OF_HTML
+	&_output($html);
 
 	return;
 }
@@ -1290,11 +1213,7 @@ sub _socialnews_list(){
 	$html =~s/<!--LIST-->/$list/g;
 	$html =~s/<!--PAGER-->/$pager/g;
 
-print << "END_OF_HTML";
-Content-type: text/html; charset=UTF-8
-
-$html
-END_OF_HTML
+	&_output($html);
 
 	return;
 }
@@ -1388,11 +1307,7 @@ eval{
 }	
 
 
-print << "END_OF_HTML";
-Content-type: text/html; charset=UTF-8
-
-$html
-END_OF_HTML
+	&_output($html);
 
 	return;
 }
@@ -1421,11 +1336,7 @@ sub _review_top(){
     my $id = $self->{cgi}->param('id');
 	$html =~s/<!--ID-->/$id/g;
 
-print << "END_OF_HTML";
-Content-type: text/html; charset=UTF-8
-
-$html
-END_OF_HTML
+	&_output($html);
 
 	return;
 }
@@ -1527,7 +1438,7 @@ sub _detail_dsp_iphone(){
 	while(my @row = $sth->fetchrow_array) {
 		$html =~s/<!--genre_name_jp-->/$row[0]/g;
 	}
-
+		
 	# サムネイルの取得
 	my $shotimgs;
 	my $shotimgs_full;
@@ -1656,11 +1567,7 @@ sub _detail_dsp_iphone(){
 	}
 	$html =~s/<!--RANDAMREC-->/$randam_rec/g;
 
-print << "END_OF_HTML";
-Content-type: text/html; charset=UTF-8
-
-$html
-END_OF_HTML
+	&_output($html);
 		
 	return;
 }
@@ -1908,12 +1815,8 @@ sub _detail_dsp_android(){
 
 	}
 	$html =~s/<!--RANDAMREC-->/$randam_rec/g;
-
-print << "END_OF_HTML";
-Content-type: text/html; charset=UTF-8
-
-$html
-END_OF_HTML
+	
+	&_output($html);
 		
 	return;
 }
@@ -1949,5 +1852,15 @@ use URI::Escape;
 	return $af_link;
 }
 
+sub _output(){
+	my $html = shift;
+	
+print << "END_OF_HTML";
+Content-type: text/html; charset=UTF-8
 
+$html
+END_OF_HTML
+	
+	return;
+}
 1;

@@ -50,7 +50,7 @@ sub _facebook_graph_api(){
 	$dl_url =~s/\#!//g;
 	$dl_url = $data->{id} if($data->{id});
 	my $cmd = qq{https://graph.facebook.com/$dl_url};
-	print "$cmd _facebook_graph_api\n";
+#	print "$cmd _facebook_graph_api\n";
 	my $get_url = `GET "$cmd"`;
 
 eval{

@@ -20,8 +20,8 @@ my $password = 'WaAoqzxe7h6yyHz';
 
 my $dbh = DBI->connect($dsn,$user,$password,{RaiseError => 1, AutoCommit => 0});
 
-for(my $i=0; $i<600; $i++){
-	my $start = $i * 10000;
+for(my $i=0; $i<6000; $i++){
+	my $start = $i * 1000;
 	&_upd($dbh,$start);
 }#for
 
@@ -35,7 +35,7 @@ sub _upd(){
 
 	my $ua = LWP::UserAgent->new;
 	print "start $start \n";
-	my $sth = $dbh->prepare(qq{SELECT id, url, good FROM `photo` WHERE id >= ? limit 10000});
+	my $sth = $dbh->prepare(qq{SELECT id, url, good FROM `photo` WHERE id >= ? limit 1000});
 	$sth->execute($start);
 	while(my @row = $sth->fetchrow_array) {
 		my $id = $row[0];

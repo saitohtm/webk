@@ -21,7 +21,7 @@ my $dbh = DBI->connect($dsn,$user,$password,{RaiseError => 1, AutoCommit => 0});
 
 
 #for(my $i=1;$i<36814;$i++){
-for(my $i=4146;$i<36814;$i++){
+for(my $i=16170;$i<36814;$i++){
 	my $url = qq{http://www.tv-ranking.com/detail/$i.php};
 	my $get_url = `GET $url`;
 print "$url\n";

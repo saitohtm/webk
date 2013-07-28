@@ -3,15 +3,14 @@
 <head>
 <meta name="keyword" content="<!--name-->,アプリ,<!--genres-->,iphone,アイフォン,アプリーズ" xml:lang="ja" lang="ja"/>
 <meta name="description" content="<!--name--> 評価<!--evaCurrent--> レビュー<!--evacount-->のiphoneアプリです" xml:lang="ja" lang="ja"/>
-<title>新着人気アプリ：<!--name--> 評価<!--evaCurrent--> 使えるiphoneアプリまとめ -アプリーズ-</title>
+<title><!--name--> 評価<!--evaCurrent-->の人気アプリ 使えるiphoneアプリまとめ -アプリーズ-</title>
 <!--META-->
 </head>
 <body>
 <!--HEADER-->
 <!--AD_HEADER-->
 
-
-<img src="/img/apple_thum.gif" height=20> <a href="/">アプリーズ</a> &gt;<a href="/iphone/">iphone版トップ</a> &gt;<a href="/iphone/category<!--genre_id-->-1/"><!--genre_name_jp--></a> &gt;<!--name-->
+<img src="/img/apple_thum.gif" height=20> <a href="/">アプリーズ</a> &gt;<a href="/iphone/">iphone版トップ</a> &gt;<a href="/iphone/category<!--genre_id-->-1/"><!--genre_name_jp--></a> &gt;<strong><!--name--></strong>
 
 <!--TABS-->
 
@@ -53,7 +52,7 @@ $(function() {
 </script>
 <ul style="list-style:none">
 <li style="float:left">
-		<img src="/img/facebook.png" width="20"> 　 いいなぁと思ったらシェア！<img src="/img/kaow03.gif">
+		<img src="/img/facebook.png" width="20"> 　このアプリいいなぁと思ったらみんなにシェア！
 </li>
 <li style="float:left">
 　　
@@ -130,9 +129,15 @@ $(function() {
 		■ファイルサイズ：<!--fileSizeBytes--><br />
 		■デベロッパー：<a href="<!--artistViewUrl-->" target="_blank" rel="nofollow"><!--artistName--></a><br />
 		■販売元：<a href="<!--sellerUrl-->" target="_blank" rel="nofollow"><!--sellerName--></a><br />
-		
 		</p>
 		</div>
+
+		<form action="/app.htm">
+		<input type=hidden name="iphoneid" value="<!--id-->">
+		<input type=hidden name="upd" value="1">
+		<button class="btn primary" type="submit">アプリ情報を最新に更新する</button>
+		</form>
+
 	    <h2><img src="/img/apple.jpg" height=25> オススメiphoneアプリ</h2>
 		<table class="zebra-striped">
 			<tbody>
