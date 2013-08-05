@@ -15,6 +15,7 @@ use CGI qw( escape );
 use Date::Simple;
 use PageAnalyze;
 use DataController;
+#use encoding qw(shiftjis);
 
 # New Directory
 # / 総合トップ
@@ -95,6 +96,8 @@ mkdir($dirname, 0755);
 exit;
 
 sub _apprank(){
+print "START _apprank\n";
+
 &_mkdir("apprank");
 
 my @genres = ("topfreeapplications","toppaidapplications","topgrossingapplications","topfreeipadapplications","toppaidipadapplications","topgrossingipadapplications","newfreeapplications","newpaidapplications");
@@ -117,8 +120,8 @@ foreach my $genre (@genres){
 	foreach my $category (@categorys){
 		&_mkdir("appranklist/$genre/$category");
 		my $url = qq{https://itunes.apple.com/jp/rss/$genre/limit=100/genre=$category/xml};
-		print "cat:$url\n";
-		&_get_rsslist($dbh,$url,$genre,$category);
+#		print "cat:$url\n";
+#		&_get_rsslist($dbh,$url,$genre,$category);
 
 	}
 }
@@ -134,8 +137,8 @@ foreach my $genre (@genres){
 	foreach my $category (@categorys){
 		&_mkdir("apprank300/$genre/$category");
 		my $url = qq{https://itunes.apple.com/jp/rss/$genre/limit=300/genre=$category/xml};
-		print "cat:$url\n";
-		&_get_rss300($dbh,$url,$genre,$category);
+#		print "cat:$url\n";
+#		&_get_rss300($dbh,$url,$genre,$category);
 
 	}
 }
@@ -150,13 +153,13 @@ foreach my $genre (@genres){
 	foreach my $category (@categorys){
 		&_mkdir("apprank/$genre/$category");
 		my $url = qq{https://itunes.apple.com/jp/rss/$genre/limit=100/genre=$category/xml};
-		print "cat:$url\n";
-		&_get_rss($dbh,$url,$genre,$category);
+#		print "cat:$url\n";
+#		&_get_rss($dbh,$url,$genre,$category);
 
 	}
 }
 
-
+print "END _apprank\n";
 
 	return;
 }
@@ -240,8 +243,8 @@ sub _cate_top(){
 		my $img200;
 		while(my @row2 = $sth2->fetchrow_array) {
 			$img200 = $row2[0];
-			$img200=~s/\.jpg/\.200x200-75\.jpg/ig;
-			$img200=~s/\.png/\.200x200-75\.png/ig;
+			$img200=~s/\.jpg$/\.200x200-75\.jpg/ig;
+			$img200=~s/\.png$/\.200x200-75\.png/ig;
 		}
 		
 		$list.=qq{<div>};
@@ -831,8 +834,8 @@ print " $where _make_list \n";
 	while(my @row = $sth->fetchrow_array) {
 		$no++;
 		my $img200 = $row[2];
-		$img200=~s/\.jpg/\.200x200-75\.jpg/ig;
-		$img200=~s/\.png/\.200x200-75\.png/ig;
+		$img200=~s/\.jpg$/\.200x200-75\.jpg/ig;
+		$img200=~s/\.png$/\.200x200-75\.png/ig;
 		my $eva = $row[3];
 		$eva=0 unless($eva);
 		my $star_str = &_star_img($eva);
@@ -905,8 +908,8 @@ print " $where _make_list2 \n";
 	}
 
 		my $img200 = $row[2];
-		$img200=~s/\.jpg/\.200x200-75\.jpg/ig;
-		$img200=~s/\.png/\.200x200-75\.png/ig;
+		$img200=~s/\.jpg$/\.200x200-75\.jpg/ig;
+		$img200=~s/\.png$/\.200x200-75\.png/ig;
 		my $eva = $row[3];
 		$eva=0 unless($eva);
 		my $star_str = &_star_img($eva);
@@ -1009,6 +1012,7 @@ sub _file_output(){
 	my $filename = shift;
 	my $html = shift;
 
+#    $html = encode('utf-8', $html);
 	$html =~s/<!--LISTDSP-->//g;
 print "$filename";
 	open(OUT,"> $filename") || die('error');
@@ -1200,37 +1204,39 @@ sub _get_rss(){
 	foreach my $app_info (@{$xml_val->{entry}}){
 		my $a = qq{im:id};
 		my $app_id = $app_info->{id}->{$a};
-print "INS $app_id \n";
+print "appid: $app_id \n";
 		# データ更新
 		my $check_flag;
-		my ($name, $url, $img100, $eva, $evacount, $formattedPrice, $id, $genres, $genre_id);
-		my $sth = $dbh->prepare(qq{SELECT name, url, img100, eva, evacount,formattedPrice,id,genres,genre_id FROM app_iphone where id = ? limit 1 });
+		my ($name, $url, $img100, $eva, $evacount, $formattedPrice, $id, $genres, $genre_id,$description);
+		my $sth = $dbh->prepare(qq{SELECT name, url, img100, eva, evacount,formattedPrice,id,genres,genre_id,description FROM app_iphone where id = ? limit 1 });
 		$sth->execute($app_id);
 		while(my @row = $sth->fetchrow_array) {
 			$check_flag = 1;
-			($name, $url, $img100, $eva, $evacount, $formattedPrice, $id, $genres, $genre_id) = @row;
+			($name, $url, $img100, $eva, $evacount, $formattedPrice, $id, $genres, $genre_id,$description) = @row;
 		}
 
 		unless($check_flag){
+print "name : $name check_flag: $check_flag \n";
 			my $data = &itunes_page_lookup($app_id);
 			&app_iphone_data($dbh, $data);
 
-			$name = $data->{name};
-			$url = $data->{dl_url};
-			$img100 = $data->{icon};
-			$eva = $data->{rateno};
-			$evacount = $data->{revcnt};
-			$formattedPrice = $data->{sale_price};
+			$name = $data->{trackName};
+			$url = $data->{trackViewUrl};
+			$img100 = $data->{img100};
+			$eva = $data->{averageUserRating};
+			$evacount = $data->{userRatingCountForCurrentVersion};
+			$formattedPrice = $data->{formattedPrice};
 			$id = $app_id;
-			$genres = $data->{category_name}; 
-			$genre_id =$data->{category_id};
+			$genres = $data->{primaryGenreName}; 
+			$genre_id =$data->{primaryGenreId};
+			$description =$data->{description};
 		}
 
 		if($img100=~/-75/){
 			$img100=~s/175/200/ig;
 		}else{
-			$img100=~s/\.jpg/\.200x200-75\.jpg/ig;
-			$img100=~s/\.png/\.200x200-75\.png/ig;
+			$img100=~s/\.jpg$/\.200x200-75\.jpg/ig;
+			$img100=~s/\.png$/\.200x200-75\.png/ig;
 		}
 		$eva=0 unless($eva);
 		$evacount=0 unless($evacount);
@@ -1351,8 +1357,8 @@ print "INS $app_id \n";
 		if($img100=~/-75/){
 			$img100=~s/175/100/ig;
 		}else{
-			$img100=~s/\.jpg/\.100x100-75\.jpg/ig;
-			$img100=~s/\.png/\.100x100-75\.png/ig;
+			$img100=~s/\.jpg$/\.100x100-75\.jpg/ig;
+			$img100=~s/\.png$/\.100x100-75\.png/ig;
 		}
 		$eva=0 unless($eva);
 		$evacount=0 unless($evacount);
@@ -1394,41 +1400,54 @@ sub _get_rss300(){
 	my $xml_val = $xml->XMLin($response);
 
 	my $list;
+	my $ranking;
 
 	foreach my $app_info (@{$xml_val->{entry}}){
 		my $a = qq{im:id};
 		my $app_id = $app_info->{id}->{$a};
-print "INS $app_id \n";
+print "app_id: $app_id \n";
+		$ranking++;
 		# データ更新
 		my $check_flag;
-		my ($name, $url, $img100, $eva, $evacount, $formattedPrice, $id, $genres, $genre_id);
-		my $sth = $dbh->prepare(qq{SELECT name, url, img100, eva, evacount,formattedPrice,id,genres,genre_id FROM app_iphone where id = ? limit 1 });
+		my ($name, $url, $img100, $eva, $evacount, $formattedPrice, $id, $genres, $genre_id,$max_rank,$description);
+		my $sth = $dbh->prepare(qq{SELECT name, url, img100, eva, evacount,formattedPrice,id,genres,genre_id,max_rank,description FROM app_iphone where id = ? and regist_date > (CURDATE() - INTERVAL 7 DAY) limit 1 });
 		$sth->execute($app_id);
 		while(my @row = $sth->fetchrow_array) {
 			$check_flag = 1;
-			($name, $url, $img100, $eva, $evacount, $formattedPrice, $id, $genres, $genre_id) = @row;
+			($name, $url, $img100, $eva, $evacount, $formattedPrice, $id, $genres, $genre_id,$max_rank,$description) = @row;
 		}
 
 		unless($check_flag){
+print "name : $name check_flag: $check_flag \n";
 			my $data = &itunes_page_lookup($app_id);
 			&app_iphone_data($dbh, $data);
 
-			$name = $data->{name};
-			$url = $data->{dl_url};
-			$img100 = $data->{icon};
-			$eva = $data->{rateno};
-			$evacount = $data->{revcnt};
-			$formattedPrice = $data->{sale_price};
+			$name = $data->{trackName};
+			$url = $data->{trackViewUrl};
+			$img100 = $data->{img100};
+			$eva = $data->{averageUserRating};
+			$evacount = $data->{userRatingCountForCurrentVersion};
+			$formattedPrice = $data->{formattedPrice};
 			$id = $app_id;
-			$genres = $data->{category_name}; 
-			$genre_id =$data->{category_id};
+			$genres = $data->{primaryGenreName}; 
+			$genre_id =$data->{primaryGenreId};
+			$description =$data->{description};
+
+			unless($max_rank){
+				$data->{max_rank} = $ranking;
+			}elsif($data->{max_rank} <= $ranking){
+			}else{
+				$data->{max_rank} = $ranking;
+			}
+
 		}
+print "name : $name \n";
 
 		if($img100=~/-75/){
 			$img100=~s/175/100/ig;
 		}else{
-			$img100=~s/\.jpg/\.100x100-75\.jpg/ig;
-			$img100=~s/\.png/\.100x100-75\.png/ig;
+			$img100=~s/\.jpg$/\.100x100-75\.jpg/ig;
+			$img100=~s/\.png$/\.100x100-75\.png/ig;
 		}
 		$eva=0 unless($eva);
 		$evacount=0 unless($evacount);
@@ -1522,41 +1541,51 @@ sub _get_rsslist(){
 	my $xml_val = $xml->XMLin($response);
 
 	my $list;
-
+	my $ranking;
 	foreach my $app_info (@{$xml_val->{entry}}){
 		my $a = qq{im:id};
 		my $app_id = $app_info->{id}->{$a};
-print "INS $app_id \n";
+print "app_id: $app_id \n";
+		$ranking++;
 		# データ更新
 		my $check_flag;
-		my ($name, $url, $img100, $eva, $evacount, $formattedPrice, $id, $genres, $genre_id,$description);
-		my $sth = $dbh->prepare(qq{SELECT name, url, img100, eva, evacount,formattedPrice,id,genres,genre_id,description FROM app_iphone where id = ? limit 1 });
+		my ($name, $url, $img100, $eva, $evacount, $formattedPrice, $id, $genres, $genre_id,$description,$max_rank);
+		my $sth = $dbh->prepare(qq{SELECT name, url, img100, eva, evacount,formattedPrice,id,genres,genre_id,description,max_rank FROM app_iphone where id = ? and regist_date > (CURDATE() - INTERVAL 7 DAY) limit 1 });
 		$sth->execute($app_id);
 		while(my @row = $sth->fetchrow_array) {
 			$check_flag = 1;
-			($name, $url, $img100, $eva, $evacount, $formattedPrice, $id, $genres, $genre_id,$description) = @row;
+			($name, $url, $img100, $eva, $evacount, $formattedPrice, $id, $genres, $genre_id,$description,$max_rank) = @row;
 		}
-
 		unless($check_flag){
+print "name : $name check_flag: $check_flag \n";
 			my $data = &itunes_page_lookup($app_id);
 			&app_iphone_data($dbh, $data);
 
-			$name = $data->{name};
-			$url = $data->{dl_url};
-			$img100 = $data->{icon};
-			$eva = $data->{rateno};
-			$evacount = $data->{revcnt};
-			$formattedPrice = $data->{sale_price};
+			$name = $data->{trackName};
+			$url = $data->{trackViewUrl};
+			$img100 = $data->{img100};
+			$eva = $data->{averageUserRating};
+			$evacount = $data->{userRatingCountForCurrentVersion};
+			$formattedPrice = $data->{formattedPrice};
 			$id = $app_id;
-			$genres = $data->{category_name}; 
-			$genre_id =$data->{category_id};
+			$genres = $data->{primaryGenreName}; 
+			$genre_id =$data->{primaryGenreId};
+			$description =$data->{description};
+
+			unless($max_rank){
+				$data->{max_rank} = $ranking;
+			}elsif($data->{max_rank} <= $ranking){
+			}else{
+				$data->{max_rank} = $ranking;
+			}
 		}
+print "name : $name \n";
 
 		if($img100=~/-75/){
 			$img100=~s/175/200/ig;
 		}else{
-			$img100=~s/\.jpg/\.200x200-75\.jpg/ig;
-			$img100=~s/\.png/\.200x200-75\.png/ig;
+			$img100=~s/\.jpg$/\.200x200-75\.jpg/ig;
+			$img100=~s/\.png$/\.200x200-75\.png/ig;
 		}
 		$eva=0 unless($eva);
 		$evacount=0 unless($evacount);
@@ -1629,7 +1658,6 @@ print "INS $app_id \n";
 	$html =~s/<!--CATERANKLISTSTR-->/$caterankstr/g;
 	$html =~s/<!--CATERANKLIST-->/$caterank/g;
 
-
 	$html = &_parts_set($html);
 
 	my $dir_str = qq{$genre};
@@ -1639,7 +1667,6 @@ print "INS $app_id \n";
 	}
 	$html =~s/<!--DIRSTR-->/$dir_str/g;
 	&_file_output("/var/www/vhosts/goo.to/httpdocs-applease/iphone/appranklist/$dir_str/index.html",$html);
-
 
 	return;
 }
